@@ -1,0 +1,104 @@
+<!--Author: Madeline Krehely
+Purpose: Admin/City official's view of reports, and assigning them tags
+Last Modified: 2/20/2026-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADMIN</title>
+    <link rel="stylesheet" href="Infrastructure-Reporter.css">
+</head>
+
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="top-bar">
+        <div class="top-bar__menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <h1 class="top-bar__title">ADMIN</h1>
+
+        <div class="top-bar__profile">Admin</div>
+    </header>
+
+    <div class="admin-page"> <!--Page Contents-->
+        <section class="admin-reports-list"> <!--list of reports on the left-->
+            <!--These are all placeholders; Clicking them does not do anything until JS implementation-->
+            <div class="admin-reports-item selected">Report (Selected)</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+            <div class="admin-reports-item">Report</div>
+        </section>
+
+        <section class="admin-view-report"> <!--report menu on the right-->
+            <div class="admin-view-report__top">
+                <!--LEFT SIDE-->
+                <div class="admin-view-report-column-left">
+                    <div class="admin-view-submitter">Submitter</div>
+                    <div class="admin-view-picture">Picture<br>(Click to view in full)</div> <!--PLACEHOLDER-->
+                    
+                    <!--DEVNOTE: Actual picture view will be like
+                    <div class="admin-view-picture">
+                        <img src="picture.jpg">
+                    </div>-->
+                
+                </div>
+
+                <!--RIGHT SIDE-->
+                <div class="admin-view-map">Map w/ location</div> <!--Replace w real map-->
+            </div>
+
+            <!--Problem Description-->
+            <div class="admin-view-description">Problem Description</div>
+
+            <!--STATUS DROPDOWN-->
+            <div class="admin-report-buttons">
+                <label for="status">Assign Status:</label>
+                <select id="status" class="admin-report-buttons__input">
+                    <option value="submitted">Submitted</option>
+                    <option value="under-review">Under Review</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="processed">Processed</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <!--DEPARTMENT ASSIGNMENT DROPDOWN-->
+            <div class="admin-report-buttons">
+                <label for="status">Assign Department:</label>
+                <select id="status" class="admin-report-buttons__input">
+                    <option value="submitted">Department 1</option>
+                    <option value="under-review">Department 2</option>
+                    <option value="processed">Department 3</option>
+                    <option value="completed">Department 4</option>
+                </select>
+            </div>
+
+            <!--BUDGET ENTER-->
+            <div class="admin-report-buttons">
+                <label for="status">Budget:</label>
+                <input type="number"
+                        id="budget"
+                        class="admin-report-buttons__input"
+                        placeholder="type budget"
+                        min="0">
+            </div>
+
+            <!--BIG UPDATE BUTTON-->
+            <button class="admin-report-update">Update Report</button>
+        </section>
+    </div>
+
+    <footer class="main-footer"></footer>
+</body>
+</html>
