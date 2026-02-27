@@ -4,10 +4,10 @@ CONTAINS:
 - file 'Infrastructure-Reporter.css' is the big combined css file
 
 - GitHub Copilot
-  ・AI coding assistance
+  AI coding assistance
 - Live Server 
-  ・Preview web pages while coding
+  Preview web pages while coding
 - Prettier
-  ・Code formatting and debugging
+  Code formatting and debugging
 - Geo Data Viewer
-  ・Verify location data
+  Verify location data
