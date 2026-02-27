@@ -11,3 +11,5 @@ CONTAINS:
   Code formatting and debugging
 - Geo Data Viewer
   Verify location data
+
+- docs: Requirements doc up to the point 2/27/2026; see Google Docs for live ver
