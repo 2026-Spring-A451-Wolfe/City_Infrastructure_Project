@@ -1,6 +1,6 @@
 /* Author: Ameen Ayyad
 Purpose: Javascript functionality for the reports tracking page 
-Last Modified: 2/28/26 */
+Last Modified: 3/1/26 */
 
 /* What I have done so far (Ameen Ayyad): 
  - View Report button functionality
@@ -35,15 +35,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Example: Set user information dynamically
+    // Display for user information in the sidebar
     if (userInfo) {
-        // This could be information from the user's session or a backend API call
-        const userName = "Benjamine Netanhyahu"; // This would normally come from login data
-        const userEmail = "littlestjef@gmail.com"; // This would normally come from login data
+        // This will be user's session or a backend API call
+        const userName = "No Name"; // This will come from login data
+        const userEmail = "noname@unknown.net"; // This will come from login data
         userInfo.textContent = `${userName} (${userEmail})`;
     }
 
-    // Example: Set progress based on report status
+    // Setting progress based on the status of the report 
     if (progressFill) {
         // This would come from backen data about the report's current status
         const reportStatus = "Under Review"; // Example status
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const progressPercentage = (currentStageIndex + 1) * 25;
             progressFill.style.width = progressPercentage + "%";
             
-            // Report status with colors 
+            // Report status with colors & Used randmon colors for each stage, this could be changed later if needed
             if (progressPercentage <= 25) {
                 progressFill.style.backgroundColor = "#ff6b6b"; // Red for submitted
             } else if (progressPercentage <= 50) {
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Add click event listener to the View Report button
+    // Added click event listener to the View Report button
     if (viewReportBtn) {
         viewReportBtn.addEventListener("click", function () {
             
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Optional: Add functionality to navigation links
+    // Maybe Add some type of functionality to navigation links later pn 
     const navLinks = document.querySelectorAll(".sub-nav a");
     navLinks.forEach(link => {
         link.addEventListener("click", function (event) {
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize page with sample data
     function initializePageData() {
-        // This would normally fetch data from an API
+        // This will fetch data from backend 
         console.log("Reports page initialized");
         
         // Example: You could fetch list of reports for this user (Backend API call)
