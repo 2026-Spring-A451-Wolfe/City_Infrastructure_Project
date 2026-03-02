@@ -36,11 +36,6 @@ that connects the app to the database using JDBC
 
 
 
-\- I wanna use pgAdmin as a browser-based database viewer
-
-
-
-------------------------------------
 
 SETTTT UPPPPPPP
 
@@ -83,17 +78,6 @@ DB_PORT=5432
 DB_NAME=citydb
 DB_USER=city
 DB_PASSWORD=citypass
-
-
-
-
-\### you can like ignore this for now 2/11/2026 -Ethan
-
-PGADMIN\_EMAIL=admin@admin.com
-
-PGADMIN\_PASSWORD=admin123
-
-
 
 
 
@@ -153,10 +137,6 @@ tomcat
 
 
 
-pgadmin
-
-
-
 All in the “Up” state.
 
 
@@ -203,8 +183,6 @@ Exposes port 8080
 
 
 
-pgadmin
-
 
 
 Web-based database admin interface
@@ -230,8 +208,6 @@ Browser
 → PostgreSQL
 
 
-
-pgAdmin connects directly to PostgreSQL for database inspection.
 
 
 
@@ -331,106 +307,7 @@ This confirms:
 Tomcat deployed correctly
 
 
-
-The servlet is running
-
-
-
-The backend can connect to the database
-
-
-
-pgAdmin:
-
- 	http://localhost:5050
-
-
-
-
-
-Login:
-
- 	Email:
-
- 		admin@admin.com
-
-
-
- 	Password:
-
-
-
- 		admin123
-
-
-
-
-
-After logging in:
-
-
-
-Register a new server
-
-
-
-Use the following connection settings:
-
-
-
-Host:
-
-
-
-db
-
-
-
-
-
-Port:
-
-
-
-5432
-
-
-
-
-
-Maintenance Database:
-
-
-
-demo
-
-
-
-
-
-Username:
-
-
-
-demo
-
-
-
-
-
-Password:
-
-
-
-demo
-
-
-
-
-
-Important: use db, not localhost.
-
-Inside Docker, services communicate using service names.
+Db Connection is maintained!
 
 
 
