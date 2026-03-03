@@ -9,9 +9,11 @@
 
 package com.example.web.controller;
 
+import com.example.web.dto.DepartmentContactDTO;
 import com.example.web.dto.DepartmentDTO;
 import com.example.web.repository.DepartmentRepository;
 import com.example.web.service.DepartmentService;
+import com.example.web.util.DatabaseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -22,6 +24,7 @@ import java.util.List;
 /* DepartmentController handles all HTTP requests to /api/departments/*.
  * Endpoints:   GET /api/departments
  *              GET /api/departments/{id}
+ *              GET /api/departments/{id}/contacts
  * This controller delegates all business logic to DepartmentService.
  * Departments are managed directly in the database by admin, and because 
  * they are publicly accessible, no authentication measures are required.
@@ -37,9 +40,7 @@ public class DepartmentController extends HttpServlet {
     @Override
     public void init() {
         departmentService = new DepartmentService(
-            new DepartmentRepository(
-                com.example.web.util.DatabaseUtil.getDataSource()
-            )
+            new DepartmentRepository(DatabaseUtil.getDataSource())
         );
     }
 
@@ -54,11 +55,17 @@ public class DepartmentController extends HttpServlet {
             if (pathInfo == null || pathInfo.equals("/")) {
                 List<DepartmentDTO> all = departmentService.getAllDepartments();
                 resp.getWriter().write(objectMapper.writeValueAsString(all));
+            } else if (pathInfo.endsWith("/contacts")) {
+                String idPart = pathInfo.replace("/contacts", "").substring(1);
+                long id = Long.parseLong(idPart);
+                List<DepartmentContactDTO> contacts = departmentService.getContactsByDepartmentId(id);
+                resp.getWriter().write(objectMapper.writeValueAsString(contacts));
             } else {
-                int id = Integer.parseInt(pathInfo.substring(1));
+                long id = Long.parseLong(pathInfo.substring(1));
                 DepartmentDTO dept = departmentService.getDepartmentById(id);
                 resp.getWriter().write(objectMapper.writeValueAsString(dept));
             }
+            
         } catch (NumberFormatException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resp.getWriter().write("{\"error\": \"Invalid department ID\"}");

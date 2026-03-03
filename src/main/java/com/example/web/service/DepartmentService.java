@@ -47,6 +47,15 @@ public class DepartmentService {
                 .orElseThrow(() -> new RuntimeException("Department not found with id: " + id));
     }
 
+    public List<DepartmentContactDTO> getContactsByDepartmentId(long id) throws SQLException {
+        departmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Department not found with id: " + id));
+        return departmentRepository.findContactsByDepartmentId(id)
+                .stream()
+                .map(this::toContactDTO)
+                .collect(Collectors.toList());
+    }
+
     private DepartmentDTO toDTO(Department d) {
         List<DepartmentContactDTO> contactDTOs = d.getContacts()
                 .stream()
