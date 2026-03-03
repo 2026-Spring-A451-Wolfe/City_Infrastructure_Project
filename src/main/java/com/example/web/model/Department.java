@@ -1,11 +1,11 @@
- /**************************************************************************
- * Filename: Department.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Represents a city department entity mapped to the departments
- *              database table.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: Department.java                                                     *
+ * Project: NOLA Infrastructure Reporting & Tracking System                      *
+ * Description: Model class that mirrors the departments table in the database,  *
+ *              were each instance represents one city department.             *
+ * Author: Sophina Nichols                                                       *
+ * Date Last Modified: 03/03/2026                                                *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.model;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Department {
 
-    private int id;
+    private long id;
     private String name;
     private String jurisdiction;
     private String description;
@@ -23,7 +23,7 @@ public class Department {
 
     public Department() {}
 
-    public Department(int id, String name, String jurisdiction,
+    public Department(long id, String name, String jurisdiction,
                       String description, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
@@ -32,9 +32,8 @@ public class Department {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

@@ -1,26 +1,27 @@
- /**************************************************************************
- * Filename: DepartmentContact.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Represents a department contact method mapped to the department_contacts 
- *              table, supporting multiple contact types per department.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: DepartmentContact.java                                                  *
+ * Project: NOLA Infrastructure Reporting & Tracking System                          *
+ * Description: Model class that mirrors the department_contacts table in database,  *
+ *              where each instance represents one contact method for a department.  *
+ *              A single department can have multiple DepartmentContact entries.     *
+ * Author: Sophina Nichols                                                           *
+ * Date Last Modified: 03/03/2026                                                    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.model;
 
 public class DepartmentContact {
 
-    private int id;
-    private int departmentId;
-    private String contactType;  // "phone", "email", "website"
+    private long id;
+    private long departmentId;
+    private String contactType;
     private String label;
     private String value;
     private boolean isEmergency;
 
     public DepartmentContact() {}
 
-    public DepartmentContact(int id, int departmentId, String contactType,
+    public DepartmentContact(long id, long departmentId, String contactType,
                               String label, String value, boolean isEmergency) {
         this.id = id;
         this.departmentId = departmentId;
@@ -30,12 +31,11 @@ public class DepartmentContact {
         this.isEmergency = isEmergency;
     }
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public int getDepartmentId() { return departmentId; }
-    public void setDepartmentId(int departmentId) { this.departmentId = departmentId; }
+    public long getDepartmentId() { return departmentId; }
+    public void setDepartmentId(long departmentId) { this.departmentId = departmentId; }
 
     public String getContactType() { return contactType; }
     public void setContactType(String contactType) { this.contactType = contactType; }

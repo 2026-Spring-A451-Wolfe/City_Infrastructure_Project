@@ -1,11 +1,11 @@
- /**************************************************************************
- * Filename: DepartmentService.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Contains business logic for retrieving, creating, and managing
- *              departments and their associated contact records.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: DepartmentService.java                                    *
+ * Project: NOLA Infrastructure Reporting & Tracking System            *
+ * Description: Contains logic for retrieving, creating, and managing  *
+ *              departments and their associated contact records.      *
+ * Author: Sophina Nichols                                             *
+ * Date Last Modified: 03/03/2026                                      *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.service;
 
@@ -19,8 +19,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DepartmentService {
 
+/* DepartmentService contains the logic layer for departments.
+ * It sits between DepartmentController and DepartmentRepository, and its
+ * main task is conversting Department model objects into DepartmentDTOs 
+ * before they are serialized and sent to the client.
+ */
+
+public class DepartmentService {
+    // Repository used to query the departments and department_contacts tables
     private final DepartmentRepository departmentRepository;
 
     public DepartmentService(DepartmentRepository departmentRepository) {
@@ -30,7 +37,7 @@ public class DepartmentService {
     public List<DepartmentDTO> getAllDepartments() throws SQLException {
         return departmentRepository.findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(this::toDTO) // convert each Department to a DepartmentDTO
                 .collect(Collectors.toList());
     }
 

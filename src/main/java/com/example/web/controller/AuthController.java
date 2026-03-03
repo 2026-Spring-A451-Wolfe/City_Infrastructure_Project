@@ -37,7 +37,6 @@ import java.util.Map;
 public class AuthController extends HttpServlet {
 
     private AuthService authService;
-
     // ObjectMapper converts Java objects to/from JSON
     private final ObjectMapper objectMapper = new ObjectMapper();
 

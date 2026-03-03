@@ -1,13 +1,17 @@
- /**************************************************************************
- * Filename: DepartmentContactDTO.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Data Transfer Object used to safely transfer department 
- *              contact information between the backend and client.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: DepartmentContactDTO.java                                   *
+ * Project: NOLA Infrastructure Reporting & Tracking System              *
+ * Description: Data Transfer Object used to safely transfer department  *
+ *              contact information between the backend and client.      *
+ * Author: Sophina Nichols                                               *
+ * Date Last Modified: 03/03/2026                                        *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.dto;
+
+/* DepartmentContactDTO is a DTO that represents one contact method for a 
+ * department in an API response.
+ */
 
 public class DepartmentContactDTO {
 
@@ -25,8 +29,7 @@ public class DepartmentContactDTO {
         this.value = value;
         this.isEmergency = isEmergency;
     }
-
-    // Getters and Setters
+    
     public String getContactType() { return contactType; }
     public void setContactType(String contactType) { this.contactType = contactType; }
 

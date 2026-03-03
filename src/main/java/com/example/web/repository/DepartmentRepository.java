@@ -1,11 +1,11 @@
- /**************************************************************************
- * Filename: DepartmentRepository.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Handles database operations for the departments table, 
- *              including retrieval and persistence of department records.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: DepartmentRepository.java                                     *
+ * Project: NOLA Infrastructure Reporting & Tracking System                *
+ * Description: Handles database operations for the departments table,     *
+ *              including retrieval and persistence of department records. *
+ * Author: Sophina Nichols                                                 *
+ * Date Last Modified: 03/03/2026                                          *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.repository;
 
@@ -17,6 +17,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+/* DepartmentRepository handles all direct database access for departments.
+ * Each method opens its own connection from the DataSource pool, executes a 
+ * query, and then closes the connection automatically. Departments are managed
+ * directly in the database by admins.
+ */
 
 public class DepartmentRepository {
 
@@ -61,14 +67,14 @@ public class DepartmentRepository {
         return Optional.empty();
     }
 
-    public List<DepartmentContact> findContactsByDepartmentId(int departmentId) throws SQLException {
+    public List<DepartmentContact> findContactsByDepartmentId(long departmentId) throws SQLException {
         List<DepartmentContact> contacts = new ArrayList<>();
         String sql = "SELECT * FROM department_contacts WHERE department_id = ? ORDER BY is_emergency DESC, id";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, departmentId);
+            ps.setLong(1, departmentId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     contacts.add(mapContactRow(rs));
@@ -80,7 +86,7 @@ public class DepartmentRepository {
 
     private Department mapRow(ResultSet rs) throws SQLException {
         return new Department(
-            rs.getInt("id"),
+            rs.getLong("id"),
             rs.getString("name"),
             rs.getString("jurisdiction"),
             rs.getString("description"),
@@ -90,8 +96,8 @@ public class DepartmentRepository {
 
     private DepartmentContact mapContactRow(ResultSet rs) throws SQLException {
         return new DepartmentContact(
-            rs.getInt("id"),
-            rs.getInt("department_id"),
+            rs.getLong("id"),
+            rs.getLong("department_id"),
             rs.getString("contact_type"),
             rs.getString("label"),
             rs.getString("value"),

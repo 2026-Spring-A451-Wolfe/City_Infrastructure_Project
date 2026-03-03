@@ -1,19 +1,24 @@
- /**************************************************************************
- * Filename: DepartmentDTO.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Data Transfer Object used to represent department data in API
- *              responses and prevent direct exposure of the Department entity.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: DepartmentDTO.java                                                    *
+ * Project: NOLA Infrastructure Reporting & Tracking System                        *
+ * Description: Data Transfer Object used to represent department data in API      *
+ *              responses and prevent direct exposure of the Department entity.    *
+ * Author: Sophina Nichols                                                         *
+ * Date Last Modified: 03/03/2026                                                  *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.dto;
 
 import java.util.List;
 
+/* DepartmentDTO is a DTO that represents what the API sends back to the client when 
+ * a department is requested. Each DepartmentDTO includes a list of DepartmentContactDTOs 
+ * so the frontend receives all contact info for a department in one response.
+ */
+
 public class DepartmentDTO {
 
-    private int id;
+    private long id;
     private String name;
     private String jurisdiction;
     private String description;
@@ -21,7 +26,7 @@ public class DepartmentDTO {
 
     public DepartmentDTO() {}
 
-    public DepartmentDTO(int id, String name, String jurisdiction, String description,
+    public DepartmentDTO(long id, String name, String jurisdiction, String description,
                          List<DepartmentContactDTO> contacts) {
         this.id = id;
         this.name = name;
@@ -30,9 +35,8 @@ public class DepartmentDTO {
         this.contacts = contacts;
     }
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
