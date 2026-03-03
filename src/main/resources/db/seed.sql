@@ -10,39 +10,56 @@
 
 -- ============================================================
 -- DEPARTMENTS
--- Pre-loading all New Orleans city departments
+-- Pre-loading all New Orleans city departments.
 -- ============================================================
-INSERT INTO departments (name, description, contact_email, contact_phone) VALUES
-('Public Works',
- 'Handles road and infrastructure repairs',
- 'dpq@nola.gov',
- '(504) 658-8000'),
+INSERT INTO departments (name, jurisdiction, description) VALUES 
+(
+    'NOLA-311',
+    'Orleans Parish',
+    'NOLA-311 is the official non-emergency service for New Orleans, allowing residents to report city maintaince issues
+     like potholes, streetlight outages, and drainage issues.'
+),
+(
+    'Department of Public Works (Main Division)',
+    'Orleans Parish',
+    'The DPW is responsible for maintaining and improving city infrastructure, including
+     streets, sidewalks, streetlights, traffic signals, and street signs. '
+),
+(
+    'Department of Public Works (Maintenance Division)',
+    'Orleans Parish',
+    'The DPW Maintenance Division is responsible for repairs to potholes and depressions in city streets.'
+),
+(
+    'Department of Public Works (Traffic Division)',
+    'Orleans Parish',
+    'The DPW Traffic Division is reponsible for installing and repairing street signs, traffic signals, and street lights.'
+),
+(
+    'Sewerage and Water Board of New Orleans',
+    'Orleans Parish',
+    'The Sewerage and Water Board manages and maintains New Orleans water, sewer, and drainage systems.'
+);
+-- ============================================================
+-- DEPARTMENT CONTACTS
+-- Pre-loading all New Orleans city department contact info.
+-- ============================================================
+INSERT INTO department_contacts (department_id, contact_type, label, value, is_emergency) VALUES
+(1, 'phone', 'Call NOLA-311', '311'),
+(1, 'email', 'Email NOLA-311', '311@nola.gov'),
+(1, 'website', 'NOLA-311 Website/Service Request', 'https://nola311.org'),
 
-('Sewage & Water Board',
- 'Manages water and sewage systems',
- 'NULL',
- '(504) 529-2837'),
+(2, 'phone', 'Call DPW Main Divion', '(504) 658-8000', FALSE),
+(2, 'email', 'Email DPW Main Divion', 'dpw@nola.gov', FALSE),
 
-('Department of Public Safety',
- 'Oversees public safety infrastructure',
- 'safety@nola.gov',
- '(504) 658-8065'),
+(3, 'phone', 'Call DPW Maintenance Divion', '(504) 658-8151', FALSE),
+(3, 'phone', 'Call DPW Maintenance Divion', '(504) 658-8152', FALSE),
 
-('Parks & Parkways',
- 'Maintains parks and green spaces',
- 'parks@nola.gov',
- '(504) 658-3200'),
+(4, 'phone', 'Call DPW Traffic Divion', '(504) 658-8040', FALSE),
+(4, 'email', 'Email DPW Traffic Divion', 'TrafficReviewDPW@nola.gov', FALSE),
 
-('Traffic Engineering',
- 'Manages traffic signs and signals',
- 'traffic@nola.gov',
- '(504) 658-8080'),
-
-('Sanitation',
- 'Handles waste and debris removal',
- 'sanitation@nola.gov',
- '(504) 658-8090');
-
+(5, 'website', 'Report an Issue/Service Request', 'https://www.swbno.org/CustomerService/ReportAnIssue', FALSE),
+(5, 'phone', 'Emergency Flood Line', '504-529-2837', TRUE);
 
 -- ============================================================
 -- USERS
@@ -50,16 +67,16 @@ INSERT INTO departments (name, description, contact_email, contact_phone) VALUES
 -- Password for both accounts is: Test@1234
 -- Passwords are hashed using BCrypt with cost factor 12
 -- ============================================================
-INSERT INTO users (username, email_or_phonenum, password_hash, role) VALUES
-('admin_user',
- 'admin@nola.gov',
- '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa',
- 'ADMIN'),
+--INSERT INTO users (username, email_or_phonenum, password_hash, role) VALUES
+--('admin_user',
+ --'admin@nola.gov',
+ --'$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa',
+ --'ADMIN'),
 
-('citizen_user',
- 'citizen@nola.gov',
- '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa',
- 'CITIZEN');
+--('citizen_user',
+---- 'citizen@nola.gov',
+-- '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa',
+-- 'CITIZEN');
 
 
 -- ============================================================
@@ -67,40 +84,10 @@ INSERT INTO users (username, email_or_phonenum, password_hash, role) VALUES
 -- A mix of categories, severities, and statuses across
 -- real New Orleans locations for testing the map view
 -- ============================================================
-INSERT INTO reports (title, description, category, severity, latitude, longitude, status, created_by) VALUES
+--INSERT INTO reports (title, description, category, severity, latitude, longitude, status, created_by) VALUES
 
-('Large Pothole on Canal Street',
- 'Deep pothole approximately 2 feet wide causing damage to vehicles passing through',
- 'POTHOLE', 'HIGH',
- 29.9584, -90.0776,
- 'OPEN', 2),
-
-('Flooding on Magazine Street',
- 'Street flooding after heavy rain making road impassable for vehicles',
- 'FLOODING', 'CRITICAL',
- 29.9245, -90.0856,
- 'IN_PROGRESS', 2),
-
-('Cracked Road on Bourbon Street',
- 'Large crack running across the entire width of the road near the intersection',
- 'CRACK', 'MEDIUM',
- 29.9583, -90.0653,
- 'OPEN', 2),
-
-('Damaged Street Sign on St. Charles Ave',
- 'Stop sign knocked over and laying on the sidewalk creating a safety hazard',
- 'SIGN_DAMAGE', 'HIGH',
- 29.9401, -90.0855,
- 'OPEN', 2),
-
-('Debris Blocking Road on Tchoupitoulas St',
- 'Large pile of debris blocking the right lane after recent storm',
- 'DEBRIS', 'MEDIUM',
- 29.9382, -90.0776,
- 'RESOLVED', 2),
-
-('Road Collapse on Esplanade Ave',
- 'Section of road has collapsed near the intersection creating a dangerous sinkhole',
- 'ROAD_COLLAPSE', 'CRITICAL',
- 29.9697, -90.0742,
- 'IN_PROGRESS', 2);
+--('Large Pothole on Canal Street',
+-- 'Deep pothole approximately 2 feet wide causing damage to vehicles passing through',
+ --'POTHOLE', 'HIGH',
+ --29.9584, -90.0776,
+ --'OPEN', 2),

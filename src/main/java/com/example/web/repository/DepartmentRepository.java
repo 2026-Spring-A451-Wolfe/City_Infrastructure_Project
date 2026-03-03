@@ -1,0 +1,92 @@
+package com.example.web.repository;
+
+import com.example.web.model.Department;
+import com.example.web.model.DepartmentContact;
+
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class DepartmentRepository {
+
+    private final DataSource dataSource;
+
+    public DepartmentRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public List<Department> findAll() throws SQLException {
+        List<Department> departments = new ArrayList<>();
+        String sql = "SELECT * FROM departments ORDER BY id";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Department dept = mapRow(rs);
+                dept.setContacts(findContactsByDepartmentId(dept.getId()));
+                departments.add(dept);
+            }
+        }
+        return departments;
+    }
+
+    public Optional<Department> findById(int id) throws SQLException {
+        String sql = "SELECT * FROM departments WHERE id = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Department dept = mapRow(rs);
+                    dept.setContacts(findContactsByDepartmentId(dept.getId()));
+                    return Optional.of(dept);
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    public List<DepartmentContact> findContactsByDepartmentId(int departmentId) throws SQLException {
+        List<DepartmentContact> contacts = new ArrayList<>();
+        String sql = "SELECT * FROM department_contacts WHERE department_id = ? ORDER BY is_emergency DESC, id";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, departmentId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    contacts.add(mapContactRow(rs));
+                }
+            }
+        }
+        return contacts;
+    }
+
+    private Department mapRow(ResultSet rs) throws SQLException {
+        return new Department(
+            rs.getInt("id"),
+            rs.getString("name"),
+            rs.getString("jurisdiction"),
+            rs.getString("description"),
+            rs.getTimestamp("created_at").toLocalDateTime()
+        );
+    }
+
+    private DepartmentContact mapContactRow(ResultSet rs) throws SQLException {
+        return new DepartmentContact(
+            rs.getInt("id"),
+            rs.getInt("department_id"),
+            rs.getString("contact_type"),
+            rs.getString("label"),
+            rs.getString("value"),
+            rs.getBoolean("is_emergency")
+        );
+    }
+}
