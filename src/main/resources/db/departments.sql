@@ -1,5 +1,5 @@
 CREATE TABLE departments (
-    id              SERIAL PRIMARY KEY,
+    id              BIGSERIAL PRIMARY KEY,
     name            VARCHAR(150) NOT NULL UNIQUE,
     jurisdiction    VARCHAR(100),
     description     TEXT,

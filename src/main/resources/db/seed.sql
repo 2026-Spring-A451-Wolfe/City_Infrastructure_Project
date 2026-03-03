@@ -49,16 +49,16 @@ INSERT INTO department_contacts (department_id, contact_type, label, value, is_e
 (1, 'email', 'Email NOLA-311', '311@nola.gov'),
 (1, 'website', 'NOLA-311 Website/Service Request', 'https://nola311.org'),
 
-(2, 'phone', 'Call DPW Main Divion', '(504) 658-8000', FALSE),
-(2, 'email', 'Email DPW Main Divion', 'dpw@nola.gov', FALSE),
+(2, 'phone', 'Call DPW Main Divion', '(504) 658-8000'),
+(2, 'email', 'Email DPW Main Divion', 'dpw@nola.gov'),
 
-(3, 'phone', 'Call DPW Maintenance Divion', '(504) 658-8151', FALSE),
-(3, 'phone', 'Call DPW Maintenance Divion', '(504) 658-8152', FALSE),
+(3, 'phone', 'Call DPW Maintenance Divion', '(504) 658-8151'),
+(3, 'phone', 'Call DPW Maintenance Divion', '(504) 658-8152'),
 
-(4, 'phone', 'Call DPW Traffic Divion', '(504) 658-8040', FALSE),
-(4, 'email', 'Email DPW Traffic Divion', 'TrafficReviewDPW@nola.gov', FALSE),
+(4, 'phone', 'Call DPW Traffic Divion', '(504) 658-8040'),
+(4, 'email', 'Email DPW Traffic Divion', 'TrafficReviewDPW@nola.gov'),
 
-(5, 'website', 'Report an Issue/Service Request', 'https://www.swbno.org/CustomerService/ReportAnIssue', FALSE),
+(5, 'website', 'Report an Issue/Service Request', 'https://www.swbno.org/CustomerService/ReportAnIssue'),
 (5, 'phone', 'Emergency Flood Line', '504-529-2837', TRUE);
 
 -- ============================================================
