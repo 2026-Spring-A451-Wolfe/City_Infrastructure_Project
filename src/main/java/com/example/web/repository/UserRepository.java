@@ -1,11 +1,11 @@
- /**************************************************************************
- * Filename: UserRepository.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Handles database operations for the users table, including 
- *              user lookup and account management queries.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: UserRepository.java                                             *
+ * Project: NOLA Infrastructure Reporting & Tracking System                  *
+ * Description: Handles database operations for the users table, including   *
+ *              user lookup and account management queries.                  *
+ * Author: Sophina Nichols                                                   *
+ * Date Last Modified: 03/03/2026                                            *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.repository;
 
@@ -23,7 +23,6 @@ public class UserRepository {
         this.dataSource = dataSource;
     }
 
-    // Find a user by email
     public Optional<User> findByEmail(String email) throws SQLException {
         String sql = "SELECT * FROM users WHERE email = ?";
         try (Connection conn = dataSource.getConnection();
@@ -36,7 +35,6 @@ public class UserRepository {
             return Optional.empty();
     }
 
-    // Find a user by username
     public Optional<User> findByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
         try (Connection conn = dataSource.getConnection();
@@ -49,7 +47,6 @@ public class UserRepository {
         return Optional.empty();
     }
 
-    // Check if username is already taken
     public boolean existsByUsername(String username) throws SQLException {
         String sql = "SELECT 1 FROM users WHERE username = ?";
         try (Connection conn = dataSource.getConnection();
@@ -61,7 +58,6 @@ public class UserRepository {
             }
     }
 
-    // Check if email is already registered
     public boolean existsByEmail(String email) throws SQLException {
         String sql = "SELECT 1 FROM users WHERE email = ?";
         try (Connection conn = dataSource.getConnection();
@@ -73,7 +69,6 @@ public class UserRepository {
             }
     }
 
-    // Save a new user and return the saved user with generated ID
     public User save(User user) throws SQLException {
         String sql = """
             INSERT INTO users (username, email, phone, password_hash, role, is_active)
@@ -95,7 +90,6 @@ public class UserRepository {
         throw new SQLException("Failed to save user");
     }
 
-    // Map a database row to a User object
     private User mapRow(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getLong("id"));

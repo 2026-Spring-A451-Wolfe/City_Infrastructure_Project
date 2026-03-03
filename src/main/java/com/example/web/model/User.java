@@ -1,11 +1,11 @@
- /**************************************************************************
- * Filename: User.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Represents a registered system user mapped to the users table,
- *              including authentication credentials and role assignment.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: User.java                                                           *
+ * Project: NOLA Infrastructure Reporting & Tracking System                      *
+ * Description: Represents a registered system user mapped to the users table,   *
+ *              including authentication credentials and role assignment.        *
+ * Author: Sophina Nichols                                                       *
+ * Date Last Modified: 03/03/2026                                                *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.model;
 
@@ -21,10 +21,8 @@ public class User {
     private boolean isActive;
     private LocalDateTime dateCreated;
 
-    // Empty constructor
     public User() {}
 
-    // Constructor for registering a new user
     public User(String username, String email, String phone, String passwordHash, String role) {
         this.username = username;
         this.email = email;
@@ -34,7 +32,6 @@ public class User {
         this.isActive = true;
     }
 
-    // Getters and Setters
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 

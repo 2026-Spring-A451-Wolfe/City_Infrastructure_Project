@@ -7,11 +7,25 @@
 -- Date Last Modified: 03/03/2026
 ------------------------------------------------------------------
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: seed.sql                                                              *
+ * Project: NOLA Infrastructure Reporting & Tracking System                        *
+ * Description: Inserts initial data into the database, including all New Orleans  *
+ *              city departments and their contact information. Also includes      *
+ *              commented-out sample users and reports for testing the map view.   *
+ * Author: Sophina Nichols                                                         *
+ * Date Last Modified: 03/03/2026                                                  *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
--- ============================================================
--- DEPARTMENTS
--- Pre-loading all New Orleans city departments.
--- ============================================================
+/* IMPORTANT!!!
+ * Run schema.sql before running this file.
+ * Tables must exist before data can be inserted.
+ */
+
+
+/* DEPARTMENTS */
+-- Pre-loads all relevant New Orleans city departments.
+-- IDs are assigned automatically by BIGSERIAL (1, 2, 3, 4, 5).
 INSERT INTO departments (name, jurisdiction, description) VALUES 
 (
     'NOLA-311',
@@ -40,10 +54,9 @@ INSERT INTO departments (name, jurisdiction, description) VALUES
     'Orleans Parish',
     'The Sewerage and Water Board manages and maintains New Orleans water, sewer, and drainage systems.'
 );
--- ============================================================
--- DEPARTMENT CONTACTS
--- Pre-loading all New Orleans city department contact info.
--- ============================================================
+
+/* DEPARTMENT CONTACTS */
+-- Pre-loads contact methods for each department.
 INSERT INTO department_contacts (department_id, contact_type, label, value, is_emergency) VALUES
 (1, 'phone', 'Call NOLA-311', '311'),
 (1, 'email', 'Email NOLA-311', '311@nola.gov'),
@@ -61,33 +74,15 @@ INSERT INTO department_contacts (department_id, contact_type, label, value, is_e
 (5, 'website', 'Report an Issue/Service Request', 'https://www.swbno.org/CustomerService/ReportAnIssue'),
 (5, 'phone', 'Emergency Flood Line', '504-529-2837', TRUE);
 
--- ============================================================
--- USERS
--- One test ADMIN and one test CITIZEN account
--- Password for both accounts is: Test@1234
--- Passwords are hashed using BCrypt with cost factor 12
--- ============================================================
---INSERT INTO users (username, email_or_phonenum, password_hash, role) VALUES
---('admin_user',
- --'admin@nola.gov',
- --'$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa',
- --'ADMIN'),
+/* USERS */ 
+-- Both accounts use password: Test@1234
+-- Hashed with BCrypt cost factor 12
+INSERT INTO users (username, email, phone, password_hash, role) VALUES
+('admin_user',   'admin@nola.gov',   '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa', 'Admin'),
+('citizen_user', 'citizen@nola.gov', '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa', 'Citizen');
 
---('citizen_user',
----- 'citizen@nola.gov',
--- '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa',
--- 'CITIZEN');
-
-
--- ============================================================
--- SAMPLE REPORTS
--- A mix of categories, severities, and statuses across
--- real New Orleans locations for testing the map view
--- ============================================================
---INSERT INTO reports (title, description, category, severity, latitude, longitude, status, created_by) VALUES
-
---('Large Pothole on Canal Street',
--- 'Deep pothole approximately 2 feet wide causing damage to vehicles passing through',
- --'POTHOLE', 'HIGH',
- --29.9584, -90.0776,
- --'OPEN', 2),
+/* SAMPLE REPORTS */ 
+INSERT INTO reports (title, description, category, severity, latitude, longitude, status, created_by) VALUES
+('Large Pothole on Canal Street',
+'Deep pothole approximately 2 feet wide causing damage to vehicles.',
+'Pothole', 'High', 29.9584, -90.0776, 'Open', 2);

@@ -1,11 +1,12 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Filename: departments.sql                                                 *
- * Project: NOLA Infrastructure Reporting & Tracking System                  *
- * Description: Creates and defines the structure of the departments table   *
- *              used to store city department records.                       *
- * Author: Sophina Nichols                                                   *
- * Date Last Modified: 03/03/2026                                            *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Filename: departments.sql                                                   *
+ * Project: NOLA Infrastructure Reporting & Tracking System                    *
+ * Description: Creates the departments table used to store city department    *
+ *              records. Departments are pre-loaded via seed.sql and managed   *
+ *              directly in the database by admins.                            *
+ * Author: Sophina Nichols                                                     *
+ * Date Last Modified: 03/03/2026                                              *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 CREATE TABLE departments (
     id              BIGSERIAL PRIMARY KEY,
