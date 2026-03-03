@@ -147,17 +147,17 @@ CREATE TABLE report_images (
 -- INDEXES
 -- Speeds up common queries used by the map view and filters.
 -- ============================================================
-CREATE INDEX IF NOT EXISTS idx_reports_status
-    ON reports(status);
+--CREATE INDEX IF NOT EXISTS idx_reports_status
+  --  ON reports(status);
 
-CREATE INDEX IF NOT EXISTS idx_reports_category
-    ON reports(category);
+--CREATE INDEX IF NOT EXISTS idx_reports_category
+  --  ON reports(category);
 
-CREATE INDEX IF NOT EXISTS idx_reports_created_by
-    ON reports(created_by);
+--CREATE INDEX IF NOT EXISTS idx_reports_created_by
+  --  ON reports(created_by);
 
-CREATE INDEX IF NOT EXISTS idx_reports_location
-    ON reports(latitude, longitude);
+--CREATE INDEX IF NOT EXISTS idx_reports_location
+  --  ON reports(latitude, longitude);
 
-CREATE INDEX IF NOT EXISTS idx_report_updates_report_id
-    ON report_updates(report_id);
+--CREATE INDEX IF NOT EXISTS idx_report_updates_report_id
+  --  ON report_updates(report_id);
