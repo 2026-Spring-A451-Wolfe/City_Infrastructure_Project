@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Filename: reports.sql                                                       *
  * Project: NOLA Infrastructure Reporting & Tracking System                    *
- * Description: Creates the reports table used to store infrastructure issue.  *
+ * Description: Creates the reports table used to store infrastructure issue   *
  *              reports submitted by users.                                    *
  * Author: Carter Roberts                                                      *
  * Date Last Modified: 03/03/2026                                              *
