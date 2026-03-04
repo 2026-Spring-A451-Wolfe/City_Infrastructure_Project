@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const progressPercentage = (currentStageIndex + 1) * 25;
             progressFill.style.width = progressPercentage + "%";
             
-            // Report status with colors & Used randmon colors for each stage, this could be changed later if needed
+            // Report status with colors  & Used randmon colors for each stage, this could be changed later if needed
             if (progressPercentage <= 25) {
                 progressFill.style.backgroundColor = "#ff6b6b"; // Red for submitted
             } else if (progressPercentage <= 50) {
