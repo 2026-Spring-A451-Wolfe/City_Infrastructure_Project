@@ -18,11 +18,18 @@ public class DatabaseUtil {
 
     static {
         dataSource = new PGSimpleDataSource();
-        dataSource.setServerNames(new String[]{"localhost"});
-        dataSource.setPortNumbers(new int[]{5432});
-        dataSource.setDatabaseName("nola_db");
-        dataSource.setUser("postgres");
-        dataSource.setPassword("");
+
+        String host     = System.getenv("DB_HOST")     != null ? System.getenv("DB_HOST")     : "localhost";
+        String port     = System.getenv("DB_PORT")     != null ? System.getenv("DB_PORT")     : "5432";
+        String dbName   = System.getenv("DB_NAME")     != null ? System.getenv("DB_NAME")     : "nola_db";
+        String user     = System.getenv("DB_USER")     != null ? System.getenv("DB_USER")     : "postgres";
+        String password = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : "nola2345";
+
+        dataSource.setServerNames(new String[]{host});
+        dataSource.setPortNumbers(new int[]{Integer.parseInt(port)});
+        dataSource.setDatabaseName(dbName);
+        dataSource.setUser(user);
+        dataSource.setPassword(password);
     }
 
     public static DataSource getDataSource() {
