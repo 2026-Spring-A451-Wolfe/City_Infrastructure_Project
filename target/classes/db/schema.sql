@@ -3,7 +3,7 @@
 -- Project: Infrastructure Reporting & Tracking System
 -- Description: Creates and defines all project databse tables.
 -- Author: Sophina Nichols
--- Date Last Modified: 03/03/2026
+-- Date Last Modified: 03/04/2026
 ------------------------------------------------------------------
 
 -- DEPARTMENTS --
@@ -43,7 +43,7 @@ CREATE TABLE users (
 
 -- REPORTS -- 
 -- Stores infrastructure reports submitted by users.
--- last_update_id foreign key is added after report_updates table is created 
+-- last_update_id foreign key's constraint is added after report_updates table is created 
 -- to avoid circular dependency.
 CREATE TABLE reports (
     id              BIGSERIAL PRIMARY KEY,
@@ -64,6 +64,7 @@ CREATE TABLE reports (
             CONSTRAINT reports_users_id_fk
                 REFERENCES users (id),
     created_at      TIMESTAMP NOT NULL DEFAULT NOW(),
+    last_update_id  BIGINT NOT NULL,
     updated_at      TIMESTAMP NOT NULL DEFAULT NOW(),
 );
 

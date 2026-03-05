@@ -4,7 +4,7 @@
  * Description: Creates the reports table used to store infrastructure issue   *
  *              reports submitted by users.                                    *
  * Author: Carter Roberts                                                      *
- * Date Last Modified: 03/03/2026                                              *
+ * Date Last Modified: 03/04/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 CREATE TABLE reports
@@ -29,5 +29,6 @@ CREATE TABLE reports
             CONSTRAINT reports_users_id_fk                  -- foreign key reference to identifier for user who filed report
                 REFERENCES users (id),
     created_at     TIMESTAMP NOT NULL DEFAULT NOW(),        -- timestamp for when user filed report
+    last_update_id BIGINT NOT NULL                          -- foreign key reference to identifier for last update to report
     updated_at     TIMESTAMP NOT NULL DEFAULT NOW()         -- timestamp for when report is updated
 );

@@ -4,7 +4,7 @@
  * Description: Creates the report_updates table used to track every status    *
  *              change made to a report, maintaining a full audit/history log. *
  * Author: Carter Roberts                                                      *
- * Date Last Modified: 03/03/2026                                              *
+ * Date Last Modified: 03/04/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 CREATE TABLE report_updates
@@ -30,6 +30,11 @@ CREATE TABLE report_updates
     comment         VARCHAR(255),                          -- optional (thus can be null) short comment admin added to report update
     updated_at      TIMESTAMP NOT NULL DEFAULT NOW()     -- Timestamp for when report was updated'
 );
+
+-- Add last_update_id foreign key to reports
+ALTER TABLE reports
+    ADD CONSTRAINT reports_report_updates_id_fk
+        FOREIGN KEY (last_update_id) REFERENCES report_updates(id);
 
 --Before--
 --create table report_updates
