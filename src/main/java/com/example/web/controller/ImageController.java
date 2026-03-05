@@ -1,13 +1,13 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Filename: UserService.java                                                *
+ * Filename: ImageController.java                                                *
  * Project: NOLA Infrastructure Reporting & Tracking System                    *
  * Description:            *
  * Author: Makayla Hairston                                                        *
  * Date Last Modified: 03/05/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package com.example.web.service;
+package com.example.web.controller;
 
-public class UserService {
+public class ImageController {
     
 }

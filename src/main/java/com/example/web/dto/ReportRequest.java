@@ -1,13 +1,13 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Filename: UserService.java                                                *
+ * Filename: ReportRequest.java                                              *
  * Project: NOLA Infrastructure Reporting & Tracking System                    *
- * Description:            *
- * Author: Makayla Hairston                                                        *
+ * Description:   *
+ * Author: Adin Hultin                                                         *
  * Date Last Modified: 03/05/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package com.example.web.service;
+package com.example.web.dto;
 
-public class UserService {
+public class ReportRequest {
     
 }
