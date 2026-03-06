@@ -8,10 +8,10 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 CREATE TABLE users (
-    id                  BIGSERIAL PRIMARY KEY,
-    username            VARCHAR(20) NOT NULL UNIQUE,
-    email_or_phone      VARCHAR(255) NOT NULL UNIQUE,
-    password_hash       VARCHAR(255) NOT NULL,
+    id                  integer PRIMARY KEY,
+    username            TEXT NOT NULL UNIQUE,
+    email_or_phone      TEXT NOT NULL UNIQUE,
+    password_hash       TEXT NOT NULL,
     role                VARCHAR(10) NOT NULL DEFAULT 'Citizen'
                                     CHECK (role IN ('Citizen', 'Admin')),
     is_active           BOOLEAN     NOT NULL DEFAULT TRUE,
