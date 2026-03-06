@@ -13,4 +13,6 @@ CONTAINS:
   Verify location data
 
 - docs: Requirements doc up to the point 3/2/2026; see Google Docs for live ver
+- docs: Added a document explaining how the Notion should be filed to be functional
+
 - test
