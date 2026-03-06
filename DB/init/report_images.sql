@@ -7,10 +7,10 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 CREATE TABLE report_images (
-    id          BIGSERIAL PRIMARY KEY,
-    report_id   BIGINT NOT NULL
-                REFERENCES reports(id) ON DELETE CASCADE,
-    image_url   VARCHAR(500),
-    file_path   VARCHAR(500),
+    id          integer PRIMARY KEY,
+    report_id   integer NOT NULL
+                REFERENCES reports(id)
+    image_url   TEXT,
+    file_path   TEXT,
     uploaded_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
