@@ -1,3 +1,12 @@
+ /**************************************************************************
+ * Filename: DbCheckServlet.java
+ * Project: Infrastructure Reporting & Tracking System
+ * Description: Provides an endpoint used to verify database connectivity and
+ *              confirm successful application-to-database communication.
+ * Author: Sophina Nichols
+ * Date Last Modified: 03/03/2026
+ **************************************************************************/
+
 package com.example.web;
 
 import jakarta.servlet.annotation.WebServlet;
