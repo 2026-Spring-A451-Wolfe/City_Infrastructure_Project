@@ -1,16 +1,11 @@
-
 /* Author: Ellie Carroll
 Purpose: Javascript functionality for the user registration page 
-Last Modified: 2/27/2026 */
+Last Modified: 3/9/2026 */
 
-/* Required: 
- - email
- - password
- - password confirmation
- - text field validation
- - signup button
- - display message
-
+/* Still Required: 
+- backend integration
+- backend password and email formatting verification
+- send login credentials to the backend for verification
 */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -37,17 +32,24 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-         // check email format
-         // what other checks do there need to be? does the email need to be functional?
+         // check email formatting
         const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
         if (!emailValue.match(emailPattern)) {
             message.textContent = "Please enter a valid email address.";
             return;
         }
 
-        // check password - how secure do we want the passwords to be? more password strength verification?
-        if (passwordValue.length < 8) {
-            message.textContent = "Password must be at least 8 characters long.";
+        // password strength verification
+        if (passwordValue.length < 10) {
+            message.textContent = "Password must be at least 10 characters long.";
+            return;
+        }
+
+        // password must include at least 2 numbers and 1 special character
+        const passwordPattern = /^(?=(?:.*\d){2,})(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\/+=~`]).+$/;
+
+        if (!passwordValue.match(passwordPattern)) {
+            message.textContent = "Password must include at least 2 numbers and 1 special character.";
             return;
         }
 
@@ -59,11 +61,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // successful registration
         message.style.color = "green";
-        message.textContent = "A confirmation email will be sent to the provided email address.";
 
+        // no longer sending confirmation email
+       // message.textContent = "A confirmation email will be sent to the provided email address.";
+
+       // send data to the backend, all checks must be preformed again on the backend
         console.log("User registered:", emailValue);
-
-        // send data to the backend,, how and where is it going?
     });
 
 });
