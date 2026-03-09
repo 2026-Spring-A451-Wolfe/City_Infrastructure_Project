@@ -12,6 +12,7 @@ added lins 31-39, 41-45, 66-67, 72-87, 102;
     <meta charset="UTF-8">
     <title>ADMIN</title>
     <link rel="stylesheet" href="Infrastructure-Reporter.css">
+    <link rel="stylesheet" href="admin-view.css">
 </head>
 
 <body>
@@ -27,8 +28,16 @@ added lins 31-39, 41-45, 66-67, 72-87, 102;
 
         <div class="top-bar__profile">Admin</div>
     </header>
+    <nav class="sub-nav">
+        <a href="dashboard-page.html">Dashboard</a>
+        <a href="report-tracking-page.html">Reports</a>
+        <a href="updates-page.html">Updates</a>
+        <a href="admin-view.html">Admin</a>
+    </nav>
 
-    <main class="admin-page"> <!--Page Contents-->
+    <div class="layout">
+        <div class="admin-layout">
+            <main class="admin-page"> <!--Page Contents-->
         <section class="admin-reports-list" aria-label="Report queue"> <!--list of reports on the left-->
             <h2 class="admin-panel-heading">Report Queue</h2>
             <p class="admin-panel-subtext">Select a report to review and update.</p>
@@ -101,9 +110,13 @@ added lins 31-39, 41-45, 66-67, 72-87, 102;
             <!--BIG UPDATE BUTTON-->
             <button class="admin-report-update">Save Updates</button>
         </section>
-    </main>
+            </main>
+        </div>
+    </div>
 
-    <footer class="main-footer"></footer>
+    <footer class="main-footer">
+        loyola university new orleans swe class project etc etc
+    </footer>
     <script src="admin-view.js"></script>
     <script src="shared-hamburger-menu.js"></script>
 </body>
