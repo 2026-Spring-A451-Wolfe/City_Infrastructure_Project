@@ -79,3 +79,8 @@ INSERT INTO reports (title, description, category, severity, latitude, longitude
     'Large Pothole on Canal Street',
     'Deep pothole approximately 2 feet wide causing damage to vehicles.',
     'Pothole', 'High', 29.9584, -90.0776, 'Open', 2);
+
+SELECT * FROM departments;
+SELECT * FROM department_contacts;
+SELECT * FROM users;
+SELECT * FROM reports;
