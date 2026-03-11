@@ -10,6 +10,36 @@
 
 package com.example.web.model;
 
+import java.time.LocalDateTime;
+
 public class ReportImage {
-    
+
+    private long id;
+    private long reportId;
+    private String imageUrl;
+    private String filePath;
+    private LocalDateTime uploadedAt;
+
+    public ReportImage() {}
+
+    public ReportImage(long reportId, String imageUrl, String filePath) {
+        this.reportId = reportId;
+        this.imageUrl = imageUrl;
+        this.filePath = filePath;
+    }
+
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+
+    public long getReportId() { return reportId; }
+    public void setReportId(long reportId) { this.reportId = reportId; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    public String getFilePath() { return filePath; }
+    public void setFilePath(String filePath) { this.filePath = filePath; }
+
+    public LocalDateTime getUploadedAt() { return uploadedAt; }
+    public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }
 }
