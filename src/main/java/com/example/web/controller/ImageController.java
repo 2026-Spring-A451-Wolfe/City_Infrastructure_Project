@@ -48,7 +48,8 @@ public class ImageController extends HttpServlet {
     @Override
     public void init() {
         ReportImageRepository reportImageRepository = new ReportImageRepository(DatabaseUtil.getDataSource());
-        imageStorageService = new ImageStorageService(reportImageRepository);
+        String uploadDirectory = getServletContext().getRealPath("/uploads"); // Webapp is being developed in Tomcat container so the store uploads will be in a folder here when running
+        imageStorageService = new ImageStorageService(reportImageRepository, uploadDirectory);
     }
 
     @Override
