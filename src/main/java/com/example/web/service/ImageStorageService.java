@@ -6,8 +6,8 @@
  *              image/webp and do not exceed 5MB. Renames each file to a UUID  *
  *              before saving to prevent collisions. Works alongside           *
  *              ReportImageRepository to persist image metadata.               *
- * Author: Makayla Hairston                                                    *
- * Date Last Modified: 03/05/2026                                              *
+ * Author: Jana El-Khatib                                                   *
+ * Date Last Modified: 03/13/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.service;

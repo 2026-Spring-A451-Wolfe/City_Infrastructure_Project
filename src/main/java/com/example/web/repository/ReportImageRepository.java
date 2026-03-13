@@ -6,8 +6,8 @@
  *              all images associated with a given report. All queries must use  * 
  *              PreparedStatement.                                               *
  *              Called only by ReportService or ImageStorageService.             *
- * Author: Carter Roberts                                                        *
- * Date Last Modified: 03/05/2026                                                *
+ * Author: Jana El-Khatib                                                       *
+ * Date Last Modified: 03/13/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.repository;
