@@ -4,8 +4,8 @@
  * Description: Represents an image attachment linked to a report, mapped to   *
  *              the report_images table. Supports both cloud-hosted URLs and   *
  *              local server file paths.                                       *
- * Author: Adin Hultin                                                         *
- * Date Last Modified: 03/05/2026                                              *
+ * Author: Jana El-Khatib                                                        *
+ * Date Last Modified: 03/13/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.model;
@@ -19,6 +19,10 @@ public class ReportImage {
     private String imageUrl;
     private String filePath;
     private LocalDateTime uploadedAt;
+    private String originalFilename;
+    private String storedFilename;
+    private String contentType;
+    private long fileSize;
 
     public ReportImage() {}
 
@@ -42,4 +46,16 @@ public class ReportImage {
 
     public LocalDateTime getUploadedAt() { return uploadedAt; }
     public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }
+
+    public String getOriginalFilename() { return originalFilename; }
+    public void setOriginalFilename(String originalFilename) { this.originalFilename = originalFilename; }
+
+    public String getStoredFilename() { return storedFilename; }
+    public void setStoredFilename(String storedFilename) { this.storedFilename = storedFilename; }
+
+    public String getContentType() { return contentType; }
+    public void setContentType(String contentType) { this.contentType = contentType; }
+
+    public long getFileSize() { return fileSize; }
+    public void setFileSize(long fileSize) { this.fileSize = fileSize; }
 }

@@ -5,8 +5,8 @@
  *              ImageStorageService for file validation and storage. Exposes   *
  *              POST /api/reports/{id}/images. Auth required (Citizen/Admin).  *
  *              Reference AuthController for structure and JWT validation.     *
- * Author: Makayla Hairston                                                    *
- * Date Last Modified: 03/05/2026                                              *
+ * Author: Jana El-Khatib                                                   *
+ * Date Last Modified: 03/13/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.controller;
@@ -48,7 +48,8 @@ public class ImageController extends HttpServlet {
     @Override
     public void init() {
         ReportImageRepository reportImageRepository = new ReportImageRepository(DatabaseUtil.getDataSource());
-        imageStorageService = new ImageStorageService(reportImageRepository);
+        String uploadDirectory = getServletContext().getRealPath("/uploads"); // Webapp is being developed in Tomcat container so the store uploads will be in a folder here when running
+        imageStorageService = new ImageStorageService(reportImageRepository, uploadDirectory);
     }
 
     @Override
