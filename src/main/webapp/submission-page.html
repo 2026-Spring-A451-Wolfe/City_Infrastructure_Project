@@ -1,13 +1,12 @@
 <!-- Sophina Nichols - submission page html draft -->
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <title>Submit Report</title>
     <link rel="stylesheet" href="submission-page.css">
 </head>
 <body>
-    <!-- Top Navigation Bar -->
     <header class="top-bar">
         <div class="top-bar__menu">
             <span></span>
@@ -17,40 +16,131 @@
 
         <h1 class="top-bar__title">Submit a Road Report</h1>
 
-        <div class="top-bar__profile">Profile</div>
+        <nav class="top-bar__profile">
+            <a href="index.html">Home</a> |
+            <a href="dashboard-page.html">Dashboard</a> |
+            <a href="report-tracking-page.html">Tracking</a>
+        </nav>
     </header>
 
-    <!-- Submission Hero -->
     <section class="submission-hero">
         <h2 class="submission-hero__title">Found a road issue? Report it below.</h2>
         <p class="submission-hero__subtitle">Help keep NOLA roads safe and smooth.</p>
     </section>
 
-    <!-- Submission Form -->
     <main class="submission-form">
+        <form id="reportForm">
 
-        <section class="report-section">
-            <h2 class="report-section__title">Upload Photo Evidence</h2>
-            <input type="file" class="report-section__input" placeholder="Choose a file...">
-        </section>
+            <section class="report-section">
+                <h2 class="report-section__title">Report Title</h2>
+                <input id="title" class="report-section__input" type="text" placeholder="Large pothole near intersection" required>
+            </section>
 
-        <section class="report-section">
-            <h2 class="report-section__title">Describe the Issue</h2>
-            <textarea class="report-section__textarea" rows="4" placeholder="Provide brief description of the issue..."></textarea>
-        </section>
+            <section class="report-section">
+                <h2 class="report-section__title">Describe the Issue</h2>
+                <textarea id="description" class="report-section__textarea" rows="4" placeholder="Provide a brief description..." required></textarea>
+            </section>
 
-        <section class="report-section">
-            <h2 class="report-section__title">Select Location on Map</h2>
-            <div class="report-section__map">(MAP)</div>
-        </section>
+            <section class="report-section">
+                <h2 class="report-section__title">Category</h2>
+                <select id="category" class="report-section__input" required>
+                    <option value="">Select category</option>
+                    <option value="Pothole">Pothole</option>
+                    <option value="Flooding">Flooding</option>
+                    <option value="Streetlight">Streetlight</option>
+                    <option value="Sign_Damage">Sign Damage</option>
+                    <option value="Road_Damage">Road Damage</option>
+                    <option value="Debris">Debris</option>
+                    <option value="Other">Other</option>
+                </select>
+            </section>
 
-        <section class="report-section">
-            <h2 class="report-section__title">Submit Report</h2>
-            <button class="report-section__submit">Submit Report</button>
-        </section>
+            <section class="report-section">
+                <h2 class="report-section__title">Severity</h2>
+                <select id="severity" class="report-section__input" required>
+                    <option value="">Select severity</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </select>
+            </section>
 
+            <section class="report-section">
+                <h2 class="report-section__title">Latitude</h2>
+                <input id="latitude" class="report-section__input" type="number" step="any" placeholder="29.9584" required>
+            </section>
+
+            <section class="report-section">
+                <h2 class="report-section__title">Longitude</h2>
+                <input id="longitude" class="report-section__input" type="number" step="any" placeholder="-90.0776" required>
+            </section>
+
+            <section class="report-section">
+                <h2 class="report-section__title">Upload Photo Evidence</h2>
+                <input type="file" class="report-section__input" disabled>
+                <p>Image upload can come later. First we’re making report submission work.</p>
+            </section>
+
+            <section class="report-section">
+                <h2 class="report-section__title">Submit Report</h2>
+                <button type="submit" class="report-section__submit">Submit Report</button>
+                <p id="resultMessage"></p>
+            </section>
+
+        </form>
     </main>
-    
 
+    <script>
+    const form = document.getElementById("reportForm");
+    const resultMessage = document.getElementById("resultMessage");
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const payload = {
+            title: document.getElementById("title").value,
+            description: document.getElementById("description").value,
+            category: document.getElementById("category").value,
+            severity: document.getElementById("severity").value,
+            latitude: parseFloat(document.getElementById("latitude").value),
+            longitude: parseFloat(document.getElementById("longitude").value)
+        };
+
+        try {
+            const response = await fetch("api/reports", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const text = await response.text();
+            let data = {};
+
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                data = { raw: text };
+            }
+
+            if (!response.ok) {
+                resultMessage.textContent =
+                    data.error || data.raw || "Failed to submit report.";
+                return;
+            }
+
+            resultMessage.textContent =
+                (data.message || "Report submitted successfully!") +
+                (data.id ? " Report ID: " + data.id : "");
+
+            form.reset();
+        } catch (error) {
+            resultMessage.textContent = "Request failed before server response.";
+            console.error(error);
+        }
+    });
+</script>
 </body>
 </html>

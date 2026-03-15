@@ -12,7 +12,12 @@ package com.example.web.repository;
 import com.example.web.model.User;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepository {
@@ -23,50 +28,102 @@ public class UserRepository {
         this.dataSource = dataSource;
     }
 
-    public Optional<User> findByEmailOrPhone(String emailophone) throws SQLException {
-        String sql = "SELECT * FROM users WHERE email_or_phone = ?";
+    public List<User> findAll() throws SQLException {
+        String sql = "SELECT * FROM users";
+        List<User> users = new ArrayList<>();
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                users.add(mapRow(rs));
+            }
+        }
+
+        return users;
+    }
+
+    public Optional<User> findById(Long id) throws SQLException {
+        String sql = "SELECT * FROM users WHERE id = ?";
+
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, emailophone);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) return Optional.of(mapRow(rs));
+
+            ps.setLong(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapRow(rs));
                 }
             }
-            return Optional.empty();
+        }
+
+        return Optional.empty();
+    }
+
+    public Optional<User> findByEmailOrPhone(String emailOrPhone) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email_or_phone = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, emailOrPhone);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapRow(rs));
+                }
+            }
+        }
+
+        return Optional.empty();
     }
 
     public Optional<User> findByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
+
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, username);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) return Optional.of(mapRow(rs));
+
+            ps.setString(1, username);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapRow(rs));
                 }
             }
+        }
+
         return Optional.empty();
     }
 
     public boolean existsByUsername(String username) throws SQLException {
         String sql = "SELECT 1 FROM users WHERE username = ?";
+
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, username);
-                try (ResultSet rs = ps.executeQuery()) {
-                    return rs.next();
-                }
+
+            ps.setString(1, username);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
             }
+        }
     }
 
-    public boolean existsByEmailOrPhone(String emailophone) throws SQLException {
+    public boolean existsByEmailOrPhone(String emailOrPhone) throws SQLException {
         String sql = "SELECT 1 FROM users WHERE email_or_phone = ?";
+
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, emailophone);
-                try (ResultSet rs = ps.executeQuery()) {
-                    return rs.next();
-                }
+
+            ps.setString(1, emailOrPhone);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
             }
+        }
     }
 
     public User save(User user) throws SQLException {
@@ -75,17 +132,23 @@ public class UserRepository {
             VALUES (?, ?, ?, ?, ?)
             RETURNING *
             """;
+
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getEmailOrPhone());
-            ps.setString(4, user.getPasswordHash());
-            ps.setString(5, user.getRole());
-            ps.setBoolean(6, user.isActive());
+            ps.setString(3, user.getPasswordHash());
+            ps.setString(4, user.getRole());
+            ps.setBoolean(5, user.isActive());
+
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return mapRow(rs);
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
             }
         }
+
         throw new SQLException("Failed to save user");
     }
 

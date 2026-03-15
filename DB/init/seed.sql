@@ -88,11 +88,11 @@ INSERT INTO reports (title, description, category, severity, latitude, longitude
 -- updated_at auto-populates via DEFAULT NOW().
 INSERT INTO report_updates (report_id, updater_id, old_status, new_status, department_id, comment) VALUES
 (
-    1, 1, 'Requested', 'In-Progress', 3, 'assigned to department of public works');
+    1, 1, 'Requested', 'In_Progress', 3, 'assigned to department of public works');
 
 -- Update last_update_id for only sample report now that the report update has been made
 UPDATE reports
-SET last_update_id = 1 WHERE report_id = 1;
+SET last_update_id = 1 WHERE id = 1;
 
 /* SAMPLE REPORT IMAGES */
 -- report_id = 1 references 'Large Pothole on Canal Street] above.

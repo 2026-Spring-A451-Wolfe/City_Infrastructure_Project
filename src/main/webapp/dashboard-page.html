@@ -6,7 +6,6 @@ Last Modified: 2/23/2026
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
@@ -14,7 +13,6 @@ Last Modified: 2/23/2026
 </head>
 
 <body>
-
     <!-- Top Navigation Bar -->
     <header class="top-bar">
         <div class="top-bar__menu">
@@ -22,47 +20,49 @@ Last Modified: 2/23/2026
             <span></span>
             <span></span>
         </div>
-        <h1 class="top-bar__title">Placeholder Title</h1>
-        <div class="top-bar__profile">Profile</div>
+        <h1 class="top-bar__title">NOLA Infrastructure Reporter</h1>
+        <div class="top-bar__profile">
+            <a href="login-page.html">Login</a>
+        </div>
     </header>
+
     <nav class="sub-nav">
         <a href="dashboard-page.html">Dashboard</a>
+        <a href="submission-page.html">Submit Report</a>
         <a href="report-tracking-page.html">Reports</a>
         <a href="updates-page.html">Updates</a>
+        <a href="admin-view.html">Admin</a>
     </nav>
 
     <div class="layout">
-
         <!-- DASHBOARD CONTENT -->
         <div class="dashboard-layout">
-
             <main class="dashboard">
-
                 <h2 class="dashboard__title">
                     Welcome to your Dashboard
                 </h2>
                 <div class="dashboard__divider"></div>
 
                 <div class="dashboard__cards">
-
                     <div class="dashboard-card">
                         <div class="dashboard-card__header">
                             Recent Reports
                         </div>
-                        <div class="dashboard-card__body"></div>
+                        <div class="dashboard-card__body" id="recentReports">
+                            Loading reports...
+                        </div>
                     </div>
 
                     <div class="dashboard-card">
                         <div class="dashboard-card__header">
                             Latest Updates
                         </div>
-                        <div class="dashboard-card__body"></div>
+                        <div class="dashboard-card__body" id="latestUpdates">
+                            Updates section coming next.
+                        </div>
                     </div>
-
                 </div>
-
             </main>
-
         </div>
 
         <!-- PROFILE DROPDOWN: Commenting it out until js is used, it will look annoying on the page
@@ -72,13 +72,76 @@ Last Modified: 2/23/2026
             <div>Recent Updates</div>
             <div>Dashboard</div>
         </div>
-    -->
+        -->
     </div>
 
     <!-- FOOTER -->
     <footer class="main-footer">
         loyola university new orleans swe class project etc etc
     </footer>
-</body>
 
+    <script>
+        async function loadReports() {
+            const recentReports = document.getElementById("recentReports");
+
+            if (!recentReports) {
+                console.error("recentReports element not found.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/api/reports");
+                const text = await response.text();
+
+                let reports;
+                try {
+                    reports = JSON.parse(text);
+                } catch (parseError) {
+                    console.error("Failed to parse JSON:", text);
+                    recentReports.textContent = "Reports came back, but JSON could not be read.";
+                    return;
+                }
+
+                console.log("Fetched reports:", reports);
+
+                if (!response.ok) {
+                    recentReports.textContent = "Failed to load reports.";
+                    return;
+                }
+
+                if (!Array.isArray(reports)) {
+                    recentReports.textContent = "API response was not a report list.";
+                    return;
+                }
+
+                if (reports.length === 0) {
+                    recentReports.textContent = "No reports found yet.";
+                    return;
+                }
+
+                const recentFive = reports.slice(0, 5);
+
+                recentReports.innerHTML = recentFive
+                    .map(
+                        (report) => `
+                    <div style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ccc;">
+                        <strong>${report.title ?? "Untitled Report"}</strong>
+                        <p>${report.description ?? "No description provided."}</p>
+                        <p><strong>Category:</strong> ${report.category ?? "N/A"}</p>
+                        <p><strong>Severity:</strong> ${report.severity ?? "N/A"}</p>
+                        <p><strong>Status:</strong> ${report.status ?? "N/A"}</p>
+                        <p><strong>Location:</strong> ${report.latitude ?? "?"}, ${report.longitude ?? "?"}</p>
+                    </div>
+                `
+                    )
+                    .join("");
+            } catch (error) {
+                console.error("Dashboard loadReports error:", error);
+                recentReports.textContent = "Error loading reports.";
+            }
+        }
+
+        loadReports();
+    </script>
+</body>
 </html>
