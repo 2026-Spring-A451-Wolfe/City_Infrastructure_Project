@@ -3,9 +3,10 @@
  * Project: NOLA Infrastructure Reporting & Tracking System                        *
  * Description: Inserts initial data into the database, including all New Orleans  *
  *              city departments and their contact information. Also includes      *
- *              commented-out sample users and reports for testing the map view.   *
+ *              commented-out sample users, reports, report updates & images for   *
+ *              testing the map view.                                              *
  * Author: Sophina Nichols                                                         *
- * Date Last Modified: 03/05/2026                                                  *
+ * Date Last Modified: 03/14/2026                                                  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* IMPORTANT!!!
@@ -80,7 +81,25 @@ INSERT INTO reports (title, description, category, severity, latitude, longitude
     'Deep pothole approximately 2 feet wide causing damage to vehicles.',
     'Pothole', 'High', 29.9584, -90.0776, 'Open', 2);
 
+/* SAMPLE REPORT UPDATES */
+-- report_id = 1 references 'Large Pothole on Canal Street' above.
+-- updater_id = 1 references admin_user above
+-- department_id = 3 references Department of Public Works above
+-- updated_at auto-populates via DEFAULT NOW().
+INSERT INTO report_updates (report_id, updater_id, old_status, new_status, department_id, comment) VALUES
+(
+    1, 1, 'Requested', 'In-Progress', 3, 'assigned to department of public works');
+
+/* SAMPLE REPORT IMAGES */
+-- report_id = 1 references 'Large Pothole on Canal Street] above.
+-- uploaded_at auto-populates via DEFAULT NOW().
+INSERT INTO report_images (report_id, image_url, file_path) VALUES
+(
+    1, 'https://cdn.abcteach.com/abcteach-content-free/docs/free_preview/c/chicken01lowres_p.png', 'fakepath/test');
+
 SELECT * FROM departments;
 SELECT * FROM department_contacts;
 SELECT * FROM users;
 SELECT * FROM reports;
+SELECT * FROM report_updates;
+SELECT * FROM report_images;
