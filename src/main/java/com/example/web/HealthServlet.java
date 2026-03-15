@@ -1,3 +1,12 @@
+ /**************************************************************************
+ * Filename: HealthServlet.java
+ * Project: Infrastructure Reporting & Tracking System
+ * Description: Provides a simple health check endpoint to verify that the
+ *              application is running and responsive.
+ * Author: Sophina Nichols
+ * Date Last Modified: 03/03/2026
+ **************************************************************************/
+
 package com.example.web;
 
 import jakarta.servlet.annotation.WebServlet;

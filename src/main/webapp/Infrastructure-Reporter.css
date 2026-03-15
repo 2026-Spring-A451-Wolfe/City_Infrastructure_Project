@@ -7,11 +7,17 @@
 /* ~ * ~ * ~ * ~ *
    GLOBAL RESET
  * ~ * ~ * ~ * ~ */
+/*
+
+2/27/2026 By Roi
+added lines 390-412, 425-438, 458-610, 613-661
+*/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif; /*The font can be changed later; group discussion?*/
+    font-family: 'Segoe UI', sans-serif;
+    /*The font can be changed later; group discussion?*/
 }
 
 body {
@@ -37,7 +43,8 @@ body {
     padding: 0 25px;
     position: sticky;
     top: 0;
-    border-bottom: 10px solid #6a5948;/* #504136*/
+    border-bottom: 10px solid #6a5948;
+    /* #504136*/
     z-index: 10;
 }
 
@@ -63,7 +70,7 @@ body {
     font-size: 0.8rem;
     font-weight: 600;
     color: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: 0.3s ease;
     z-index: 2;
@@ -135,13 +142,13 @@ body {
     padding: 25px;
     border-radius: 18px;
     border: 2px solid #504136;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     transition: 0.3s ease;
 }
 
 .report-section:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
 .report-section__title {
@@ -150,7 +157,7 @@ body {
     margin-bottom: 12px;
     padding-bottom: 8px;
     border-bottom: 1px solid #333333;
-    color:  #385064;
+    color: #385064;
 }
 
 .report-section__input,
@@ -162,12 +169,16 @@ body {
     border: 1px solid #3c7d7b;
     font-size: 0.95rem;
 }
+
 .report-section__textarea::placeholder,
 .report-section__input::placeholder {
     border-color: #3c7d7b;
-    color: #bbbbbb;   /* light grey */
-    font-style: italic; /* optional, makes it subtle */
-    opacity: 1;         /* ensures full visibility on all browsers */
+    color: #bbbbbb;
+    /* light grey */
+    font-style: italic;
+    /* optional, makes it subtle */
+    opacity: 1;
+    /* ensures full visibility on all browsers */
 }
 
 .report-section__map {
@@ -175,7 +186,7 @@ body {
     height: 180px;
     background-color: #b3e5fc;
     border-radius: 12px;
-    border: 2px solid  #3c7d7b;
+    border: 2px solid #3c7d7b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -189,7 +200,7 @@ body {
     padding: 12px;
     background-color: rgb(133, 190, 237);
     color: #385064;
-    border: 2px solid  #3c7d7b;
+    border: 2px solid #3c7d7b;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 530;
@@ -230,7 +241,7 @@ body {
     padding: 30px;
     border-radius: 20px;
     border: 2px solid #504136;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -239,7 +250,7 @@ body {
 
 .login-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
 .login-card__title {
@@ -247,7 +258,7 @@ body {
     font-weight: 600;
     padding-bottom: 8px;
     border-bottom: 1px solid #333333;
-    color:  #385064;
+    color: #385064;
     text-align: center;
 }
 
@@ -260,63 +271,63 @@ body {
 }
 
 .login-card__input::placeholder {
-  color: #bbbbbb;
-  font-style: italic;
+    color: #bbbbbb;
+    font-style: italic;
 }
 
 .login-card__button {
-  padding: 12px;
-  background-color: rgb(133, 190, 237);
-  color: #385064;
-  border: 2px solid #3c7d7b;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 550;
-  cursor: pointer;
-  transition: 0.3s ease;
+    padding: 12px;
+    background-color: rgb(133, 190, 237);
+    color: #385064;
+    border: 2px solid #3c7d7b;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 550;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
 .login-card__button:hover {
-  background-color: #b3e5fc;
-  transform: translateY(-2px);
+    background-color: #b3e5fc;
+    transform: translateY(-2px);
 }
 
 .login-card__footer {
-  text-align: center;
-  font-size: 0.9rem;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 .login-card__link {
-  color: #385064;
-  font-weight: 600;
-  text-decoration: none;
+    color: #385064;
+    font-weight: 600;
+    text-decoration: none;
 }
 
 .login-card__link:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* ~ * ~ * ~ * ~ * MAP SECTION * ~ * ~ * ~ * ~ */
 
 .map-section {
-  padding: 40px 20px;
-  text-align: center;
+    padding: 40px 20px;
+    text-align: center;
 }
 
 .map-section__title {
-  font-size: 1.8rem;
-  color: #385064;
-  margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #385064;
+    margin-bottom: 20px;
 }
 
 #map {
-  height: 500px;
-  width: 90%;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-radius: 20px;
-  border: 4px solid #504136;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    height: 500px;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 4px solid #504136;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -324,7 +335,7 @@ body {
 /* ~ * ~ * ~ * ~ *
  REGISTRATION PAGE
  * ~ * ~ * ~ * ~ */
-.registration-section{
+.registration-section {
     margin: 50px auto;
     display: flex;
     flex-direction: column;
@@ -332,9 +343,9 @@ body {
     gap: 5px;
     padding: 0 20px;
     align-items: center;
-} 
+}
 
-.registration-section__input{
+.registration-section__input {
     width: 75%;
     margin: 10px 0;
 
@@ -342,19 +353,21 @@ body {
     padding: 15px;
     border-radius: 15px;
     border: 3px solid #504136;
-    opacity: 0.8; /* most of the 'lighter' text boxes are at 80% opacity, using 
+    opacity: 0.8;
+    /* most of the 'lighter' text boxes are at 80% opacity, using 
                     the same basic palette from the rest of the website -- either force fake opacity
                     with hex code, or use RGBA to keep borders intact*/
     font-size: 16px;
     outline: none;
 }
 
-.registration-section__input::placeholder{ /*asking for user input*/
+.registration-section__input::placeholder {
+    /*asking for user input*/
     color: #091817;
 }
 
 /*sign-up button*/
-.registration-section__button{
+.registration-section__button {
     margin-top: 25px;
     padding: 20px;
     width: 90%;
@@ -368,13 +381,13 @@ body {
     transition: 0.3s ease;
 }
 
-.registration-section__button:hover{
+.registration-section__button:hover {
     background-color: #7fbebc;
     opacity: 0.8;
     transform: translateY(-2px);
 }
 
-.registration-section .confirmation{
+.registration-section .confirmation {
     margin-top: 20px;
     font-size: 14px;
     color: #333;
@@ -386,160 +399,344 @@ body {
     ADMIN PAGE
  * ~ * ~ * ~ * ~ */
 
-/*splits the page into the proper sections*/
-.admin-page{
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 40px;
+.admin-layout {
+    flex: 1;
+    padding: 60px 80px;
+}
 
-    max-width: 1200px;
+/*splits the page into the proper sections*/
+.admin-page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 32px;
+
+    max-width: 1400px;
     margin: 40px auto;
+    width: calc(100% - 60px);
+}
+
+.admin-panel-heading{
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #385064;
+    margin-bottom: 6px;
+}
+
+.admin-panel-subtext{
+    font-size: 0.92rem;
+    color: #5a6c7d;
+    margin-bottom: 14px;
+}
+
+/* Status badges for report items */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge--submitted {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-badge--under-review {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.status-badge--in-progress {
+    background: #f3e5f5;
+    color: #6a1b9a;
+}
+
+.status-badge--halted {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.status-badge--done {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge--rejected {
+    background: #fce4ec;
+    color: #ad1457;
 }
 
 /*Reports list - scrollable, clickable once JS implemented*/
-.admin-reports-list{
-    border: 3px solid #504136; 
-    width: 300px;
-    border-radius: 15px;
-    background: rgba(127, 190, 188, 0.5); /*#d9d9d9 at 40% opacity*/
-    padding: 10px;
-
+.admin-reports-list {
+    border: 2px solid #504136;
+    width: 320px;
+    border-radius: 12px;
+    background: rgba(127, 190, 188, 0.35);
+    padding: 16px;
     height: 600px;
     overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-.admin-reports-item{ /*Default status; unselected*/
-    padding: 10px;
-    margin-bottom: 10px;
+.admin-reports-list__empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #5a6c7d;
+    font-style: italic;
+}
 
-    background: rgba(217, 217, 217, 0.4);    
-    border: 3px solid #504136;
-    border-radius: 10px;
-
+.admin-reports-item {
+    /*Default status; unselected*/
+    padding: 14px;
+    margin-bottom: 12px;
+    background: white;
+    border: 2px solid #d0d4d9;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.admin-reports-item:hover,
-.admin-reports-item.selected{ /*highlights*/
-    background: #7fbebc;
+.admin-reports-item:hover {
+    border-color: #7fbebc;
+    box-shadow: 0 2px 6px rgba(127, 190, 188, 0.3);
+    transform: translateY(-1px);
+}
+
+.admin-reports-item.selected {
+    background: #e0f4f3;
+    border-color: #3c7d7b;
+    box-shadow: 0 2px 8px rgba(60, 125, 123, 0.25);
 }
 
 /*Report viewer - click on report, see detail*/
-.admin-view-report{
-    background: rgba(127, 190, 188, 0.5);
-    width: 650px;
-    border: 3px solid #504136;
-    border-radius: 20px;
+.admin-view-report {
+    background: white;
+    width: 100%;
+    border: 2px solid #d0d4d9;
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
 
-    padding: 30px;
+.admin-view-header {
+    border-bottom: 2px solid #e8e9eb;
+    padding-bottom: 16px;
+}
 
+.admin-view-report-column-left {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.admin-view-report-column-left{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.admin-view-report__top{
+.admin-view-report__top {
     display: grid;
     grid-template-columns: 120px 1fr;
     gap: 20px;
 }
 
-.admin-view-submitter{
+.admin-view-submitter {
     width: 100px;
     height: 100px;
-
-    background: #5a80a1;
-    opacity: 0.9;
+    background: linear-gradient(135deg, #5a80a1 0%, #4a6d8a 100%);
+    border: 3px solid #e0e3e7;
     border-radius: 50%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-.admin-view-picture{
+.admin-view-picture {
     width: 120px;
     height: 160px;
-    background: #d9d9d9;
-    border-radius: 15px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ebed 100%);
+    border: 2px solid #d0d4d9;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    text-align: center; /*placeholder until image integration*/
-    font-size: 14px;
-
+    text-align: center;
+    font-size: 0.85rem;
+    color: #7a8a99;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-view-picture:hover {
+    border-color: #7fbebc;
+    box-shadow: 0 2px 8px rgba(127, 190, 188, 0.2);
 }
 
 /*THIS IS A DRAFT FOR WHEN WE HAVE PICTURES!!!
 .admin-view-picture img{
-    width: 100%
-    height: 100%
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 8px;
 }*/
 
-.admin-view-map{ /*PLACEHOLDER, review when map is implemented*/
-    background: white;
-    border-radius: 15px;
+.admin-view-map {
+    /*PLACEHOLDER, review when map is implemented*/
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ebed 100%);
+    border: 2px solid #d0d4d9;
+    border-radius: 8px;
     height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #7a8a99;
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
-.admin-view-description{
-    border: 3px solid #504136;
-    border-radius: 15px;
+.admin-view-description {
+    border: 2px solid #e0e3e7;
+    border-radius: 8px;
     padding: 20px;
-    background: rgba(217, 217, 217, 0.4);
+    background: #f8f9fa;
     min-height: 100px;
 }
 
+.admin-view-description__title{
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #385064;
+    margin-bottom: 8px;
+}
+
+.admin-view-description__text{
+    line-height: 1.45;
+}
+
 /*status, department, budget menus*/
-.admin-report-buttons{
+.admin-report-buttons {
     display: flex;
-    margin: 0 auto;
+    margin: 0;
     align-items: center;
-    width: 50%;
+    width: 100%;
     justify-content: space-between;
+    gap: 16px;
+    border: 2px solid #e0e3e7;
+    border-radius: 8px;
+    padding: 16px 20px;
+    background: #f8f9fa;
+}
 
-    border: 3px solid #504136;
-    border-radius: 15px;
-    padding: 15px 20px;
-
-    background: rgba(217, 217, 217, 0.4);
+.admin-report-buttons label{
+    font-weight: 600;
+    color: #385064;
+    min-width: 145px;
 }
 
 .admin-report-buttons__input,
-.admin-report-buttons__select{
-    border-radius: 20px;
-    border: none;
-    padding: 8px 15px;
+.admin-report-buttons__select {
+    border-radius: 6px;
+    border: 1px solid #c1c7cd;
+    background: white;
+    padding: 10px 14px;
+    width: 100%;
+    max-width: 340px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
 }
 
-.admin-report-update{
+.admin-report-buttons__input:focus,
+.admin-report-buttons__select:focus {
+    outline: none;
+    border-color: #5a80a1;
+    box-shadow: 0 0 0 3px rgba(90, 128, 161, 0.1);
+}
+
+.admin-report-update {
     display: flex;
-    margin: 0 auto;
+    margin: 8px auto 0;
     align-items: center;
-    width: 80%;
-    margin-top: 20px;
-    padding: 20px;
-    font-size: 24px;
-    border-radius: 15px;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 8px;
     border: none;
-    background: white;
+    background: linear-gradient(135deg, #4a9d9c 0%, #3c7d7b 100%);
+    color: white;
     justify-content: center;
     cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(60, 125, 123, 0.3);
+}
+
+.admin-report-update:hover {
+    background: linear-gradient(135deg, #5ab3b2 0%, #4a9d9c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(60, 125, 123, 0.4);
+}
+
+.admin-report-update:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(60, 125, 123, 0.3);
+}
+
+@media (max-width: 1024px) {
+    .admin-page{
+        grid-template-columns: 1fr;
+        margin: 24px auto;
+    }
+
+    .admin-reports-list{
+        width: 100%;
+        height: 260px;
+    }
+
+    .admin-reports-list__empty{
+        min-height: 130px;
+    }
+
+    .admin-view-report{
+        padding: 20px;
+    }
+
+    .admin-view-report__top{
+        grid-template-columns: 1fr;
+    }
+
+    .admin-view-report-column-left{
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .admin-view-submitter,
+    .admin-view-picture{
+        width: 100%;
+        max-width: 220px;
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-report-buttons{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-report-buttons label{
+        min-width: 0;
+    }
+
+    .admin-report-buttons__input,
+    .admin-report-buttons__select{
+        max-width: none;
+    }
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -552,18 +749,29 @@ body {
     height: 40px;
     display: flex;
     align-items: center;
-    padding-left: 30px;
-    gap: 20px;
+    justify-content: center;
+    gap: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sub-nav a {
     color: white;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
 
 .sub-nav a:hover {
-    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.sub-nav a:active,
+.sub-nav a.active {
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -824,6 +1032,13 @@ body {
     margin: 10px 0 40px 0;
 }
 
+.update-card {
+    border: 2px solid #7fbebc;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: white;
+    margin-bottom: 25px;
+}
 
 /* ~ * ~ * ~ * ~ *
   FOOTER
