@@ -1,10 +1,10 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Filename: ReportUpdate.java                                                  *
- * Project: NOLA Infrastructure Reporting & Tracking System                     *
- * Description: Represents a status update made to a report, including the     *
- *              previous and new status, department, and user who updated it.  *
- * Author: Anderson Varela Suarez, capitalization tweaked by Madeline 3/16   *
- * Date Last Modified: 03/06/2026                                               *
+ * Filename: ReportUpdate.java                                                   *
+ * Project: NOLA Infrastructure Reporting & Tracking System                      *
+ * Description: Represents a status update made to a report, including the       *
+ *              previous and new status, department, and user who updated it.    *
+ * Author: Anderson Varela Suarez, capitalization tweaked by Madeline 3/16       *
+ * Date Last Modified: 03/06/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.model;
