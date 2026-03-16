@@ -62,10 +62,10 @@ public class AuthService {
             throw new Exception("Password must contain at least one special character");
         }
 
-        if (userRepository.findByUsername(request.getUsername()) != null) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new Exception("Username already taken");
         }
-        if (userRepository.findByEmailOrPhone(request.getEmailOrPhone()) != null) {
+        if (userRepository.findByEmailOrPhone(request.getEmailOrPhone()).isPresent()) {
             throw new Exception("Email/phone already registered");
         }
 
