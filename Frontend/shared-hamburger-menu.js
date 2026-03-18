@@ -215,7 +215,7 @@
 
             .app-nav-link:hover {
                 background: #7fbebc;
-                transform: translateY(-1px);
+                transform: translateY(-3px);
             }
 
             .app-nav-link.active {
