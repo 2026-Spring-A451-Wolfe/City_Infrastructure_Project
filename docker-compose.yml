@@ -39,6 +39,35 @@ services:
       timeout: 5s
       retries: 10
 
+<<<<<<< HEAD
+=======
+  tomcat:
+    build: .
+    container_name: tomcat-demo-web
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JDBC_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      FRONTEND_URL: http://localhost:3000
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+      start_period: 30s
+
+>>>>>>> 771596d (docker compose changes)
 volumes:
   db_data:
 
