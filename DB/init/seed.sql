@@ -118,7 +118,7 @@ SELECT
     -90.08 + (random() * 0.02),  -- random lng around New Orleans
     'Open',
     i  -- ties report to user with same ID
-FROM generate_series(21, 40) AS s(i);
+FROM generate_series(1, 20) AS s(i);
 
 /* SAMPLE REPORT UPDATES */
 -- report_id = 1 references 'Large Pothole on Canal Street' above.
