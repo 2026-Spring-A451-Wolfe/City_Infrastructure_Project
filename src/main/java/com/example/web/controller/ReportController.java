@@ -4,16 +4,20 @@
  * Description: Handles all HTTP requests and responses for report-related     *
  *              endpoints. Parses requests, delegates to ReportService, and    *
  *              writes JSON responses. No business logic belongs here.         *
- * Author: Adin Hultin
- * -Edited by Ethan DeLaRosa on 3/15                   *
- * Date Last Modified: 03/15/2026                                              *
+ * Author: Adin Hultin                                                         *         
+ * -Edited by Ethan DeLaRosa on 3/15                                           *    
+ * - Edited by Madeline Krehely 3/19                                           *           
+ * Date Last Modified: 03/19/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package com.example.web.controller;
 
 import com.example.web.dto.ReportRequest;
 import com.example.web.model.Report;
 import com.example.web.service.ReportService;
+import com.example.web.repository.ReportRepository;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +31,7 @@ import java.util.Map;
 @WebServlet("/api/reports")
 public class ReportController extends HttpServlet {
 
-    private final ReportService reportService = new ReportService();
+    private final ReportService reportService = new ReportService(new ReportRepository());
     private final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
 
     @Override

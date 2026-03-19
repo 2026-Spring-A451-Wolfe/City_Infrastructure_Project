@@ -6,7 +6,8 @@
  *              ReportRepository and other repositories, and maps results      *
  *              to DTOs before returning them to ReportController.             *
  * Author: Adin Hultin                                                         *
- * Date Last Modified: 03/05/2026                                              *
+ * Edited: Madeline Krehely 3/19
+ * Date Last Modified: 03/19/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package com.example.web.service;
 
@@ -19,7 +20,11 @@ import java.util.List;
 
 public class ReportService {
 
-    private final ReportRepository reportRepository = new ReportRepository();
+    private final ReportRepository reportRepository;
+
+    public ReportService(ReportRepository reportRepository) {
+        this.reportRepository = reportRepository;
+    }
 
     public Report createReport(ReportRequest request, long createdBy) throws SQLException {
         validate(request);
