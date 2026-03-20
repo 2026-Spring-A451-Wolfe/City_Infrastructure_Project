@@ -8,8 +8,16 @@
  *              and attaches the decoded user claims (userId, username, role) to the *
  *              request as attributes for downstream use by controllers. Public.     *
  *              routes are bypassed entirely. Must be registered in web.xml          *
- * Author: Sophina Nichols                                                           *
- * Date Last Modified: 03/05/2026                                                    *
+ * Author: Sophina Nichols   
+ * - Edited By: Jana El-Khatib 03/20/2026
+ *          - Changes: - Added @WebFilter("/api/*") annotation — filter was never 
+ *                      being registered  by Tomcat without it, meaning ALL requests *
+ *                      bypassed authentication                                      *
+ *                                                                                   *
+ *                     - Fixed userId extraction: changed claims.get("userId") to    *
+ *                      Long.parseLong(claims.getSubject()) to match how JwtUtil     *
+ *                      stores it                                                    *
+ * Date Last Modified: 03/20/2026                                                    *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.config;

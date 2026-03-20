@@ -7,7 +7,15 @@
  *              to DTOs before returning them to ReportController.             *
  * Author: Adin Hultin                                                         *
  * Edited: Madeline Krehely 3/19
- * Date Last Modified: 03/19/2026                                              *
+ * - Edited By: Jana El-Khatib 03/20/2026
+ *          - Changes: - Added ReportUpdateRepository as second 
+ *                      constructor argument            
+ *                     - Added getReportById(long id)                                            
+ *                     - Added getUpdatesByReportId(long reportId)                               
+ *                     - Added updateStatus(long reportId, long updaterId, 
+ *                          ReportUpdateDTO)  
+ *                     - Added deleteReport(long reportId)                                       
+ * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package com.example.web.service;
 

@@ -6,8 +6,12 @@
  *              change records and fetching the full update history for a      *
  *              given report. All queries must use PreparedStatement.          *
  *              Called only by ReportService.                                  *
- * Author: Madeline Krehely                                                    *
- * Date Last Modified: 03/16/2026                                              *
+ * Author: Madeline Krehely
+ * - Edited by: Jana El-Khatib 03/20/2026
+ *              - Changes: - Fixed department_id insert — now uses setNull when 
+ *                departmentID is 0 instead of inserting 0, which violated 
+ *                the foreign key constraint                                                
+ * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
  
 package com.example.web.repository;

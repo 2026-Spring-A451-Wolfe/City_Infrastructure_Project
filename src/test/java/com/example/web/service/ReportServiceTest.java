@@ -4,8 +4,15 @@
  * Description: JUnit 5 test suite for ReportService. Covers report submission,  *
  *              status updates, retrieval, filtering, and error handling.        *
  *              Mirror structure of DepartmentServiceTest for consistency.       *
- * Author: Madeline Krehely                                                      *
- * Date Last Modified: 03/19/2026                                                *
+ * Author: Madeline Krehely 
+ * - Edited by: Jana El-Khatib 03/20/2026
+ *              - Changes: - Added StubReportUpdateRepository — required 
+ *                         because ReportService constructor now takes two 
+ *                         arguments after ReportUpdateRepository was added 
+ *                         as a dependency
+ *                         - Updated setUp() to pass both stubs to 
+ *                         ReportService constructor                                                *
+ * Date Last Modified: 03/20/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.service;
@@ -15,7 +22,6 @@ import com.example.web.model.Report;
 import com.example.web.repository.ReportRepository;
 import com.example.web.model.ReportUpdate;
 import com.example.web.repository.ReportUpdateRepository;
-import com.example.web.util.DatabaseUtil;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,15 +4,20 @@
  * Description: Handles all direct JDBC database queries for the reports,      *
  *              report_updates, and report_images tables. No business logic    *
  *              here — only raw SQL operations. Called only by ReportService.  *
- * Author: Carter Roberts, edited by Ethan DeLaRosa on 3/15                   *
- * Date Last Modified: 03/15/2026                                             *
+ * Author: Carter Roberts, edited by Ethan DeLaRosa on 3/15                    *
+ * - Edited by: Jana El-Khatib 03/20/2026
+ *              - Changes: - Added findById(long id) — fetch single 
+ *                          report by ID                     
+ *                         - Added updateStatus(long reportId, String newStatus) 
+ *                              — update status     
+ *                         - Added delete(long id) — delete a report by ID                           
+ *                         - Removed unused ReportUpdate import     
+ * Date Last Modified: 03/20/2026                                             *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.repository;
 
 import com.example.web.model.Report;
-import com.example.web.model.ReportUpdate;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

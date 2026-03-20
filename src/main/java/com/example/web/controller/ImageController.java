@@ -5,8 +5,14 @@
  *              ImageStorageService for file validation and storage. Exposes   *
  *              POST /api/reports/{id}/images. Auth required (Citizen/Admin).  *
  *              Reference AuthController for structure and JWT validation.     *
- * Author: Jana El-Khatib                                                   *
- * Date Last Modified: 03/13/2026                                              *
+ * Author: Jana El-Khatib
+ *         - Changes: - Changed @WebServlet from "/api/reports/*" to 
+ *                    "/api/images/*" to resolve servlet conflict with 
+ *                     ReportController (both were mapped to "/api/reports/*" 
+ *                     which caused Tomcat to refuse to deploy the app)      
+ *                     - Updated path matching from "/\\d+/images" to "/\\d+" 
+ *                       to match new URL  *                                    
+ * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.controller;

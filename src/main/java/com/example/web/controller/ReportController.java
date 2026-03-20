@@ -6,8 +6,20 @@
  *              writes JSON responses. No business logic belongs here.         *
  * Author: Adin Hultin                                                         *         
  * -Edited by Ethan DeLaRosa on 3/15                                           *    
- * - Edited by Madeline Krehely 3/19                                           *           
- * Date Last Modified: 03/19/2026                                              *
+ * - Edited by Madeline Krehely 3/19   
+ * - Edited By: Jana El-Khatib 03/20/2026
+ *          - Changes: - Changed @WebServlet from "/api/reports/*" to support
+ *                      routing to /api/reports/{id} and 
+ *                      /api/reports{id}/updates
+ *                     - Added doGet routing for GET /api/reports/{id} and 
+ *                      /api/reports/{id}/updates 
+ *                     - Fixed hardcoded createdBy = 2L — now reads userId 
+ *                      from JWT filter attr  
+ *                     - Added doPut for PUT /api/reports/{id}/status 
+ *                          (Admin only)               
+ *                     - Added doDelete for DELETE /api/reports/{id} 
+ *                          (Admin only)                                                         *           
+ * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package com.example.web.controller;
 
@@ -174,7 +186,7 @@ public class ReportController extends HttpServlet {
     }
 
     // -------------------------------------------------------------------------
-    // PUT /api/reports/{id}/status — Admin only, update report status
+    // DELETE /api/reports/{id} - Admin only, delete a report
     // -------------------------------------------------------------------------
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
