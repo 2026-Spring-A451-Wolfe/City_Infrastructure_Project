@@ -6,8 +6,12 @@
  *              image/webp and do not exceed 5MB. Renames each file to a UUID  *
  *              before saving to prevent collisions. Works alongside           *
  *              ReportImageRepository to persist image metadata.               *
- * Author: Jana El-Khatib                                                   *
- * Date Last Modified: 03/13/2026                                              *
+ * Author: Jana El-Khatib
+ *         - Changes: - Added reportImage.setReportId(reportID) before 
+ *                    saving — reportId was being passed in 
+ *                    but never set on the object, causing it to insert 0 
+ *                    and violate the foreign key constraint on report_images  
+ * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.service;
@@ -65,6 +69,7 @@ public class ImageStorageService {
         }
 
         ReportImage reportImage = new ReportImage();
+        reportImage.setReportId(reportID);
         reportImage.setOriginalFilename(originalFilename);
         reportImage.setStoredFilename(storedFilename);
         reportImage.setContentType(contentType);
