@@ -91,14 +91,14 @@
         <url-pattern>/api/reports/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Images — /api/reports/{id}/images -->
+    <!-- Images — /api/images/{id} -->
     <servlet>
         <servlet-name>ImageController</servlet-name>
         <servlet-class>com.example.web.controller.ImageController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ImageController</servlet-name>
-        <url-pattern>/api/reports/*/images</url-pattern>
+        <url-pattern>/api/images/*</url-pattern>
     </servlet-mapping>
 
 

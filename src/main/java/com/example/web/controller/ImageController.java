@@ -5,8 +5,14 @@
  *              ImageStorageService for file validation and storage. Exposes   *
  *              POST /api/reports/{id}/images. Auth required (Citizen/Admin).  *
  *              Reference AuthController for structure and JWT validation.     *
- * Author: Jana El-Khatib                                                   *
- * Date Last Modified: 03/13/2026                                              *
+ * Author: Jana El-Khatib
+ *         - Changes: - Changed @WebServlet from "/api/reports/*" to 
+ *                    "/api/images/*" to resolve servlet conflict with 
+ *                     ReportController (both were mapped to "/api/reports/*" 
+ *                     which caused Tomcat to refuse to deploy the app)      
+ *                     - Updated path matching from "/\\d+/images" to "/\\d+" 
+ *                       to match new URL  *                                    
+ * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.controller;
@@ -38,7 +44,7 @@ import java.util.Map;
  * and writing JSON responses back to the client.
  */
 
-@WebServlet("/api/reports/*")
+@WebServlet("/api/images/*")
 @MultipartConfig
 public class ImageController extends HttpServlet {
 
@@ -57,7 +63,7 @@ public class ImageController extends HttpServlet {
         resp.setContentType("application/json");
         String path = req.getPathInfo();
 
-        if (path != null && path.matches("/\\d+/images")) {
+        if (path != null && path.matches("/\\d+")) {
             handleImageUpload(req, resp);
         } else {
             resp.setStatus(404);
@@ -93,6 +99,7 @@ public class ImageController extends HttpServlet {
             // Extract report ID from path: /{id}/images
             String path = req.getPathInfo();
             String[] pathParts = path.split("/");
+            
             Integer reportId = Integer.parseInt(pathParts[1]);
 
             // Read uploaded file part
