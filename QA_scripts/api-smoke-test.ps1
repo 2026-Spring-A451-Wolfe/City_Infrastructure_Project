@@ -257,8 +257,8 @@ try {
 
     Write-Step "Logging in"
     $loginBody = @{
-        email_or_phone = $LoginIdentity
-        password       = $LoginPassword
+        emailOrPhone = $LoginIdentity
+        password     = $LoginPassword
     }
     $login = Invoke-JsonRequest -Method POST -Uri "$BaseUrl/api/auth/login" -Headers $null -Body $loginBody
     if ($login.StatusCode -eq 200 -and $null -ne $login.Json -and -not [string]::IsNullOrWhiteSpace($login.Json.token)) {
