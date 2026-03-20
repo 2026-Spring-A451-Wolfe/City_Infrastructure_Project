@@ -64,10 +64,11 @@ INSERT INTO department_contacts (department_id, contact_type, label, value, is_e
 (5, 'phone',    'Emergency Flood Line',         '504-529-2837', TRUE);
 
 /* USERS */ 
--- Both accounts use password: Test@1234
+-- city_admin password: Admin!1234
+-- citizen_user password: Test@1234
 -- Hashed with BCrypt cost factor 12
 INSERT INTO users (username, email_or_phone, password_hash, role) VALUES
-('admin_user',   'admin@nola.gov',   '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa', 'Admin'),
+('city_admin',   'city_admin@nola.gov',   '$2a$12$l.MIMh7cL0mLqkXZU73ww.h68rFlV1cvm9N.iqtv7O8FY1Rf3vhVu', 'Admin'),
 ('citizen_user', 'citizen@nola.gov', '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa', 'Citizen');
 
 /* AUTO-GENERATED USERS */

@@ -60,7 +60,7 @@ public class ReportController extends HttpServlet {
 
             // TEMPORARY until login/session is wired up.
             // Use an existing seeded citizen account ID.
-            long createdBy = 2L;
+            long createdBy = (long) request.getAttribute("userID");
 
             Report savedReport = reportService.createReport(reportRequest, createdBy);
 
