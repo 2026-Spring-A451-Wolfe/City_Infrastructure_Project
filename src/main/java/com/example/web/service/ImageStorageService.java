@@ -65,6 +65,7 @@ public class ImageStorageService {
         }
 
         ReportImage reportImage = new ReportImage();
+        reportImage.setReportId(reportID);
         reportImage.setOriginalFilename(originalFilename);
         reportImage.setStoredFilename(storedFilename);
         reportImage.setContentType(contentType);

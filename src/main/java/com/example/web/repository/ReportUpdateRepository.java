@@ -41,7 +41,11 @@ public class ReportUpdateRepository {
             ps.setLong(2, update.getUpdaterID());
             ps.setString(3, update.getOldStatus());
             ps.setString(4, update.getNewStatus());
-            ps.setLong(5, update.getDepartmentID());
+            if (update.getDepartmentID() == 0) {
+                ps.setNull(5, java.sql.Types.BIGINT);
+            } else {
+                ps.setLong(5, update.getDepartmentID());
+            }
             ps.setString(6, update.getComment());
 
             int affectedRows = ps.executeUpdate();

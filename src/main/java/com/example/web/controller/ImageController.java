@@ -38,7 +38,7 @@ import java.util.Map;
  * and writing JSON responses back to the client.
  */
 
-@WebServlet("/api/reports/*")
+@WebServlet("/api/images/*")
 @MultipartConfig
 public class ImageController extends HttpServlet {
 
@@ -57,7 +57,7 @@ public class ImageController extends HttpServlet {
         resp.setContentType("application/json");
         String path = req.getPathInfo();
 
-        if (path != null && path.matches("/\\d+/images")) {
+        if (path != null && path.matches("/\\d+")) {
             handleImageUpload(req, resp);
         } else {
             resp.setStatus(404);
@@ -93,6 +93,7 @@ public class ImageController extends HttpServlet {
             // Extract report ID from path: /{id}/images
             String path = req.getPathInfo();
             String[] pathParts = path.split("/");
+            
             Integer reportId = Integer.parseInt(pathParts[1]);
 
             // Read uploaded file part

@@ -21,9 +21,11 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.util.Map;
 
+@WebFilter("/api/*")
 public class JwtAuthFilter implements Filter {
 
     private final ObjectMapper mapper = new ObjectMapper();

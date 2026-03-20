@@ -13,6 +13,9 @@ package com.example.web.service;
 import com.example.web.dto.ReportRequest;
 import com.example.web.model.Report;
 import com.example.web.repository.ReportRepository;
+import com.example.web.model.ReportUpdate;
+import com.example.web.repository.ReportUpdateRepository;
+import com.example.web.util.DatabaseUtil;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,11 +36,13 @@ class ReportServiceTest {
     private ReportService reportService;
 
     private StubReportRepository stubRepository;
+    private StubReportUpdateRepository stubUpdateRepository;
 
     @BeforeEach
     void setUp() {
         stubRepository = new StubReportRepository();
-        reportService = new ReportService(stubRepository);
+        stubUpdateRepository = new StubReportUpdateRepository();
+        reportService = new ReportService(stubRepository, stubUpdateRepository);
     }
 
     /* createReport() Tests */
@@ -82,7 +87,8 @@ class ReportServiceTest {
     @Test
     // Expected Outcome: should return list of reports
     void getAllReports_returnsReports() throws SQLException {
-        stubRepository.reports = List.of(buildReport(1L, "Pothole", "Description", "Pothole", "Low", 29.95, -90.07, 1L));
+        stubRepository.reports = List
+                .of(buildReport(1L, "Pothole", "Description", "Pothole", "Low", 29.95, -90.07, 1L));
         List<Report> result = reportService.getAllReports();
         assertEquals(1, result.size());
         assertEquals("Pothole", result.get(0).getTitle());
@@ -98,8 +104,8 @@ class ReportServiceTest {
     }
 
     // tester report
-    private Report buildReport(Long id, String title, String description, String category, 
-                              String severity, double latitude, double longitude, long createdBy) {
+    private Report buildReport(Long id, String title, String description, String category,
+            String severity, double latitude, double longitude, long createdBy) {
         Report report = new Report(title, description, category, severity, latitude, longitude, createdBy);
         report.setId(id);
         report.setStatus("Requested");
@@ -120,6 +126,20 @@ class ReportServiceTest {
         @Override
         public List<Report> findAll() {
             return reports;
+        }
+    }
+
+    // Stub of fake data
+    private static class StubReportUpdateRepository extends ReportUpdateRepository {
+        List<ReportUpdate> updates = Collections.emptyList();
+
+        public StubReportUpdateRepository() {
+            super(null); // null DataSource is safe since we override all methods
+        }
+
+        @Override
+        public List<ReportUpdate> findByReportID(long reportId) {
+            return updates;
         }
     }
 }

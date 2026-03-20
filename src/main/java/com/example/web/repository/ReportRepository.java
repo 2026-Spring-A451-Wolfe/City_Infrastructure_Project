@@ -11,6 +11,7 @@
 package com.example.web.repository;
 
 import com.example.web.model.Report;
+import com.example.web.model.ReportUpdate;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,14 +40,14 @@ public class ReportRepository {
 
     public Report save(Report report) throws SQLException {
         String sql = """
-            INSERT INTO reports
-            (title, description, category, severity, latitude, longitude, status, created_by)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            RETURNING id, created_at, updated_at
-            """;
+                INSERT INTO reports
+                (title, description, category, severity, latitude, longitude, status, created_by)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                RETURNING id, created_at, updated_at
+                """;
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, report.getTitle());
             stmt.setString(2, report.getDescription());
@@ -79,18 +80,18 @@ public class ReportRepository {
 
     public List<Report> findAll() throws SQLException {
         String sql = """
-            SELECT id, title, description, category, severity,
-                   latitude, longitude, status, created_by,
-                   created_at, last_update_id, updated_at
-            FROM reports
-            ORDER BY created_at DESC
-            """;
+                SELECT id, title, description, category, severity,
+                       latitude, longitude, status, created_by,
+                       created_at, last_update_id, updated_at
+                FROM reports
+                ORDER BY created_at DESC
+                """;
 
         List<Report> reports = new ArrayList<>();
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Report report = new Report();
@@ -124,5 +125,74 @@ public class ReportRepository {
         }
 
         return reports;
+    }
+
+    public Report findById(long id) throws SQLException {
+        String sql = """
+                SELECT id, title, description, category, severity,
+                       latitude, longitude, status, created_by,
+                       created_at, last_update_id, updated_at
+                FROM reports
+                WHERE id = ?
+                """;
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Report report = new Report();
+                    report.setId(rs.getLong("id"));
+                    report.setTitle(rs.getString("title"));
+                    report.setDescription(rs.getString("description"));
+                    report.setCategory(rs.getString("category"));
+                    report.setSeverity(rs.getString("severity"));
+                    report.setLatitude(rs.getDouble("latitude"));
+                    report.setLongitude(rs.getDouble("longitude"));
+                    report.setStatus(rs.getString("status"));
+                    report.setCreatedBy(rs.getLong("created_by"));
+
+                    Timestamp createdAt = rs.getTimestamp("created_at");
+                    if (createdAt != null)
+                        report.setCreatedAt(createdAt.toLocalDateTime());
+
+                    long lastUpdateId = rs.getLong("last_update_id");
+                    if (!rs.wasNull())
+                        report.setLastUpdateId(lastUpdateId);
+
+                    Timestamp updatedAt = rs.getTimestamp("updated_at");
+                    if (updatedAt != null)
+                        report.setUpdatedAt(updatedAt.toLocalDateTime());
+
+                    return report;
+                }
+            }
+        }
+        return null; // no report found with that id
+    }
+
+    public void updateStatus(long reportId, String newStatus) throws SQLException {
+        String sql = """
+                UPDATE reports
+                SET status = ?, updated_at = NOW()
+                WHERE id = ?
+                """;
+
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newStatus);
+            stmt.setLong(2, reportId);
+            stmt.executeUpdate();
+        }
+    }
+
+    public void delete(long id) throws SQLException {
+        String sql = "DELETE FROM reports WHERE id = ?";
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
     }
 }
