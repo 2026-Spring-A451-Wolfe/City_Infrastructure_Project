@@ -349,7 +349,7 @@ body {
     width: 75%;
     margin: 10px 0;
 
-    background: #edece5;
+    background: #ffffff;
     padding: 15px;
     border-radius: 15px;
     border: 3px solid #504136;
@@ -372,8 +372,8 @@ body {
     padding: 20px;
     width: 90%;
 
-    background: #5a80a1;
-    border: 2px solid #504136;
+    background: #b3e5fc;
+    border: 3px solid #504136;
     border-radius: 25px;
 
     font-size: 30px;
@@ -382,7 +382,7 @@ body {
 }
 
 .registration-section__button:hover {
-    background-color: #7fbebc;
+    background-color: #6b9cff;
     opacity: 0.8;
     transform: translateY(-2px);
 }
@@ -390,7 +390,7 @@ body {
 .registration-section .confirmation {
     margin-top: 20px;
     font-size: 14px;
-    color: #333;
+    color: #2b2b2b;
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -424,7 +424,7 @@ body {
 
 .admin-panel-subtext{
     font-size: 0.92rem;
-    color: #5a6c7d;
+    color: #385064;
     margin-bottom: 14px;
 }
 
