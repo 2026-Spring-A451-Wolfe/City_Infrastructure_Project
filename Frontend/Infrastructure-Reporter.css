@@ -22,7 +22,7 @@ added lines 390-412, 425-438, 458-610, 613-661
 
 body {
     background-color: #eae4cc;
-    color: #333;
+    color: #2b2b2b;
 
     display: flex;
     flex-direction: column;
@@ -54,7 +54,7 @@ body {
     transform: translateX(-50%);
     font-size: 1.5rem;
     font-weight: 400;
-    color: #aad4f6;
+    color: #b3e5fc;
     z-index: 1;
 }
 
@@ -104,10 +104,10 @@ body {
    SUBMISSION HERO
  * ~ * ~ * ~ * ~ */
 .submission-hero {
-    background-color: #9cbfcf;
+    background-color: #7fbebc;
     padding: 30px 10px;
     text-align: center;
-    border-bottom: 2px solid #cfd8dc;
+    /*border-bottom: 2px solid #cfd8dc; I dont think we need this? It makes it look like theres a gap between the hero and the bottom. -Kelly*/
 }
 
 .submission-hero__title {
@@ -120,7 +120,7 @@ body {
 .submission-hero__subtitle {
     font-size: 1rem;
     font-weight: 300;
-    color: #333333;
+    color: #2b2b2b;
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -138,10 +138,10 @@ body {
 }
 
 .report-section {
-    background: #7fbebc;
+    background: #edece5;
     padding: 25px;
     border-radius: 18px;
-    border: 2px solid #504136;
+    border: 3px solid #504136;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     transition: 0.3s ease;
 }
@@ -156,7 +156,7 @@ body {
     font-weight: 525;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid #2b2b2b;
     color: #385064;
 }
 
@@ -165,8 +165,8 @@ body {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
-    background-color: #e8e7e0;
-    border: 1px solid #3c7d7b;
+    background-color: #ffffff;
+    border: 1px solid #385064;
     font-size: 0.95rem;
 }
 
@@ -186,21 +186,21 @@ body {
     height: 180px;
     background-color: #b3e5fc;
     border-radius: 12px;
-    border: 2px solid #3c7d7b;
+    border: 2px solid #385064;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    color: #0277bd;
+    color: #385064;
     transition: 0.3s ease;
 }
 
 .report-section__submit {
     width: 100%;
     padding: 12px;
-    background-color: rgb(133, 190, 237);
+    background-color: #b3e5fc;
     color: #385064;
-    border: 2px solid #3c7d7b;
+    border: 2px solid #385064;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 530;
@@ -209,7 +209,7 @@ body {
 }
 
 .report-section__submit:hover {
-    background-color: #b3e5fc;
+    background-color: #6b9cff;
     transform: translateY(-2px);
 }
 
@@ -234,13 +234,13 @@ body {
    LOGIN CARD
  * ~ * ~ * ~ * ~ */
 .login-card {
-    background: #75a0c4;
+    background: #edece5;
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
     padding: 30px;
     border-radius: 20px;
-    border: 2px solid #504136;
+    border: 3px solid #504136;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
@@ -265,8 +265,8 @@ body {
 .login-card__input {
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid #3c7d7b;
-    background-color: #e8e7e0;
+    border: 1px solid #385064;
+    background-color: #ffffff;
     font-size: 0.95rem;
 }
 
@@ -277,9 +277,9 @@ body {
 
 .login-card__button {
     padding: 12px;
-    background-color: rgb(133, 190, 237);
+    background-color: #b3e5fc;
     color: #385064;
-    border: 2px solid #3c7d7b;
+    border: 2px solid #385064;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 550;
@@ -288,7 +288,7 @@ body {
 }
 
 .login-card__button:hover {
-    background-color: #b3e5fc;
+    background-color: #6b9cff;
     transform: translateY(-2px);
 }
 
@@ -349,7 +349,7 @@ body {
     width: 75%;
     margin: 10px 0;
 
-    background: #7fbebc;
+    background: #edece5;
     padding: 15px;
     border-radius: 15px;
     border: 3px solid #504136;
@@ -746,9 +746,9 @@ body {
  * ~ * ~ * ~ * ~ */
 .sub-nav {
     background-color: #6a5948;
-    height: 40px;
+    height: 45px;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     gap: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -766,7 +766,7 @@ body {
 
 .sub-nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .sub-nav a:active,
@@ -814,7 +814,7 @@ body {
 
 .dashboard-card {
     width: 320px;
-    border: 2px solid #7fbebc;
+    border: 3px solid #52979d;
     border-radius: 12px;
     overflow: hidden;
     background-color: #d9d9d9;
@@ -824,13 +824,13 @@ body {
     padding: 12px;
     text-align: center;
     font-size: 1.2rem;
-    background-color: #d9d9d9;
-    border-bottom: 2px solid #7fbebc;
+    background-color: #b2b2b2;
+    border-bottom: 3px solid #52979d;
 }
 
 .dashboard-card__body {
     height: 250px;
-    background-color: #d9d9d9;
+    background-color: #ededed;
 }
 
 /* ~ * ~ * ~ * ~ *

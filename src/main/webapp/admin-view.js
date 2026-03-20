@@ -285,7 +285,7 @@
     function setQueueStatus(message, isError) {
         dom.queueEmpty.textContent = message;
         dom.queueEmpty.style.display = "flex";
-        dom.queueEmpty.style.color = isError ? "#7a1f1f" : "#385064";
+        dom.queueEmpty.style.color = isError ? "#a61010" : "#385064"; //Made error color brighter. I could barely tell it apart from regular text. -Kelly
     }
 
     function showMessage(message, isError) {
@@ -297,7 +297,7 @@
 
         pageMessage.textContent = message;
         pageMessage.style.display = "block";
-        pageMessage.style.color = isError ? "#7a1f1f" : "#385064";
+        pageMessage.style.color = isError ? "#a61010" : "#385064";
     }
 
     function getReportId(report) {
