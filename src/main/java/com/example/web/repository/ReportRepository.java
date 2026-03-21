@@ -11,7 +11,9 @@
  *                         - Added updateStatus(long reportId, String newStatus) 
  *                              — update status     
  *                         - Added delete(long id) — delete a report by ID                           
- *                         - Removed unused ReportUpdate import     
+ *                         - Removed unused ReportUpdate import
+ *                         - Added a findByUserId(long userId) - associated the 
+ *                              user with their report     
  * Date Last Modified: 03/20/2026                                             *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -199,5 +201,53 @@ public class ReportRepository {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         }
+    }
+
+    public List<Report> findByUserId(long userId) throws SQLException {
+        String sql = """
+                SELECT id, title, description, category, severity,
+                       latitude, longitude, status, created_by,
+                       created_at, last_update_id, updated_at
+                FROM reports
+                WHERE id = ?
+                ORDER BY created_at DESC
+                """;
+
+        List<Report> reports = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Report report = new Report();
+                    report.setId(rs.getLong("id"));
+                    report.setTitle(rs.getString("title"));
+                    report.setDescription(rs.getString("description"));
+                    report.setCategory(rs.getString("category"));
+                    report.setSeverity(rs.getString("severity"));
+                    report.setLatitude(rs.getDouble("latitude"));
+                    report.setLongitude(rs.getDouble("longitude"));
+                    report.setStatus(rs.getString("status"));
+                    report.setCreatedBy(rs.getLong("created_by"));
+
+                    Timestamp createdAt = rs.getTimestamp("created_at");
+                    if (createdAt != null)
+                        report.setCreatedAt(createdAt.toLocalDateTime());
+
+                    long lastUpdateId = rs.getLong("last_update_id");
+                    if (!rs.wasNull())
+                        report.setLastUpdateId(lastUpdateId);
+
+                    Timestamp updatedAt = rs.getTimestamp("updated_at");
+                    if (updatedAt != null)
+                        report.setUpdatedAt(updatedAt.toLocalDateTime());
+
+                    reports.add(report);
+                }
+            }
+        }
+        return reports;
     }
 }

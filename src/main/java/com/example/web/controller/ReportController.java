@@ -18,7 +18,9 @@
  *                     - Added doPut for PUT /api/reports/{id}/status 
  *                          (Admin only)               
  *                     - Added doDelete for DELETE /api/reports/{id} 
- *                          (Admin only)                                                         *           
+ *                          (Admin only) 
+ *                      - Added a GET /api/reports/me will return the reports
+ *                          of the user         
  * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package com.example.web.controller;
@@ -91,6 +93,12 @@ public class ReportController extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_OK);
                 objectMapper.writeValue(response.getWriter(), updates);
 
+            } else if (pathInfo.equals("/my")) {
+                // GET /api/reports/my - returns current user's reports
+                long userId = (long) request.getAttribute("userId");
+                List<Report> reports = reportService.getMyReports((userId));
+                response.setStatus(HttpServletResponse.SC_OK);
+                objectMapper.writeValue(response.getWriter(), reports);
             } else {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 objectMapper.writeValue(response.getWriter(),

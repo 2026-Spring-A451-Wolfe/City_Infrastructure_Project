@@ -14,7 +14,8 @@
  *                     - Added getUpdatesByReportId(long reportId)                               
  *                     - Added updateStatus(long reportId, long updaterId, 
  *                          ReportUpdateDTO)  
- *                     - Added deleteReport(long reportId)                                       
+ *                     - Added deleteReport(long reportId)
+ *                     - Added getMyReports(long userId)                                       
  * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package com.example.web.service;
@@ -115,6 +116,10 @@ public class ReportService {
             throw new IllegalArgumentException("Report not found.");
         }
         reportRepository.delete(reportId);
+    }
+
+    public List<Report> getMyReports(long userId) throws SQLException {
+        return reportRepository.findByUserId(userId);
     }
 
     private void validate(ReportRequest request) {
