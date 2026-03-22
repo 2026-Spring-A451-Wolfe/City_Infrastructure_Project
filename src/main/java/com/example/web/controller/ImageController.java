@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /* ImageController handles HTTP requests to upload report images.
- * Endpoint:    POST /api/reports/{id}/images
+ * Endpoint:    POST /api/images/*
  * Auth:        Required (Citizen/Admin)
  * This controller is responsible only for reading requests,
  * validating JWT access, passing image data to ImageStorageService,
