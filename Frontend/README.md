@@ -17,7 +17,7 @@ The webpages are hosted using nginx inside the frontend container.
 The frontend container uses a Dockerfile based on the nginx:alpine image. nginx serves the static frontend files from /usr/share/nginx/html. This is appropriate because the frontend is made up of static assets and does not need to execute Java code. Tomcat remains the application server for the Java backend, while nginx serves as the frontend web server and reverse proxy.
 
 - Opening `/` redirects to `login-page.html`
-- `/api`, `/health`, and `/db-check` are proxied to the backend `tomcat` service
+- `/api`, and `/db-check` are proxied to the backend API `back-api` service, while `/health` is proxied to the main back `tomcat` service. 
 
 ## Frontend Directory Structure
 
@@ -49,7 +49,8 @@ Run the full project: docker compose up --build
 
 Access points: 
 - Frontend: http://localhost:3000
-- Backend direct: http://localhost:8080
+- Backend direct: http://localhost:5050
+- Tomcat direct: http://localhost:8080
 
 
 ## Run
