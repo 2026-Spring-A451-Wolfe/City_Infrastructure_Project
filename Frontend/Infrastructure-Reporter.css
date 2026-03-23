@@ -257,7 +257,7 @@ body {
     font-size: 1.3rem;
     font-weight: 600;
     padding-bottom: 8px;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid #2b2b2b;
     color: #385064;
     text-align: center;
 }
@@ -363,7 +363,8 @@ body {
 
 .registration-section__input::placeholder {
     /*asking for user input*/
-    color: #091817;
+    color: #bbbbbb;
+    font-style: italic;
 }
 
 /*sign-up button*/
@@ -372,8 +373,9 @@ body {
     padding: 20px;
     width: 90%;
 
-    background: #5a80a1;
-    border: 2px solid #504136;
+    background-color: #b3e5fc;
+    color: #385064;
+    border: 2px solid #385064;
     border-radius: 25px;
 
     font-size: 30px;
@@ -382,15 +384,14 @@ body {
 }
 
 .registration-section__button:hover {
-    background-color: #7fbebc;
-    opacity: 0.8;
+    background-color: #6b9cff;
     transform: translateY(-2px);
 }
 
 .registration-section .confirmation {
     margin-top: 20px;
     font-size: 14px;
-    color: #333;
+    color: #2b2b2b;
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -526,7 +527,7 @@ body {
 }
 
 .admin-view-header {
-    border-bottom: 2px solid #e8e9eb;
+    border-bottom: 2px solid #e0e3e7;
     padding-bottom: 16px;
 }
 
@@ -605,7 +606,7 @@ body {
     border: 2px solid #e0e3e7;
     border-radius: 8px;
     padding: 20px;
-    background: #f8f9fa;
+    background: #f5f7fa;
     min-height: 100px;
 }
 
@@ -631,7 +632,7 @@ body {
     border: 2px solid #e0e3e7;
     border-radius: 8px;
     padding: 16px 20px;
-    background: #f8f9fa;
+    background: #f5f7fa;
 }
 
 .admin-report-buttons label{
@@ -643,7 +644,7 @@ body {
 .admin-report-buttons__input,
 .admin-report-buttons__select {
     border-radius: 6px;
-    border: 1px solid #c1c7cd;
+    border: 1px solid #385064;
     background: white;
     padding: 10px 14px;
     width: 100%;
@@ -814,7 +815,7 @@ body {
 
 .dashboard-card {
     width: 320px;
-    border: 3px solid #52979d;
+    border: 3px solid #7fbebc;
     border-radius: 12px;
     overflow: hidden;
     background-color: #d9d9d9;
@@ -825,12 +826,12 @@ body {
     text-align: center;
     font-size: 1.2rem;
     background-color: #b2b2b2;
-    border-bottom: 3px solid #52979d;
+    border-bottom: 3px solid #7fbebc;
 }
 
 .dashboard-card__body {
     height: 250px;
-    background-color: #ededed;
+    background-color: #edece5;
 }
 
 /* ~ * ~ * ~ * ~ *
@@ -883,7 +884,7 @@ body {
 .sidebar__profile-circle {
     width: 100px;
     height: 100px;
-    background-color: #78a0c3;
+    background-color: #759dbf;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1045,7 +1046,7 @@ body {
  * ~ * ~ * ~ * ~ */
 .main-footer {
     background-color: #5a80a1;
-    border-top: 10px solid #705252;
+    border-top: 10px solid #6a5948;
     color: white;
     text-align: center;
     padding: 20px;
