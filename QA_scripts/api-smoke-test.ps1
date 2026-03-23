@@ -5,8 +5,8 @@ param(
     [switch]$NoCache,
     [switch]$FreshDb,
     [switch]$TearDown,
-    [string]$LoginIdentity = "citizen@nola.gov",
-    [string]$LoginPassword = "Test@1234",
+    [string]$LoginIdentity = "citizen_user@nola.gov",
+    [string]$LoginPassword = "Citizen!1234",
     [int]$ReportCount = 1,
     [int]$ImagesPerReport = 1,
     [string]$ReportTitlePrefix = "Smoke Test Report",
@@ -262,7 +262,7 @@ try {
     }
     $login = Invoke-JsonRequest -Method POST -Uri "$BaseUrl/api/auth/login" -Headers $null -Body $loginBody
     if ($login.StatusCode -eq 200 -and $null -ne $login.Json -and -not [string]::IsNullOrWhiteSpace($login.Json.token)) {
-        $token = $login.Json.token
+        $token = $login.Json.token.Trim()
         $authHeader = @{ Authorization = "Bearer $token" }
         Add-TestResult -Name "POST /api/auth/login" -Status "PASS" -Details "Login succeeded and JWT was returned"
     }
@@ -306,7 +306,7 @@ try {
             Add-TestResult -Name $reportTestName -Status "SKIP" -Details "Skipped because login did not return a valid token"
 
             for ($i = 1; $i -le $ImagesPerReport; $i++) {
-                Add-TestResult -Name "POST /api/reports/{id}/images [$r/$ReportCount image $i/$ImagesPerReport]" -Status "SKIP" -Details "Skipped because report was not created"
+                Add-TestResult -Name "POST /api/images/{reportId} [$r/$ReportCount image $i/$ImagesPerReport]" -Status "SKIP" -Details "Skipped because report was not created"
             }
             continue
         }
@@ -339,7 +339,7 @@ try {
         }
 
         for ($i = 1; $i -le $ImagesPerReport; $i++) {
-            $imageTestName = "POST /api/reports/{id}/images [$r/$ReportCount image $i/$ImagesPerReport]"
+            $imageTestName = "POST /api/images/{reportId} [$r/$ReportCount image $i/$ImagesPerReport]"
 
             if ($null -eq $reportId) {
                 Add-TestResult -Name $imageTestName -Status "SKIP" -Details "Skipped because report creation failed"
@@ -351,7 +351,7 @@ try {
             $pngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9WmB2XwAAAAASUVORK5CYII="
             [System.IO.File]::WriteAllBytes($tempPng, [System.Convert]::FromBase64String($pngBase64))
 
-            $uploadRaw = curl.exe -sS -X POST "$BaseUrl/api/reports/$reportId/images" -H "Authorization: Bearer $token" -F "image=@$tempPng"
+            $uploadRaw = curl.exe -sS -X POST "$BaseUrl/api/images/$reportId" -H "Authorization: Bearer $token" -F "image=@$tempPng"
             if ([string]::IsNullOrWhiteSpace($uploadRaw)) {
                 Add-TestResult -Name $imageTestName -Status "FAIL" -Details "Empty response from image upload"
                 Remove-Item -Path $tempPng -Force -ErrorAction SilentlyContinue
