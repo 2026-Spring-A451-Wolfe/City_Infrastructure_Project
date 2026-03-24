@@ -1,0 +1,9 @@
+# Backend API & Database Containers
+
+The dockerfile in this folder is connected to the container responsible for linking together the frontend services & the other container's content, the PostgreSQL database & data. 
+
+## API
+The Backend API dockerfile is the exact same structure as that of the primary "tomcat" container used in the main directory, though since the dockerfile has to be in a folder to be recognized as different than the main tomcat dockerfile, it has to reference a parent directory, which is why the code in the dockerfile & docker-compose is slightly different. The Backend API container must rely upon the .env file in the parent directory to connect to the database in the database container, and must expose port 8080 and transfer to URL as port 5050; this means the URL to access is 5050. The backend API container is dependent upon the health of the database container. The backend API is referenced to connect frontend through the proxy passes in the nginx.conf file in the Frontend directory; db_check and api servlets referred to in the Frontend are proxy-passed to the API container, which can properly connect to the database where Frontend cannot.
+
+## DB
+The database container is fully instantiated & handled through the docker-compose.yml in the parent directory, where a volume "db_data" is created and maintained to persistently store the database contents, and ./DB/init:/docker-entrypoint-initdb.d is used as a volume mount command to use the files in the DB/init folder of the repository to instantiate and generate all the SQL in those files on the first container use. The database container needs to connect to the port hosting the database, which is currently 5433, through the common PostgreSQL user port, 5432; the docker-compose is currently dynamically setting this up so that, if the host-port is changed, the port used in the command to connect the ports is also automatically changed.
