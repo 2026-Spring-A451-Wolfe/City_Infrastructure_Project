@@ -34,6 +34,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /* ImageController handles HTTP requests to upload report images.
@@ -49,12 +50,14 @@ import java.util.Map;
 public class ImageController extends HttpServlet {
 
     private ImageStorageService imageStorageService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
 
     @Override
     public void init() {
         ReportImageRepository reportImageRepository = new ReportImageRepository(DatabaseUtil.getDataSource());
-        String uploadDirectory = getServletContext().getRealPath("/uploads"); // Webapp is being developed in Tomcat container so the store uploads will be in a folder here when running
+        String uploadDirectory = getServletContext().getRealPath("/uploads"); // Webapp is being developed in Tomcat
+                                                                              // container so the store uploads will be
+                                                                              // in a folder here when running
         imageStorageService = new ImageStorageService(reportImageRepository, uploadDirectory);
     }
 
@@ -71,7 +74,36 @@ public class ImageController extends HttpServlet {
         }
     }
 
-    private void handleImageUpload(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    // -------------------------------------------------------------------------
+    // GET /api/images/report/{reportId} — get all images for a report
+    // -------------------------------------------------------------------------
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        String path = req.getPathInfo();
+
+        if (path != null && path.matches("/report/\\d+")) {
+            try {
+                long reportId = Long.parseLong(path.split("/")[2]);
+
+                ReportImageRepository reportImageRepository =
+                    new ReportImageRepository(DatabaseUtil.getDataSource());
+                List<ReportImage> images = reportImageRepository.findByReportId(reportId);
+
+                resp.setStatus(200);
+                resp.getWriter().write(objectMapper.writeValueAsString(images));
+            } catch (Exception e) {
+                resp.setStatus(500);
+                resp.getWriter().write("{\"error\":\"" + e.getMessage() + "\"}");
+            }
+        } else {
+            resp.setStatus(404);
+            resp.getWriter().write("{\"error\": \"Not found\"}");
+        }
+    }
+
+    private void handleImageUpload(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
         try {
             // Read the Authorization header
             String authHeader = req.getHeader("Authorization");
@@ -99,7 +131,7 @@ public class ImageController extends HttpServlet {
             // Extract report ID from path: /{id}/images
             String path = req.getPathInfo();
             String[] pathParts = path.split("/");
-            
+
             Integer reportId = Integer.parseInt(pathParts[1]);
 
             // Read uploaded file part
@@ -121,12 +153,11 @@ public class ImageController extends HttpServlet {
 
             // Delegate to ImageStorageService for validation and storage
             ReportImage image = imageStorageService.saveImage(
-                tempFile,
-                originalFilename,
-                contentType,
-                fileSize,
-                reportId
-            );
+                    tempFile,
+                    originalFilename,
+                    contentType,
+                    fileSize,
+                    reportId);
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
