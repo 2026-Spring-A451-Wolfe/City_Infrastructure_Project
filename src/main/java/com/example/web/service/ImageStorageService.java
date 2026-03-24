@@ -74,6 +74,7 @@ public class ImageStorageService {
         reportImage.setStoredFilename(storedFilename);
         reportImage.setContentType(contentType);
         reportImage.setFilePath(destinationFile.getAbsolutePath());
+        reportImage.setImageUrl("/uploads/" + storedFilename);
         reportImage.setFileSize(fileSize);
 
         return reportImageRepository.save(reportImage);

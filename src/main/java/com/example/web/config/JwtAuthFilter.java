@@ -124,6 +124,8 @@ public class JwtAuthFilter implements Filter {
                 return true;
             if (path.matches("/api/departments/\\d+/contacts"))
                 return true;
+            if (path.matches("/api/images/report/\\d+"))
+                return true;
         }
 
         return false;
