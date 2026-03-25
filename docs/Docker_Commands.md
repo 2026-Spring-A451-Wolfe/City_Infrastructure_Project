@@ -156,7 +156,6 @@ curl -X DELETE http://localhost:8080/api/reports/<id> \\
   -H "Authorization: Bearer <token>"
 ```
 
-⚠️ Deleting a report also deletes all its updates and images (cascade).
 
 \-------------------------------------------------------------
 
@@ -171,9 +170,6 @@ curl -X POST http://localhost:8080/api/images/<reportId> \\
   -H "Authorization: Bearer <token>" \\
   -F "image=@/path/to/your/photo.jpg"
 ```
-
-⚠️ URL changed from /api/reports/{id}/images → /api/images/{id}
-Accepted file types: JPEG, PNG, WEBP — max 5MB
 
 ### Get All Images for a Report (public, no token needed)
 
@@ -209,13 +205,4 @@ curl http://localhost:8080/api/departments/<id>/contacts
 
 \-------------------------------------------------------------
 
-## Windows curl Notes
-
-* Windows Command Prompt does NOT support single quotes in curl
-* Use double quotes and escape inner quotes with "
-* Example:
-
-```bash
-curl -X POST http://localhost:8080/api/auth/login -H "Content-Type: application/json" -d "{\\"email\_or\_phone\\": \\"your\_email\\", \\"password\\": \\"your\_password\\"}"
 ```
-
