@@ -62,7 +62,7 @@ curl -X POST http://localhost:8080/api/auth/register \\
   -H "Content-Type: application/json" \\
   -d '{
     "username": "your\_username",
-    "email\_or\_phone": "your\_email\_or\_phone",
+    "email\_Or\_Phone": "your\_email\_or\_phone",
     "password": "your\_password"
   }'
 ```
@@ -73,7 +73,7 @@ curl -X POST http://localhost:8080/api/auth/register \\
 curl -X POST http://localhost:8080/api/auth/login \\
   -H "Content-Type: application/json" \\
   -d '{
-    "email\_or\_phone": "your\_email\_or\_phone",
+    "email\_Or\_Phone": "your\_email\_or\_phone",
     "password": "your\_password"
   }'
 ```
