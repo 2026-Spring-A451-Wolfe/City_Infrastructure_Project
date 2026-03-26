@@ -37,7 +37,7 @@ class ImageStorageServiceTest {
         this.imageStorageService = new ImageStorageService(this.stubRepository, tempDir.toString());
     }
 
-    // Expected Outcome: UPLOAD & VALIDATION (UUID RENAMING)
+    // Expected Outcome: Upload & Validation
     @Test
     void saveImage_validFile_generatesUuidAndSaves() throws Exception {
         File sourceFile = tempDir.resolve("pothole.jpg").toFile();
@@ -55,7 +55,7 @@ class ImageStorageServiceTest {
         Assertions.assertTrue(new File(result.getFilePath()).exists());
     }
 
-    // Expected Outcome: VALIDATION (FILE TYPE & SIZE)
+    // Expected Outcome: Validation (file type & size)
     @Test
     void saveImage_invalidSize_throwsException() throws Exception {
         File largeFile = tempDir.resolve("huge.jpg").toFile();
@@ -73,7 +73,7 @@ class ImageStorageServiceTest {
         Assertions.assertEquals("Image file size must not exceed 5MB", exception.getMessage());
     }
 
-    // Expected Outcome: RETRIEVAL
+    // Expected Outcome: Retrival 
     @Test
     void retrieveImageMetadata_returnsCorrectData() throws Exception {
         // Arrange: Put a fake record in our stub "database"
@@ -89,7 +89,7 @@ class ImageStorageServiceTest {
         Assertions.assertEquals("nola_drain.png", found.get().getOriginalFilename());
     }
 
-    // Expected Outcome: DELETION
+    // Expected Outcome: Deletion
     @Test
     void deleteImage_validId_removesFileFromDiskAndDb() throws Exception {
 
