@@ -1,12 +1,6 @@
 /* Author: Ellie Carroll
 Purpose: Javascript functionality for the user registration page 
-Last Modified: 3/9/2026 */
-
-/* Still Required: 
-- backend integration
-- backend password and email formatting verification
-- send login credentials to the backend for verification
-*/
+Last Modified: 3/27/2026 */
 
 document.addEventListener("DOMContentLoaded", function () {
 

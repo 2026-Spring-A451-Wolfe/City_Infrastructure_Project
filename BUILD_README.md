@@ -11,7 +11,6 @@ This shell script (`build.sh`) automates the build and deployment process for th
 Compiles the Java project, builds Docker images, and starts all services.
 
 ### Specific Commands
-
 - **Clean build**: `./build.sh clean` - Cleans build artifacts and stops/removes containers
 - **Java only**: `./build.sh java-only` - Compiles and packages Java project only
 - **Docker only**: `./build.sh docker-only` - Builds and starts Docker services only

@@ -5,7 +5,7 @@
 
 set -e  # Exit on any error
 
-echo "🚀 Starting build process for NOLA Infrastructure Reporting & Tracking System"
+echo "Starting build process for NOLA Infrastructure Reporting & Tracking System"
 echo "=============================================================================="
 
 # Colors for output
@@ -122,13 +122,13 @@ wait_for_services() {
 # Display service information
 show_services() {
     echo ""
-    echo "🎉 Build completed successfully!"
+    echo "Build completed successfully!"
     echo "=================================="
     echo ""
     echo "Services are running on:"
-    echo "  🌐 Frontend:    http://localhost:3000"
-    echo "  🔧 Backend API: http://localhost:8080"
-    echo "  🗄️  Database:    localhost:5433 (internal)"
+    echo "   Frontend:    http://localhost:3000"
+    echo "   Backend API: http://localhost:8080"
+    echo "   Database:    localhost:5433 (internal)"
     echo ""
     echo "To view service status: docker-compose ps"
     echo "To view logs:           docker-compose logs -f [service-name]"
