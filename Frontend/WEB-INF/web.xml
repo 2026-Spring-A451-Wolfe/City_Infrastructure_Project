@@ -28,7 +28,7 @@
 
     <filter>
         <filter-name>JwtAuthFilter</filter-name>
-        <filter-class>com.example.web.config.JwtAuthFilter</filter-class>
+        <filter-class>edu.loyno.cosca451.config.JwtAuthFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -44,7 +44,7 @@
     <!-- Health Check -->
     <servlet>
         <servlet-name>HealthServlet</servlet-name>
-        <servlet-class>com.example.web.servlet.HealthServlet</servlet-class>
+        <servlet-class>edu.loyno.cosca451.HealthServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HealthServlet</servlet-name>
@@ -54,7 +54,7 @@
     <!-- Database Check -->
     <servlet>
         <servlet-name>DbCheckServlet</servlet-name>
-        <servlet-class>com.example.web.servlet.DbCheckServlet</servlet-class>
+        <servlet-class>edu.loyno.cosca451.DbCheckServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DbCheckServlet</servlet-name>
@@ -64,7 +64,7 @@
     <!-- Auth — /api/auth/register, /api/auth/login, /api/auth/me -->
     <servlet>
         <servlet-name>AuthController</servlet-name>
-        <servlet-class>com.example.web.controller.AuthController</servlet-class>
+        <servlet-class>edu.loyno.cosca451.controller.AuthController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthController</servlet-name>
@@ -74,7 +74,7 @@
     <!-- Departments — /api/departments, /api/departments/* -->
     <servlet>
         <servlet-name>DepartmentController</servlet-name>
-        <servlet-class>com.example.web.controller.DepartmentController</servlet-class>
+        <servlet-class>edu.loyno.cosca451.controller.DepartmentController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DepartmentController</servlet-name>
@@ -84,7 +84,7 @@
     <!-- Reports — /api/reports, /api/reports/* -->
     <servlet>
         <servlet-name>ReportController</servlet-name>
-        <servlet-class>com.example.web.controller.ReportController</servlet-class>
+        <servlet-class>edu.loyno.cosca451.controller.ReportController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ReportController</servlet-name>
@@ -94,7 +94,7 @@
     <!-- Images — /api/images/{id} -->
     <servlet>
         <servlet-name>ImageController</servlet-name>
-        <servlet-class>com.example.web.controller.ImageController</servlet-class>
+        <servlet-class>edu.loyno.cosca451.controller.ImageController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ImageController</servlet-name>
