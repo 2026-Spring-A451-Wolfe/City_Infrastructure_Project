@@ -1,3 +1,8 @@
+/* changes made by Adin 3/27
+ - Changed the sidebar menu colors to match the rest of the site    
+  (was still using the old cream and brown theme)                    
+  - Fixed the map showing on top of the menu when you open it */
+
 (function () {
     const menuButton = document.querySelector(".top-bar__menu");
     if (!menuButton) {
@@ -139,11 +144,15 @@
                 border-radius: 6px;
             }
 
+            #map, .leaflet-container {
+                z-index: 1 !important;
+            }
+
             .app-nav-overlay {
                 position: fixed;
                 inset: 0;
                 background: rgba(0,0,0,0.35);
-                z-index: 80;
+                z-index: 1000;
             }
 
             .app-nav-drawer {
@@ -152,12 +161,12 @@
                 left: 0;
                 width: min(320px, 84vw);
                 height: 100vh;
-                background: #eae4cc;
-                border-right: 3px solid #504136;
+                background: #f0f4f8;
+                border-right: 3px solid #4a9ebb;
                 box-shadow: 8px 0 24px rgba(0,0,0,0.2);
                 transform: translateX(-105%);
                 transition: transform 0.25s ease;
-                z-index: 90;
+                z-index: 1001;
                 display: flex;
                 flex-direction: column;
             }
@@ -171,8 +180,8 @@
                 align-items: center;
                 justify-content: space-between;
                 padding: 14px 16px;
-                border-bottom: 3px solid #6a5948;
-                background: #5a80a1;
+                border-bottom: 3px solid #4a9ebb;
+                background: #1e3a5f;
             }
 
             .app-nav-title {
@@ -183,9 +192,9 @@
             }
 
             .app-nav-close {
-                border: 2px solid #3c7d7b;
-                background: #b3e5fc;
-                color: #385064;
+                border: 2px solid #4a9ebb;
+                background: #2d6a9f;
+                color: #ffffff;
                 border-radius: 8px;
                 font-size: 1.2rem;
                 line-height: 1;
@@ -204,24 +213,24 @@
 
             .app-nav-link {
                 text-decoration: none;
-                color: #2b2b2b;
-                border: 2px solid #504136;
-                border-radius: 10px;
-                background: rgba(127,190,188,0.5);
+                color: #1a2b3c;
+                border: 1.5px solid #dce4ec;
+                border-radius: 8px;
+                background: #ffffff;
                 padding: 10px 12px;
                 font-weight: 600;
                 transition: transform 0.2s ease, background-color 0.2s ease;
             }
 
             .app-nav-link:hover {
-                background: #7fbebc;
+                background: #e8f1f8;
                 transform: translateY(-3px);
             }
 
             .app-nav-link.active {
-                background: #5a80a1;
+                background: #2d6a9f;
                 color: #ffffff;
-                border-color: #3c7d7b;
+                border-color: #4a9ebb;
             }
 
             body.app-nav-open {
