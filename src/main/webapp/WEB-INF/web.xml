@@ -19,32 +19,18 @@
 
     <display-name>NOLA Infrastructure Reporting and Tracking System</display-name>
 
-    <!-- =====================================================================
-         FILTERS
-         JwtAuthFilter runs on every /api/* request and validates the JWT
-         token before the request reaches any servlet. Public routes are
-         bypassed inside the filter itself.
-    ====================================================================== -->
-
-    <filter>
-        <filter-name>JwtAuthFilter</filter-name>
-        <filter-class>com.example.web.config.JwtAuthFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>JwtAuthFilter</filter-name>
-        <url-pattern>/api/*</url-pattern>
-    </filter-mapping>
-
+    <!-- JwtAuthFilter is registered via @WebFilter("/api/*") on the class.
+         Controllers use @WebServlet — do not duplicate them here or Tomcat fails
+         with "both mapped to the same url-pattern". -->
 
     <!-- =====================================================================
-         SERVLETS
+         SERVLETS (only those without annotations)
     ====================================================================== -->
 
     <!-- Health Check -->
     <servlet>
         <servlet-name>HealthServlet</servlet-name>
-        <servlet-class>com.example.web.servlet.HealthServlet</servlet-class>
+        <servlet-class>com.example.web.HealthServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HealthServlet</servlet-name>
@@ -54,53 +40,12 @@
     <!-- Database Check -->
     <servlet>
         <servlet-name>DbCheckServlet</servlet-name>
-        <servlet-class>com.example.web.servlet.DbCheckServlet</servlet-class>
+        <servlet-class>com.example.web.DbCheckServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DbCheckServlet</servlet-name>
         <url-pattern>/db-check</url-pattern>
     </servlet-mapping>
-
-    <!-- Auth — /api/auth/register, /api/auth/login, /api/auth/me -->
-    <servlet>
-        <servlet-name>AuthController</servlet-name>
-        <servlet-class>com.example.web.controller.AuthController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AuthController</servlet-name>
-        <url-pattern>/api/auth/*</url-pattern>
-    </servlet-mapping>
-
-    <!-- Departments — /api/departments, /api/departments/* -->
-    <servlet>
-        <servlet-name>DepartmentController</servlet-name>
-        <servlet-class>com.example.web.controller.DepartmentController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DepartmentController</servlet-name>
-        <url-pattern>/api/departments/*</url-pattern>
-    </servlet-mapping>
-
-    <!-- Reports — /api/reports, /api/reports/* -->
-    <servlet>
-        <servlet-name>ReportController</servlet-name>
-        <servlet-class>com.example.web.controller.ReportController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ReportController</servlet-name>
-        <url-pattern>/api/reports/*</url-pattern>
-    </servlet-mapping>
-
-    <!-- Images — /api/images/{id} -->
-    <servlet>
-        <servlet-name>ImageController</servlet-name>
-        <servlet-class>com.example.web.controller.ImageController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ImageController</servlet-name>
-        <url-pattern>/api/images/*</url-pattern>
-    </servlet-mapping>
-
 
     <!-- =====================================================================
          SESSION & TIMEOUT

@@ -9,7 +9,6 @@
 
 package com.example.web;
 
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-@WebServlet("/db-check")
+/** Mapped in WEB-INF/web.xml to /db-check */
 public class DbCheckServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

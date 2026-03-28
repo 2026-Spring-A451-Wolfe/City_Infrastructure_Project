@@ -1,14 +1,4 @@
 services:
-  frontend:
-    build:
-      context: ./Frontend
-      dockerfile: Dockerfile
-    container_name: frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - back-api
-
   back-api:
     build:
       context: .

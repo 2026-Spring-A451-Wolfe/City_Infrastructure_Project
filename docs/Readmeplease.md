@@ -13,7 +13,7 @@ Table of Contents
 1) Project overview
 
 This project runs a Java servlet app in Tomcat and a PostgreSQL database in Docker.
-There are two containers in this stack: db (PostgreSQL) and tomcat (Java web app).
+There are two containers in this stack: `db` (PostgreSQL) and `back-api` (Tomcat + static UI and servlets from `src/main/webapp`).
 DataGrip is the database client for this project. It is not a container.
 
 How requests flow:
@@ -39,10 +39,10 @@ docker compose ps
 
 Expected result:
 - db is Up (healthy)
-- tomcat is Up
+- back-api is Up
 
-App URL:
-- http://localhost:8080
+App URL (Tomcat maps host 5050 to container 8080):
+- http://localhost:5050
 
 Important connection rule:
 - App container connects to DB using db:5432 (internal Docker network)
@@ -50,13 +50,13 @@ Important connection rule:
 
 3) Front End team guide
 
-Where to edit frontend files in this repo:
-- src/main/webapp/index.html
+Where to edit web UI files (served by Tomcat from the WAR, no separate web container):
+- `src/main/webapp/` (HTML, CSS, JS, `WEB-INF/web.xml`)
 
 What to do:
-1. Edit HTML/CSS/JS in src/main/webapp
-2. Rebuild and run: docker compose up --build -d
-3. Open http://localhost:8080 and verify the page
+1. Edit HTML/CSS/JS in `src/main/webapp`
+2. Rebuild and run: `docker compose up --build -d`
+3. Open http://localhost:5050 and verify the page
 
 Before push:
 - Confirm page loads in browser
@@ -93,8 +93,8 @@ Build/test cycle:
 
 Before push:
 - Endpoint checks:
-  - http://localhost:8080/health
-  - http://localhost:8080/db-check
+  - http://localhost:5050/health
+  - http://localhost:5050/db-check
 - Tests pass with mvn test
 
 5) QA team guide
@@ -105,9 +105,9 @@ How to run for testing:
 3. docker compose ps
 
 What to test:
-- App home page loads: http://localhost:8080
-- Health endpoint returns OK: http://localhost:8080/health
-- DB endpoint returns DB OK: http://localhost:8080/db-check
+- App home page loads: http://localhost:5050
+- Health endpoint returns OK: http://localhost:5050/health
+- DB endpoint returns DB OK: http://localhost:5050/db-check
 
 If /db-check fails:
 - Confirm db is healthy in docker compose ps
