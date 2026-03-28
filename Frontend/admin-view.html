@@ -11,11 +11,12 @@ added lins 31-39, 41-45, 66-67, 72-87, 102;
 <head>
     <meta charset="UTF-8">
     <title>ADMIN</title>
-    <link rel="stylesheet" href="./Infrastructure-Reporter.css">
-    <link rel="stylesheet" href="./admin-view.css">
+    <link rel="stylesheet" href="../Frontend/Infrastructure-Reporter.css">
+    <link rel="stylesheet" href="../Frontend/admin-view.js">
 </head>
 
 <body>
+    <!-- Top Navigation Bar -->
     <header class="top-bar">
         <div class="top-bar__menu">
             <span></span>
@@ -24,9 +25,9 @@ added lins 31-39, 41-45, 66-67, 72-87, 102;
         </div>
 
         <h1 class="top-bar__title">ADMIN</h1>
+
         <div class="top-bar__profile">Admin</div>
     </header>
-
     <nav class="sub-nav">
         <a href="dashboard-page.html">Dashboard</a>
         <a href="report-tracking-page.html">Reports</a>
@@ -36,70 +37,87 @@ added lins 31-39, 41-45, 66-67, 72-87, 102;
 
     <div class="layout">
         <div class="admin-layout">
-            <main class="admin-page">
+            <main class="admin-page"> <!--Page Contents-->
+        <section class="admin-reports-list" aria-label="Report queue"> <!--list of reports on the left-->
+            <h2 class="admin-panel-heading">Report Queue</h2>
+            <p class="admin-panel-subtext">Select a report to review and update.</p>
 
-                <!-- REPORT LIST -->
-                <section class="admin-reports-list">
-                    <h2>Report Queue</h2>
-                    <p>Select a report to review and update.</p>
+            <div class="admin-reports-list__empty" role="status" aria-live="polite">
+                No reports are currently loaded.
+            </div>
+        </section>
 
-                    <div id="reports-status">
-                        Loading reports...
-                    </div>
-                </section>
+        <section class="admin-view-report" aria-label="Selected report details"> <!--report menu on the right-->
+            <div class="admin-view-header">
+                <h2 class="admin-panel-heading">Report Details</h2>
+                <p class="admin-panel-subtext">Review, assign, and update issue status.</p>
+            </div>
 
-                <!-- REPORT DETAILS -->
-                <section class="admin-view-report">
+            <div class="admin-view-report__top">
+                <!--LEFT SIDE-->
+                <div class="admin-view-report-column-left">
+                    <div class="admin-view-submitter" aria-label="Submitter profile">Submitter</div>
+                    <div class="admin-view-picture" aria-label="Report image area">No image attached</div>
+                    
+                    <!--DEVNOTE: Actual picture view will be like
+                    <div class="admin-view-picture">
+                        <img src="picture.jpg">
+                    </div>-->
+                
+                </div>
 
-                    <h2>Report Details</h2>
-                    <p>Review, assign, and update issue status.</p>
+                <!--RIGHT SIDE-->
+                <div class="admin-view-map" aria-label="Map location area">Map location preview</div> <!--Replace w real map-->
+            </div>
 
-                    <div>
-                        <div>Submitter</div>
-                        <div>No image attached</div>
-                    </div>
+            <!--Problem Description-->
+            <div class="admin-view-description">
+                <h3 class="admin-view-description__title">Problem Description</h3>
+                <p class="admin-view-description__text">Select a report from the queue to view its details.</p>
+            </div>
 
-                    <div>Map location preview</div>
+            <!--STATUS DROPDOWN-->
+            <div class="admin-report-buttons">
+                <label for="status-select">Assign Status:</label>
+                <select id="status-select" class="admin-report-buttons__input">
+                    <option value="submitted">Submitted</option>
+                    <option value="under-review">Under Review</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="halted-on-pause">Halted / On Pause</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
 
-                    <div>
-                        <h3>Problem Description</h3>
-                        <p id="report-description">
-                            Select a report to view details.
-                        </p>
-                    </div>
+            <!--DEPARTMENT ASSIGNMENT DROPDOWN-->
+            <div class="admin-report-buttons">
+                <label for="department-select">Assign Department:</label>
+                <select id="department-select" class="admin-report-buttons__input">
+                    <option value="">Select department</option>
+                </select>
+            </div>
 
-                    <!-- STATUS -->
-                    <label>Status:</label>
-                    <select id="status-select">
-                        <option value="submitted">Submitted</option>
-                        <option value="under-review">Under Review</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="halted-on-pause">Halted / On Pause</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="done">Done</option>
-                    </select>
+            <!--BUDGET ENTER-->
+            <div class="admin-report-buttons">
+                <label for="budget">Budget:</label>
+                <input type="number"
+                        id="budget"
+                        class="admin-report-buttons__input"
+                        placeholder="Enter budget"
+                        min="0">
+            </div>
 
-                    <!-- DEPARTMENT -->
-                    <label>Department:</label>
-                    <select id="department-select">
-                        <option>Loading departments...</option>
-                    </select>
-
-                    <!-- BUDGET -->
-                    <label>Budget:</label>
-                    <input type="number" id="budget" min="0">
-
-                    <!-- STATUS MESSAGE -->
-                    <div id="status-message"></div>
-
-                    <!-- BUTTON -->
-                    <button id="save-btn">Save Updates</button>
-
-                </section>
+            <!--BIG UPDATE BUTTON-->
+            <button class="admin-report-update">Save Updates</button>
+        </section>
             </main>
         </div>
     </div>
 
+    <footer class="main-footer">
+        loyola university new orleans swe class project etc etc
+    </footer>
     <script src="admin-view.js"></script>
+    <script src="shared-hamburger-menu.js"></script>
 </body>
 </html>
