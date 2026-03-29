@@ -4,16 +4,38 @@
  * Description: Handles all HTTP requests and responses for report-related     *
  *              endpoints. Parses requests, delegates to ReportService, and    *
  *              writes JSON responses. No business logic belongs here.         *
- * Author: Adin Hultin
- * -Edited by Ethan DeLaRosa on 3/15                   *
- * Date Last Modified: 03/15/2026                                              *
+ * Author: Adin Hultin                                                         *         
+ * -Edited by Ethan DeLaRosa on 3/15                                           *    
+ * - Edited by Madeline Krehely 3/19   
+ * - Edited By: Jana El-Khatib 03/20/2026
+ *          - Changes: - Changed @WebServlet from "/api/reports/*" to support
+ *                      routing to /api/reports/{id} and 
+ *                      /api/reports{id}/updates
+ *                     - Added doGet routing for GET /api/reports/{id} and 
+ *                      /api/reports/{id}/updates 
+ *                     - Fixed hardcoded createdBy = 2L — now reads userId 
+ *                      from JWT filter attr  
+ *                     - Added doPut for PUT /api/reports/{id}/status 
+ *                          (Admin only)               
+ *                     - Added doDelete for DELETE /api/reports/{id} 
+ *                          (Admin only) 
+ *                      - Added a GET /api/reports/me will return the reports
+ *                          of the user         
+ * Date Last Modified: 03/20/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package com.example.web.controller;
 
 import com.example.web.dto.ReportRequest;
+import com.example.web.dto.ReportUpdateDTO;
 import com.example.web.model.Report;
+import com.example.web.model.ReportUpdate;
+import com.example.web.repository.ReportRepository;
+import com.example.web.repository.ReportUpdateRepository;
 import com.example.web.service.ReportService;
+import com.example.web.util.DatabaseUtil;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,28 +46,79 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/api/reports")
+@WebServlet("/api/reports/*")
 public class ReportController extends HttpServlet {
 
-    private final ReportService reportService = new ReportService();
+    private final ReportService reportService = new ReportService(
+            new ReportRepository(),
+            new ReportUpdateRepository(DatabaseUtil.getDataSource()));
     private final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
 
+    // -------------------------------------------------------------------------
+    // GET /api/reports
+    // GET /api/reports/{id}
+    // GET /api/reports/{id}/updates
+    // -------------------------------------------------------------------------
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
+        String pathInfo = request.getPathInfo();
+
         try {
-            List<Report> reports = reportService.getAllReports();
-            response.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(response.getWriter(), reports);
+            if (pathInfo == null || pathInfo.equals("/")) {
+                // GET /api/reports
+                List<Report> reports = reportService.getAllReports();
+                response.setStatus(HttpServletResponse.SC_OK);
+                objectMapper.writeValue(response.getWriter(), reports);
+
+            } else if (pathInfo.matches("/\\d+")) {
+                // GET /api/reports/{id}
+                long id = Long.parseLong(pathInfo.substring(1));
+                Report report = reportService.getReportById(id);
+                if (report == null) {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    objectMapper.writeValue(response.getWriter(),
+                            Map.of("error", "Report not found"));
+                } else {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    objectMapper.writeValue(response.getWriter(), report);
+                }
+
+            } else if (pathInfo.matches("/\\d+/updates")) {
+                // GET /api/reports/{id}/updates
+                long id = Long.parseLong(pathInfo.split("/")[1]);
+                List<?> updates = reportService.getUpdatesByReportId(id);
+                response.setStatus(HttpServletResponse.SC_OK);
+                objectMapper.writeValue(response.getWriter(), updates);
+
+            } else if (pathInfo.equals("/my")) {
+                // GET /api/reports/my - returns current user's reports
+                long userId = (long) request.getAttribute("userId");
+                List<Report> reports = reportService.getMyReports((userId));
+                response.setStatus(HttpServletResponse.SC_OK);
+                objectMapper.writeValue(response.getWriter(), reports);
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                objectMapper.writeValue(response.getWriter(),
+                        Map.of("error", "Not found"));
+            }
+
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            objectMapper.writeValue(response.getWriter(),
+                    Map.of("error", "Invalid report ID"));
         } catch (SQLException e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             objectMapper.writeValue(response.getWriter(),
-                    Map.of("error", "Failed to fetch reports.", "details", e.getMessage()));
+                    Map.of("error", "Database error", "details", e.getMessage()));
         }
     }
 
+    // -------------------------------------------------------------------------
+    // POST /api/reports — create a new report
+    // -------------------------------------------------------------------------
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
@@ -54,9 +127,7 @@ public class ReportController extends HttpServlet {
         try {
             ReportRequest reportRequest = objectMapper.readValue(request.getInputStream(), ReportRequest.class);
 
-            // TEMPORARY until login/session is wired up.
-            // Use an existing seeded citizen account ID.
-            long createdBy = 2L;
+            long createdBy = (long) request.getAttribute("userId");
 
             Report savedReport = reportService.createReport(reportRequest, createdBy);
 
@@ -71,6 +142,96 @@ public class ReportController extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             objectMapper.writeValue(response.getWriter(),
                     Map.of("error", "Failed to save report.", "details", e.getMessage()));
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // PUT /api/reports/{id}/status — Admin only, update report status
+    // -------------------------------------------------------------------------
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo == null || !pathInfo.matches("/\\d+/status")) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            objectMapper.writeValue(response.getWriter(), Map.of("error", "Not found"));
+            return;
+        }
+
+        try {
+            // Enforce Admin only
+            String role = (String) request.getAttribute("role");
+            if (!"Admin".equals(role)) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                objectMapper.writeValue(response.getWriter(),
+                        Map.of("error", "Forbidden", "message", "Admin access required."));
+                return;
+            }
+
+            // Extract report ID from path: /{id}/status
+            long reportId = Long.parseLong(pathInfo.split("/")[1]);
+            long updaterId = (long) request.getAttribute("userId");
+
+            ReportUpdateDTO statusRequest = objectMapper.readValue(
+                    request.getInputStream(), ReportUpdateDTO.class);
+
+            ReportUpdate update = reportService.updateStatus(reportId, updaterId, statusRequest);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+            objectMapper.writeValue(response.getWriter(), update);
+
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            objectMapper.writeValue(response.getWriter(), Map.of("error", e.getMessage()));
+        } catch (SQLException e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            objectMapper.writeValue(response.getWriter(),
+                    Map.of("error", "Database error", "details", e.getMessage()));
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // DELETE /api/reports/{id} - Admin only, delete a report
+    // -------------------------------------------------------------------------
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String pathInfo = request.getPathInfo();
+        
+        if (pathInfo == null || !pathInfo.matches("/\\d+")) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            objectMapper.writeValue(response.getWriter(), Map.of("error", "Not found"));
+            return;
+        }
+
+        try {
+            // Enforce Admin only
+            String role = (String) request.getAttribute("role");
+            if (!"Admin".equals(role)) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                objectMapper.writeValue(response.getWriter(),
+                        Map.of("error", "Forbidden", "message", "Admin access required."));
+                return;
+            }
+
+            long reportId = Long.parseLong(pathInfo.substring(1));
+            reportService.deleteReport(reportId);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+            objectMapper.writeValue(response.getWriter(), Map.of("success", true, "message", "Report deleted successfully."));
+
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            objectMapper.writeValue(response.getWriter(), Map.of("error", e.getMessage()));
+        } catch (SQLException e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            objectMapper.writeValue(response.getWriter(),
+                    Map.of("error", "Database error", "details", e.getMessage()));
         }
     }
 }

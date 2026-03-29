@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Filename: web.xml                                                     *
+     * Project: NOLA Infrastructure Reporting & Tracking System              *
+     * Description: Deployment descriptor for the Apache Tomcat servlet      *
+     *              container. Registers and maps all servlet classes and    *
+     *              JwtAuthFilter to their respective URL patterns. Required *
+     *              for Tomcat to recognize and route HTTP requests to the   *
+     *              correct handlers.                                        *
+     * Author: Sophina Nichols                                               *
+     * Date Last Modified: 03/05/2026                                        *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <display-name>NOLA Infrastructure Reporting and Tracking System</display-name>
+
+    <!-- =====================================================================
+         FILTERS
+         JwtAuthFilter runs on every /api/* request and validates the JWT
+         token before the request reaches any servlet. Public routes are
+         bypassed inside the filter itself.
+    ====================================================================== -->
+
+    <filter>
+        <filter-name>JwtAuthFilter</filter-name>
+        <filter-class>com.example.web.config.JwtAuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>JwtAuthFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- =====================================================================
+         SERVLETS
+    ====================================================================== -->
+
+    <!-- Health Check -->
+    <servlet>
+        <servlet-name>HealthServlet</servlet-name>
+        <servlet-class>com.example.web.servlet.HealthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HealthServlet</servlet-name>
+        <url-pattern>/health</url-pattern>
+    </servlet-mapping>
+
+    <!-- Database Check -->
+    <servlet>
+        <servlet-name>DbCheckServlet</servlet-name>
+        <servlet-class>com.example.web.servlet.DbCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DbCheckServlet</servlet-name>
+        <url-pattern>/db-check</url-pattern>
+    </servlet-mapping>
+
+    <!-- Auth — /api/auth/register, /api/auth/login, /api/auth/me -->
+    <servlet>
+        <servlet-name>AuthController</servlet-name>
+        <servlet-class>com.example.web.controller.AuthController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthController</servlet-name>
+        <url-pattern>/api/auth/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Departments — /api/departments, /api/departments/* -->
+    <servlet>
+        <servlet-name>DepartmentController</servlet-name>
+        <servlet-class>com.example.web.controller.DepartmentController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DepartmentController</servlet-name>
+        <url-pattern>/api/departments/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Reports — /api/reports, /api/reports/* -->
+    <servlet>
+        <servlet-name>ReportController</servlet-name>
+        <servlet-class>com.example.web.controller.ReportController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportController</servlet-name>
+        <url-pattern>/api/reports/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Images — /api/images/{id} -->
+    <servlet>
+        <servlet-name>ImageController</servlet-name>
+        <servlet-class>com.example.web.controller.ImageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImageController</servlet-name>
+        <url-pattern>/api/images/*</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- =====================================================================
+         SESSION & TIMEOUT
+         Sessions expire after 30 minutes of inactivity.
+         JWT expiration (24 hrs) is enforced separately by JwtAuthFilter.
+    ====================================================================== -->
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+
+    <!-- =====================================================================
+         WELCOME FILES
+         Default pages served when the root URL is accessed.
+    ====================================================================== -->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>
