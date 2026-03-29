@@ -3,8 +3,10 @@
  * Project: NOLA Infrastructure Reporting & Tracking System                  *
  * Description: Handles authentication endpoints for user registration and   *
  *              login, returning JWT tokens upon successful authentication.  *
- * Author: Sophina Nichols                                                   *
- * Date Last Modified: 03/04/2026                                            *
+ * Author: Sophina Nichols   
+ * - Edited By: Jana El-Khatib 03/25/2026
+ *          - Changes: - - Added logging statements   
+ * Date Last Modified: 03/25/2026                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package com.example.web.controller;
@@ -23,6 +25,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /* AuthController handles all HTTP requests to /api/auth/*.
  * Endpoints:   POST /api/auth/register
@@ -36,6 +39,8 @@ import java.util.Map;
 @WebServlet("/api/auth/*")
 public class AuthController extends HttpServlet {
 
+    private static final Logger logger = Logger.getLogger(AuthController.class.getName());
+
     private AuthService authService;
     // ObjectMapper converts Java objects to/from JSON
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -44,10 +49,14 @@ public class AuthController extends HttpServlet {
     public void init() {
         UserRepository userRepository = new UserRepository(DatabaseUtil.getDataSource());
         authService = new AuthService(userRepository);
+
+        logger.info("AuthController initialized successfully");
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        logger.info("POST /api/auth" + req.getPathInfo() + " request received");
         resp.setContentType("application/json");
         String path = req.getPathInfo();
 
@@ -56,20 +65,25 @@ public class AuthController extends HttpServlet {
         } else if ("/login".equals(path)) {
             handleLogin(req, resp);
         } else {
-            resp.setStatus(404);    // Error (404): No matching route found
+            logger.warning("POST /api/auth FAILED — path not found: " + path);
+            resp.setStatus(404); // Error (404): No matching route found
             resp.getWriter().write("{\"error\": \"Not found\"}");
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("GET /api/auth" + req.getPathInfo() + " hit");
         resp.setContentType("application/json");
         String path = req.getPathInfo();
+        logger.info("GET /api/auth" + path + " request received");
 
         if ("/me".equals(path)) {
             handleMe(req, resp);
         } else {
-            resp.setStatus(404);    // Error (404): No matching route found
+            logger.warning("GET /api/auth FAILED — path not found: " + path);
+
+            resp.setStatus(404); // Error (404): No matching route found
             resp.getWriter().write("{\"error\": \"Not found\"}");
         }
     }
@@ -87,10 +101,12 @@ public class AuthController extends HttpServlet {
             response.put("message", "Registration successful");
             response.put("username", user.getUsername());
 
-            resp.setStatus(201);    // Success (201)
+            logger.info("SUCCESS: User registered — username: " + user.getUsername());
+            resp.setStatus(201); // Success (201)
             resp.getWriter().write(objectMapper.writeValueAsString(response));
         } catch (Exception e) {
-            resp.setStatus(400);    // Error (400): Validation failed or username/email/phone is taken
+            logger.warning("FAILED: Registration error — " + e.getMessage());
+            resp.setStatus(400); // Error (400): Validation failed or username/email/phone is taken
             Map<String, Object> error = new HashMap<>();
             error.put("success", false);
             error.put("message", e.getMessage());
@@ -102,7 +118,7 @@ public class AuthController extends HttpServlet {
         try {
             // Deserialize JSON request body into a LoginRequest object
             LoginRequest request = objectMapper.readValue(req.getInputStream(), LoginRequest.class);
-            
+
             // Delegate to AuthService which verifies credentials and generates JWT
             String token = authService.login(request);
 
@@ -110,10 +126,13 @@ public class AuthController extends HttpServlet {
             response.put("success", true);
             response.put("token", token);
 
-            resp.setStatus(200);    // Success (200)
+            logger.info("SUCCESS: User login — token issued");
+
+            resp.setStatus(200); // Success (200)
             resp.getWriter().write(objectMapper.writeValueAsString(response));
         } catch (Exception e) {
-            resp.setStatus(401);    // Error (401): Credentials are invalid
+            logger.warning("FAILED: Login error — " + e.getMessage());
+            resp.setStatus(401); // Error (401): Credentials are invalid
             Map<String, Object> error = new HashMap<>();
             error.put("success", false);
             error.put("message", e.getMessage());
@@ -128,7 +147,8 @@ public class AuthController extends HttpServlet {
 
             // Token must exist and follow the "Bearer <token>" format
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                resp.setStatus(401);    // Error (401): Token is missing, invalid, or expired
+                logger.warning("FAILED: Missing or invalid token");
+                resp.setStatus(401); // Error (401): Token is missing, invalid, or expired
                 resp.getWriter().write("{\"error\": \"Missing or invalid token\"}");
                 return;
             }
@@ -143,10 +163,12 @@ public class AuthController extends HttpServlet {
             response.put("userId", userId);
             response.put("role", role);
 
-            resp.setStatus(200);    // Success (200)
+            logger.info("SUCCESS: /me — userId: " + userId + ", role: " + role);
+            resp.setStatus(200); // Success (200)
             resp.getWriter().write(objectMapper.writeValueAsString(response));
         } catch (Exception e) {
-            resp.setStatus(401);    // Error (401): Token is missing, invalid, or expired
+            logger.warning("FAILED: Token error — " + e.getMessage());
+            resp.setStatus(401); // Error (401): Token is missing, invalid, or expired
             resp.getWriter().write("{\"error\": \"Invalid or expired token\"}");
         }
     }

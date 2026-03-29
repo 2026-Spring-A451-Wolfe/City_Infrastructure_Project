@@ -1,110 +1,103 @@
 /* Author: Ellie Carroll
-Purpose: Javascript functionality for the user registration page 
-Last Modified: 3/9/2026 */
+Purpose: Javascript functionality for the user registration page
+Last Modified: 3/27/2026 -CW */
 
-/* Still Required: 
-- backend password and email formatting verification
-- send login credentials to the backend for verification
+/*
+Still Required:
+- Confirm exact backend request field names if backend does not accept { email, password }
 */
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    const username = document.getElementById("username");
+    const registrationForm = document.getElementById("registrationForm");
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
-    const signupBtn = document.getElementById("signupButton");
+    const signupButton = document.getElementById("signupButton");
     const message = document.getElementById("confirmation");
 
-    signupBtn.addEventListener("click", async function () {
+    if (!registrationForm || !email || !password || !confirmPassword || !signupButton || !message) {
+        console.error("Registration page is missing one or more required elements.");
+        return;
+    }
 
-        const usernameValue = username.value.trim();
+    registrationForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
         const emailValue = email.value.trim();
         const passwordValue = password.value.trim();
         const confirmPasswordValue = confirmPassword.value.trim();
 
-        // clearing the last entry
         message.textContent = "";
         message.style.color = "black";
-
-        // check if text field has content
-        if (!usernameValue || !emailValue || !passwordValue || !confirmPasswordValue) {
-            message.textContent = "Please fill in all fields.";
-            return;
-        }
-
-        // check username length
-        if (usernameValue.length < 3) {
-            message.textContent = "Username must be at least 3 characters.";
-            return;
-        }
-
-        // check email formatting
-        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/i;
-        if (!emailValue.match(emailPattern)) {
-            message.textContent = "Please enter a valid email address.";
-            return;
-        }
-
-        // password strength verification
-        if (passwordValue.length < 8) {
-            message.textContent = "Password must be at least 8 characters long.";
-            return;
-        }
-
-        // password must include at least 1 uppercase, 1 number, and 1 special character
-        if (!/[A-Z]/.test(passwordValue)) {
-            message.textContent = "Password must contain at least one uppercase letter.";
-            return;
-        }
-
-        if (!/[0-9]/.test(passwordValue)) {
-            message.textContent = "Password must contain at least one number.";
-            return;
-        }
-
-        if (!/[!@#$%^&*()]/.test(passwordValue)) {
-            message.textContent = "Password must contain at least one special character.";
-            return;
-        }
-
-        // check password formatting with each other 
-        if (passwordValue !== confirmPasswordValue) {
-            message.textContent = "Passwords do not match.";
-            return;
-        }
+        signupButton.disabled = true;
+        signupButton.textContent = "Signing up...";
 
         try {
+            if (!emailValue || !passwordValue || !confirmPasswordValue) {
+                message.textContent = "Please fill in all fields.";
+                return;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailValue)) {
+                message.textContent = "Please enter a valid email address.";
+                return;
+            }
+
+            if (passwordValue.length < 10) {
+                message.textContent = "Password must be at least 10 characters long.";
+                return;
+            }
+
+            const passwordPattern = /^(?=(?:.*\d){2,})(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\/+=~`]).+$/;
+            if (!passwordPattern.test(passwordValue)) {
+                message.textContent = "Password must include at least 2 numbers and 1 special character.";
+                return;
+            }
+
+            if (passwordValue !== confirmPasswordValue) {
+                message.textContent = "Passwords do not match.";
+                return;
+            }
+
             const response = await fetch("/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    username: usernameValue,
-                    emailOrPhone: emailValue,
+                    email: emailValue,
                     password: passwordValue
                 })
             });
 
-            const data = await response.json();
+            let data = {};
+            const rawText = await response.text();
 
-            if (response.ok) {
-                message.style.color = "green";
-                message.textContent = "Registration successful. Redirecting to login...";
-                setTimeout(function () {
-                    window.location.href = "/login-page.html";
-                }, 1500);
-            } else {
-                message.style.color = "red";
-                message.textContent = data.message || "Registration failed.";
+            try {
+                data = rawText ? JSON.parse(rawText) : {};
+            } catch (parseError) {
+                data = { message: rawText || "Registration failed." };
             }
+
+            if (!response.ok) {
+                throw new Error(data.message || "Registration failed.");
+            }
+
+            message.style.color = "green";
+            message.textContent = "Registration successful! Redirecting to login...";
+
+            setTimeout(function () {
+                window.location.href = "login-page.html";
+            }, 1500);
+
         } catch (error) {
+            console.error("Registration error:", error);
             message.style.color = "red";
-            message.textContent = "Could not connect to server.";
-            console.error(error);
+            message.textContent = error.message || "Something went wrong during registration.";
+        } finally {
+            signupButton.disabled = false;
+            signupButton.textContent = "Sign up!";
         }
-
     });
-
 });

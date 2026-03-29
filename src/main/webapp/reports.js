@@ -12,12 +12,13 @@ Last Modified: 3/1/26 */
 document.addEventListener("DOMContentLoaded", function () {
 
     // Buttons and elements
-    const viewReportBtn = document.querySelector(".report-card__btn");
-    const reportName = document.querySelector(".report-card__info p:first-of-type");
-    const reportDescription = document.querySelector(".report-card__info p:nth-of-type(2)");
-    const progressFill = document.querySelector(".progress__fill");
-    const profileCircle = document.querySelector(".sidebar__profile-circle");
-    const userInfo = document.querySelector(".sidebar__nav li");
+const viewReportBtn = document.querySelector(".report-card__btn");
+const cancelButtons = document.querySelectorAll(".cancel-btn"); // ✅ ADD THIS
+const reportName = document.querySelector(".report-card__info p:first-of-type");
+const reportDescription = document.querySelector(".report-card__info p:nth-of-type(2)");
+const progressFill = document.querySelector(".progress__fill");
+const profileCircle = document.querySelector(".sidebar__profile-circle");
+const userInfo = document.querySelector(".sidebar__nav li");
     
     // Maybe sometype of message element for displaying status could be used here 
     let messageDiv = document.querySelector(".report-message");
@@ -123,6 +124,21 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Navigating to:", link.textContent);
         });
     });
+
+    /* cancel button functionality (event delegation) --cw*/
+
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("cancel-btn")) {
+
+        const card = e.target.closest(".report-card");
+
+        const confirmDelete = confirm("Are you sure you want to cancel this report?");
+
+        if (confirmDelete && card) {
+            card.remove();
+        }
+    }
+});
 
     // Initialize page with sample data
     function initializePageData() {
