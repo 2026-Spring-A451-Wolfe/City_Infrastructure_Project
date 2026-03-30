@@ -3,8 +3,8 @@
      * Filename: web.xml                                                     *
      * Project: NOLA Infrastructure Reporting & Tracking System              *
      * Description: Deployment descriptor for the Apache Tomcat servlet      *
-     *              container. Registers and maps all servlet classes and    *
-     *              JwtAuthFilter to their respective URL patterns. Required *
+     *              container. Registers HealthServlet and DbCheckServlet;   *
+     *              other servlets/filters use annotations. Required for     *
      *              for Tomcat to recognize and route HTTP requests to the   *
      *              correct handlers.                                        *
      * Author: Sophina Nichols                                               *
@@ -19,18 +19,17 @@
 
     <display-name>NOLA Infrastructure Reporting and Tracking System</display-name>
 
-    <!-- JwtAuthFilter is registered via @WebFilter("/api/*") on the class.
-         Controllers use @WebServlet — do not duplicate them here or Tomcat fails
-         with "both mapped to the same url-pattern". -->
+    <!-- JwtAuthFilter is registered via @WebFilter("/api/*"). API controllers use
+         @WebServlet — listing them here too causes duplicate url-pattern errors. -->
 
     <!-- =====================================================================
-         SERVLETS (only those without annotations)
+         SERVLETS (only those without @WebServlet on the class)
     ====================================================================== -->
 
     <!-- Health Check -->
     <servlet>
         <servlet-name>HealthServlet</servlet-name>
-        <servlet-class>com.example.web.HealthServlet</servlet-class>
+        <servlet-class>edu.loyno.cosca451.HealthServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HealthServlet</servlet-name>
@@ -40,7 +39,7 @@
     <!-- Database Check -->
     <servlet>
         <servlet-name>DbCheckServlet</servlet-name>
-        <servlet-class>com.example.web.DbCheckServlet</servlet-class>
+        <servlet-class>edu.loyno.cosca451.DbCheckServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DbCheckServlet</servlet-name>

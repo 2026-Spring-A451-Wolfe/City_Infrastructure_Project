@@ -65,11 +65,11 @@ INSERT INTO department_contacts (department_id, contact_type, label, value, is_e
 
 /* USERS */ 
 -- city_admin password: Admin!1234
--- citizen_user password: Test@1234
+-- citizen_user password: Citizen!1234
 -- Hashed with BCrypt cost factor 12
 INSERT INTO users (username, email_or_phone, password_hash, role) VALUES
 ('city_admin',   'city_admin@nola.gov',   '$2a$12$l.MIMh7cL0mLqkXZU73ww.h68rFlV1cvm9N.iqtv7O8FY1Rf3vhVu', 'Admin'),
-('citizen_user', 'citizen@nola.gov', '$2a$12$pCkJkNzBqcDLwMbJXBWnHOQfh6Ah4pJ5qJxMBbGhMJyMWkFvJfKHa', 'Citizen');
+('citizen', 'citizen_user@nola.gov', '$2a$12$rFSIOYnIzUrzBdM862YEouFwU0pF2aq5CyQ/YmP4PWkb3MfuIQddu', 'Citizen');
 
 /* AUTO-GENERATED USERS */
 -- Generates a series of users, can be modified to larger testing datasets if needed. 
