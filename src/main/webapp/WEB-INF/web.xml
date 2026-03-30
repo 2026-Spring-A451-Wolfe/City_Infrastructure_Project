@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Filename: web.xml                                                     *
+     * Project: NOLA Infrastructure Reporting & Tracking System              *
+     * Description: Deployment descriptor for the Apache Tomcat servlet      *
+     *              container. Registers HealthServlet and DbCheckServlet;   *
+     *              other servlets/filters use annotations. Required for     *
+     *              for Tomcat to recognize and route HTTP requests to the   *
+     *              correct handlers.                                        *
+     * Author: Sophina Nichols                                               *
+     * Date Last Modified: 03/05/2026                                        *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <display-name>NOLA Infrastructure Reporting and Tracking System</display-name>
+
+    <!-- JwtAuthFilter is registered via @WebFilter("/api/*"). API controllers use
+         @WebServlet — listing them here too causes duplicate url-pattern errors. -->
+
+    <!-- =====================================================================
+         SERVLETS (only those without @WebServlet on the class)
+    ====================================================================== -->
+
+    <!-- Health Check -->
+    <servlet>
+        <servlet-name>HealthServlet</servlet-name>
+        <servlet-class>edu.loyno.cosca451.HealthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HealthServlet</servlet-name>
+        <url-pattern>/health</url-pattern>
+    </servlet-mapping>
+
+    <!-- Database Check -->
+    <servlet>
+        <servlet-name>DbCheckServlet</servlet-name>
+        <servlet-class>edu.loyno.cosca451.DbCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DbCheckServlet</servlet-name>
+        <url-pattern>/db-check</url-pattern>
+    </servlet-mapping>
+
+    <!-- =====================================================================
+         SESSION & TIMEOUT
+         Sessions expire after 30 minutes of inactivity.
+         JWT expiration (24 hrs) is enforced separately by JwtAuthFilter.
+    ====================================================================== -->
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+
+    <!-- =====================================================================
+         WELCOME FILES
+         Default pages served when the root URL is accessed.
+    ====================================================================== -->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

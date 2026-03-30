@@ -28,4 +28,4 @@ jobs:
         run: mvn test
 
       - name: Build Docker image
-        run: docker build -t devopps-app .
+        run: docker build -f BackAPI/Dockerfile -t devopps-app .

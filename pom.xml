@@ -53,12 +53,14 @@
         <artifactId>jjwt-api</artifactId>
         <version>0.11.5</version>
     </dependency>
+
     <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-impl</artifactId>
         <version>0.11.5</version>
         <scope>runtime</scope>
     </dependency>
+
     <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-jackson</artifactId>
@@ -76,7 +78,19 @@
       <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-web</artifactId>
-          <version>5.0.3.RELEASE</version> <!-- Use an appropriate version -->
+          <version>6.1.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>6.1.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+          <version>6.1.0</version>
       </dependency>
   </dependencies>
 
@@ -97,6 +111,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
+        <configuration>
+          <environmentVariables>
+            <JWT_SECRET>test-jwt-secret-key-for-testing-purposes-only</JWT_SECRET>
+          </environmentVariables>
+        </configuration>
       </plugin>
     </plugins>
   </build>
