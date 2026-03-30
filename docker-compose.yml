@@ -1,27 +1,18 @@
 services:
-  back-api:
+
+  frontend:
     build:
-      context: .
-      dockerfile: ./BackAPI/Dockerfile
-    container_name: back-api
-    env_file:
-    - .env
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      JDBC_URL: jdbc:postgresql://db:5432/${DB_NAME}
-      JWT_SECRET: ${JWT_SECRET}
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: frontend
     ports:
-      - "5050:8080"
+      - "3000:80"
     depends_on:
-      db:
-        condition: service_healthy
+      - tomcat
 
   db:
-    image: postgres:15
+    image: postgres:15 # i thought we were using 17??
+    container_name: tomcat-demo-db
     env_file:
       - .env
     environment:
@@ -39,8 +30,6 @@ services:
       timeout: 5s
       retries: 10
 
-<<<<<<< HEAD
-=======
   tomcat:
     build: .
     container_name: tomcat-demo-web
@@ -53,7 +42,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       JDBC_URL: jdbc:postgresql://db:5432/${DB_NAME}
-      JWT_SECRET: ${JWT_SECRET}
+      # JWT_SECRET: ${JWT_SECRET}
       FRONTEND_URL: http://localhost:3000
     ports:
       - "8080:8080"
@@ -67,7 +56,6 @@ services:
       retries: 8
       start_period: 30s
 
->>>>>>> 771596d (docker compose changes)
 volumes:
   db_data:
-
+#

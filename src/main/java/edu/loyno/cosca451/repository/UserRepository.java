@@ -163,4 +163,21 @@ public class UserRepository {
         user.setDateCreated(rs.getTimestamp("date_created").toLocalDateTime());
         return user;
     }
+
+    public User update(User user) throws SQLException {
+        String sql = """
+            UPDATE users SET is_active = ?
+            WHERE id = ?
+            RETURNING *
+            """;
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setBoolean(1, user.isActive());
+            ps.setLong(2, user.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        }
+        throw new SQLException("Failed to update user");
+    }
 }
