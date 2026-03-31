@@ -13,11 +13,11 @@ package edu.loyno.cosca451.service;
 
 import edu.loyno.cosca451.model.User;
 import edu.loyno.cosca451.repository.UserRepository;
+import edu.loyno.cosca451.util.PasswordUtil;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-@Service
 public class UserService {
 
     // Repository used to query and update users in the database
@@ -101,7 +101,7 @@ public class UserService {
         
         user.setPasswordHash(PasswordUtil.hashPassword(password));
 
-        user.setRole("USER"); // Default role, can be changed later by an admin
+        user.setRole("Citizen"); // Must match allowed DB role values
         user.setActive(true);
 
         return userRepository.save(user);

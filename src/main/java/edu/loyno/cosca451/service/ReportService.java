@@ -28,6 +28,7 @@ import edu.loyno.cosca451.model.ReportUpdate;
 import edu.loyno.cosca451.repository.ReportRepository;
 
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.List;
 
 public class ReportService {
@@ -71,7 +72,7 @@ public class ReportService {
     public ReportUpdate updateStatus(long reportId, long updaterId, ReportUpdateDTO request)
             throws SQLException {
         // Validate the new status value against allowed values from spec
-        String newStatus = request.getNewStatus();
+        String newStatus = normalizeStatus(request.getNewStatus());
         if (newStatus == null || newStatus.isBlank()) {
             throw new IllegalArgumentException("New status is required.");
         }
@@ -108,6 +109,31 @@ public class ReportService {
         reportRepository.updateStatus(reportId, newStatus);
 
         return savedUpdate;
+    }
+
+    private String normalizeStatus(String rawStatus) {
+        if (rawStatus == null) {
+            return null;
+        }
+
+        String normalized = rawStatus.trim();
+        if (normalized.isEmpty()) {
+            return normalized;
+        }
+
+        String key = normalized.toLowerCase(Locale.ROOT)
+                .replace('-', '_')
+                .replace(' ', '_');
+
+        return switch (key) {
+            case "requested", "submitted" -> "Requested";
+            case "open" -> "Open";
+            case "in_progress", "inprogress" -> "In_Progress";
+            case "resolved", "done", "completed" -> "Resolved";
+            case "closed" -> "Closed";
+            case "rejected" -> "Rejected";
+            default -> normalized;
+        };
     }
 
     public void deleteReport(long reportId) throws SQLException {

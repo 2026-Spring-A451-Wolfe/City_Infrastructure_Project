@@ -209,7 +209,7 @@ public class ReportRepository {
                        latitude, longitude, status, created_by,
                        created_at, last_update_id, updated_at
                 FROM reports
-                WHERE id = ?
+                WHERE created_by = ?
                 ORDER BY created_at DESC
                 """;
 
@@ -220,7 +220,7 @@ public class ReportRepository {
             stmt.setLong(1, userId);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
+                while (rs.next()) {
                     Report report = new Report();
                     report.setId(rs.getLong("id"));
                     report.setTitle(rs.getString("title"));

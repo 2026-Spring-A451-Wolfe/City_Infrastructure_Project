@@ -109,6 +109,21 @@ class ReportServiceTest {
         assertTrue(result.isEmpty());
     }
 
+    @Test
+    // Expected Outcome: should return only reports for the requested user
+    void getMyReports_returnsUserScopedReports() throws SQLException {
+        List<Report> userReports = List.of(
+                buildReport(10L, "Flooded Street", "Desc", "Flooding", "High", 29.96, -90.08, 7L),
+                buildReport(11L, "Broken Sign", "Desc", "Sign_Damage", "Low", 29.97, -90.09, 7L));
+        stubRepository.userReports = userReports;
+
+        List<Report> result = reportService.getMyReports(7L);
+
+        assertEquals(2, result.size());
+        assertEquals(7L, result.get(0).getCreatedBy());
+        assertEquals(7L, result.get(1).getCreatedBy());
+    }
+
     // tester report
     private Report buildReport(Long id, String title, String description, String category,
             String severity, double latitude, double longitude, long createdBy) {
@@ -122,6 +137,7 @@ class ReportServiceTest {
     // Stub of fake data
     private static class StubReportRepository extends ReportRepository {
         List<Report> reports = Collections.emptyList();
+        List<Report> userReports = Collections.emptyList();
 
         @Override
         public Report save(Report report) {
@@ -132,6 +148,11 @@ class ReportServiceTest {
         @Override
         public List<Report> findAll() {
             return reports;
+        }
+
+        @Override
+        public List<Report> findByUserId(long userId) {
+            return userReports;
         }
     }
 
