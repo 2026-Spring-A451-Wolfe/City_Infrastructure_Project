@@ -17,6 +17,8 @@ import com.example.web.model.ReportImage;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReportImageRepository {
     private final DataSource dataSource;
@@ -72,6 +74,34 @@ public class ReportImageRepository {
                 }
             }
         }
+    }
+
+    public List<ReportImage> findByReportId(long reportId) throws SQLException {
+        String sql = """
+                SELECT id, report_id, image_url, file_path, uploaded_at
+                FROM report_images
+                WHERE report_id = ?
+                ORDER BY uploaded_at ASC
+                """;
+
+        List<ReportImage> images = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, reportId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ReportImage image = new ReportImage();
+                    image.setId(rs.getLong("id"));
+                    image.setReportId(rs.getLong("report_id"));
+                    image.setImageUrl(rs.getString("image_url"));
+                    image.setFilePath(rs.getString("file_path"));
+                    image.setUploadedAt(rs.getTimestamp("uploaded_at").toLocalDateTime());
+                    images.add(image);
+                }
+            }
+        }
+        return images;
     }
 
     public void delete(ReportImage image) throws SQLException {
