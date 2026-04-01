@@ -84,7 +84,7 @@ build_docker() {
     print_status "Building and starting Docker services..."
     print_warning "This may take several minutes on first run..."
 
-    if docker-compose up --build -d; then
+    if docker compose up --build -d; then
         print_success "Docker services started successfully"
     else
         print_error "Failed to start Docker services"
@@ -100,7 +100,7 @@ wait_for_services() {
     print_status "Waiting for database..."
     timeout=60
     while [ $timeout -gt 0 ]; do
-        if docker-compose ps db | grep -q "healthy"; then
+        if docker compose ps db | grep -q "healthy"; then
             print_success "Database is ready"
             break
         fi
@@ -116,6 +116,19 @@ wait_for_services() {
     print_status "Waiting for Tomcat application..."
     sleep 10  # Give Tomcat time to deploy the application
 
+    # Quick endpoint checks
+    if curl -fs http://localhost:8080/health >/dev/null 2>&1; then
+        print_success "Health endpoint is responding"
+    else
+        print_warning "Health endpoint did not respond yet"
+    fi
+
+    if curl -fs http://localhost:8080/db-check >/dev/null 2>&1; then
+        print_success "DB check endpoint is responding"
+    else
+        print_warning "DB check endpoint did not respond yet"
+    fi
+
     print_success "Services should now be ready"
 }
 
@@ -126,13 +139,14 @@ show_services() {
     echo "=================================="
     echo ""
     echo "Services are running on:"
-    echo "   Frontend:    http://localhost:3000"
-    echo "   Backend API: http://localhost:8080"
+    echo "   Application: http://localhost:8080"
+    echo "   Health:      http://localhost:8080/health"
+    echo "   DB Check:    http://localhost:8080/db-check"
     echo "   Database:    localhost:5433 (internal)"
     echo ""
-    echo "To view service status: docker-compose ps"
-    echo "To view logs:           docker-compose logs -f [service-name]"
-    echo "To stop services:       docker-compose down"
+    echo "To view service status: docker compose ps"
+    echo "To view logs:           docker compose logs -f [service-name]"
+    echo "To stop services:       docker compose down"
     echo ""
 }
 
@@ -155,7 +169,7 @@ case "${1:-}" in
     "clean")
         print_status "Cleaning project..."
         clean_project
-        docker-compose down -v 2>/dev/null || true
+        docker compose down -v 2>/dev/null || true
         print_success "Project cleaned"
         ;;
     "java-only")
@@ -175,24 +189,24 @@ case "${1:-}" in
         ;;
     "stop")
         print_status "Stopping all services..."
-        docker-compose down
+        docker compose down
         print_success "Services stopped"
         ;;
     "restart")
         print_status "Restarting services..."
-        docker-compose restart
+        docker compose restart
         wait_for_services
         show_services
         ;;
     "logs")
         if [ -n "$2" ]; then
-            docker-compose logs -f "$2"
+            docker compose logs -f "$2"
         else
-            docker-compose logs -f
+            docker compose logs -f
         fi
         ;;
     "status")
-        docker-compose ps
+        docker compose ps
         ;;
     *)
         main

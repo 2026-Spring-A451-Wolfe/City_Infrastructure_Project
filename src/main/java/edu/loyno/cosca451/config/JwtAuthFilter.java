@@ -12,9 +12,9 @@
  * Date Last Modified: 03/30/2026                                                    *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package com.example.web.config;
+package edu.loyno.cosca451.config;
 
-import com.example.web.util.JwtUtil;
+import edu.loyno.cosca451.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 

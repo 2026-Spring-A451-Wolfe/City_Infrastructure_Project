@@ -5,8 +5,8 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.example</groupId>
-  <artifactId>tomcat-demo</artifactId>
+<groupId>edu.loyno.cosca451</groupId>
+<artifactId>city-infrastructure-project</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
 

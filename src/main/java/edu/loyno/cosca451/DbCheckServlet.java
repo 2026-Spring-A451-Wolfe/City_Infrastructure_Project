@@ -7,9 +7,9 @@
  * Date Last Modified: 03/30/2026
  **************************************************************************/
 
-package com.example.web;
+package edu.loyno.cosca451;
 
-import com.example.web.util.DatabaseUtil;
+import edu.loyno.cosca451.util.DatabaseUtil;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

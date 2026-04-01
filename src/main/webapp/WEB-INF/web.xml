@@ -19,6 +19,16 @@
 
     <display-name>NOLA Infrastructure Reporting and Tracking System</display-name>
 
+    <filter>
+        <filter-name>JwtAuthFilter</filter-name>
+        <filter-class>edu.loyno.cosca451.config.JwtAuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>JwtAuthFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+
     <!-- JwtAuthFilter is registered via @WebFilter("/api/*"). API controllers use
          @WebServlet — listing them here too causes duplicate url-pattern errors. -->
 
@@ -36,15 +46,6 @@
         <url-pattern>/health</url-pattern>
     </servlet-mapping>
 
-    <!-- Database Check -->
-    <servlet>
-        <servlet-name>DbCheckServlet</servlet-name>
-        <servlet-class>edu.loyno.cosca451.DbCheckServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DbCheckServlet</servlet-name>
-        <url-pattern>/db-check</url-pattern>
-    </servlet-mapping>
 
     <!-- =====================================================================
          SESSION & TIMEOUT
