@@ -7,8 +7,8 @@
  * Author: Adin Hultin                                                         *
  * -Edited by:                                                                 *
  * -Ethan DeLaRosa on 3/15                                                     *
- * -Hector Maes on 3/27                                                        *
- * Date Last Modified: 03/15/2026                                              *
+ * -Hector Maes on 03/27/26                                                        *
+ * Date Last Modified: 03/27/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package edu.loyno.cosca451.servlets;
 
@@ -63,13 +63,14 @@ public class ReportServlet extends HttpServlet { //ReportService changed to Repo
         response.setCharacterEncoding("UTF-8");
 
         try {
-            //reads JSON body
+            //parses incoming JSON request boy into DTO
             ReportRequest reportRequest = objectMapper.readValue(request.getInputStream(), ReportRequest.class);
 
             // TEMPORARY until login/session is wired up.
             // Use an existing seeded citizen account ID.
             long createdBy = 2L;
 
+            //call service layer
             Report savedReport = reportService.createReport(reportRequest, createdBy);
 
             response.setStatus(HttpServletResponse.SC_CREATED);

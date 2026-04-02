@@ -4,8 +4,11 @@
  * Description: Handles all direct JDBC database queries for the reports,      *
  *              report_updates, and report_images tables. No business logic    *
  *              here — only raw SQL operations. Called only by ReportService.  *
- * Author: Carter Roberts, edited by Ethan DeLaRosa on 3/15                   *
- * Date Last Modified: 03/15/2026                                             *
+ * Author: Carter Roberts                                                      *
+ * Edited by:                                                                  *
+ * Ethan DeLaRosa - 03/15/2026                                                 *
+ * Hector Maes - 04/02/2026                                                    *
+ * Date Last Modified: 03/15/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.db;

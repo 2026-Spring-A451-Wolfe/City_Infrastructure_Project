@@ -6,10 +6,12 @@
  *              submission. Validated in ReportService before a Report object  *
  *              is built.                                                      *
  * Author: Adin Hultin                                                         *
- * Date Last Modified: 03/05/2026                                              *
+ * Edited By:                                                                  *
+ * Hector Maes - 04/02/2026                                                    *
+ * Date Last Modified: 04/02/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package com.example.web.dto;
+package edu.loyno.cosca451.dto;
 
 public class ReportRequest {
 
