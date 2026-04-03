@@ -12,17 +12,29 @@
 2/27/2026 By Roi
 added lines 390-412, 425-438, 458-610, 613-661
 */
+
+/*3/27 redesign done by Adin 
+-colorway changed
+-Updated the font so it looks good on Mac                                                
+- Made all the rounded corners consistent — inputs are slightly
+rounded, cards are a bit more, and the map is the most rounded     
+- Added a subtle blue glow when you click into any text field so   
+you can tell which one is active                                
+- Added hover effects to the dashboard cards, update cards, report 
+cards, and sidebar items — they lift up slightly when you hover   
+over them, and buttons press down when you click                   
+- Removed an old opacity hack on the registration inputs */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-    /*The font can be changed later; group discussion?*/
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 body {
-    background-color: #eae4cc;
-    color: #333;
+    background-color: #f0f4f8;
+    color: #1a2b3c;
 
     display: flex;
     flex-direction: column;
@@ -35,7 +47,7 @@ body {
    NAVIGATION BAR
  * ~ * ~ * ~ * ~ */
 .top-bar {
-    background-color: #5a80a1;
+    background-color: #1e3a5f;
     height: 100px;
     display: flex;
     align-items: center;
@@ -43,8 +55,7 @@ body {
     padding: 0 25px;
     position: sticky;
     top: 0;
-    border-bottom: 10px solid #6a5948;
-    /* #504136*/
+    border-bottom: 3px solid #4a9ebb;
     z-index: 10;
 }
 
@@ -54,16 +65,16 @@ body {
     transform: translateX(-50%);
     font-size: 1.5rem;
     font-weight: 400;
-    color: #aad4f6;
+    color: #d1e3f0;
     z-index: 1;
 }
 
 .top-bar__profile {
     width: 60px;
     height: 60px;
-    background-color: #759dbf;
+    background-color: #2d6a9f;
     border-radius: 50%;
-    border: 4px solid #7fbebc;
+    border: 4px solid #4a9ebb;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,7 +88,7 @@ body {
 }
 
 .top-bar__profile:hover {
-    background-color: #517390;
+    background-color: #1e3a5f;
     transform: scale(1.05);
 }
 
@@ -104,23 +115,23 @@ body {
    SUBMISSION HERO
  * ~ * ~ * ~ * ~ */
 .submission-hero {
-    background-color: #9cbfcf;
+    background-color: #4a9ebb;
     padding: 30px 10px;
     text-align: center;
-    border-bottom: 2px solid #cfd8dc;
+    /*border-bottom: 2px solid #cfd8dc; I dont think we need this? It makes it look like theres a gap between the hero and the bottom. -Kelly*/
 }
 
 .submission-hero__title {
     font-size: 1.8rem;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #385064;
+    color: #1e3a5f;
 }
 
 .submission-hero__subtitle {
     font-size: 1rem;
     font-weight: 300;
-    color: #333333;
+    color: #1a2b3c;
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -138,10 +149,10 @@ body {
 }
 
 .report-section {
-    background: #7fbebc;
+    background: #ffffff;
     padding: 25px;
-    border-radius: 18px;
-    border: 2px solid #504136;
+    border-radius: 10px;
+    border: 1px solid #dce4ec;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     transition: 0.3s ease;
 }
@@ -153,21 +164,29 @@ body {
 
 .report-section__title {
     font-size: 1.1rem;
-    font-weight: 525;
+    font-weight: 600;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px solid #333333;
-    color: #385064;
+    border-bottom: 2px solid #4a9ebb;
+    color: #1e3a5f;
 }
 
 .report-section__input,
 .report-section__textarea {
     width: 100%;
-    padding: 10px;
+    padding: 10px 12px;
     border-radius: 6px;
-    background-color: #e8e7e0;
-    border: 1px solid #3c7d7b;
+    background-color: #f0f4f8;
+    border: 1.5px solid #dce4ec;
     font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.report-section__input:focus,
+.report-section__textarea:focus {
+    border-color: #4a9ebb;
+    box-shadow: 0 0 0 3px rgba(74, 158, 187, 0.15);
 }
 
 .report-section__textarea::placeholder,
@@ -184,33 +203,39 @@ body {
 .report-section__map {
     margin-top: 15px;
     height: 180px;
-    background-color: #b3e5fc;
-    border-radius: 12px;
-    border: 2px solid #3c7d7b;
+    background-color: #f0f4f8;
+    border-radius: 10px;
+    border: 1.5px solid #dce4ec;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    color: #0277bd;
+    color: #1e3a5f;
     transition: 0.3s ease;
 }
 
 .report-section__submit {
     width: 100%;
     padding: 12px;
-    background-color: rgb(133, 190, 237);
-    color: #385064;
-    border: 2px solid #3c7d7b;
-    border-radius: 8px;
+    background-color: #2d6a9f;
+    color: white;
+    border: none;
+    border-radius: 6px;
     font-size: 1rem;
-    font-weight: 530;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
 }
 
 .report-section__submit:hover {
-    background-color: #b3e5fc;
+    background-color: #245a87;
     transform: translateY(-2px);
+}
+
+.report-section__submit:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -227,20 +252,20 @@ body {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 10px;
-    color: #385064;
+    color: #1e3a5f;
 }
 
 /* ~ * ~ * ~ * ~ *
    LOGIN CARD
  * ~ * ~ * ~ * ~ */
 .login-card {
-    background: #75a0c4;
+    background: #ffffff;
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
     padding: 30px;
-    border-radius: 20px;
-    border: 2px solid #504136;
+    border-radius: 10px;
+    border: 1px solid #dce4ec;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
@@ -257,17 +282,24 @@ body {
     font-size: 1.3rem;
     font-weight: 600;
     padding-bottom: 8px;
-    border-bottom: 1px solid #333333;
-    color: #385064;
+    border-bottom: 2px solid #4a9ebb;
+    color: #1e3a5f;
     text-align: center;
 }
 
 .login-card__input {
     padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #3c7d7b;
-    background-color: #e8e7e0;
+    border-radius: 6px;
+    border: 1.5px solid #dce4ec;
+    background-color: #f0f4f8;
     font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.login-card__input:focus {
+    border-color: #4a9ebb;
+    box-shadow: 0 0 0 3px rgba(74, 158, 187, 0.15);
 }
 
 .login-card__input::placeholder {
@@ -277,19 +309,25 @@ body {
 
 .login-card__button {
     padding: 12px;
-    background-color: rgb(133, 190, 237);
-    color: #385064;
-    border: 2px solid #3c7d7b;
-    border-radius: 8px;
+    background-color: #2d6a9f;
+    color: white;
+    border: none;
+    border-radius: 6px;
     font-size: 1rem;
-    font-weight: 550;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
 }
 
 .login-card__button:hover {
-    background-color: #b3e5fc;
+    background-color: #245a87;
     transform: translateY(-2px);
+}
+
+.login-card__button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
 }
 
 .login-card__footer {
@@ -298,7 +336,7 @@ body {
 }
 
 .login-card__link {
-    color: #385064;
+    color: #1e3a5f;
     font-weight: 600;
     text-decoration: none;
 }
@@ -316,7 +354,7 @@ body {
 
 .map-section__title {
     font-size: 1.8rem;
-    color: #385064;
+    color: #1e3a5f;
     margin-bottom: 20px;
 }
 
@@ -325,9 +363,9 @@ body {
     width: 90%;
     max-width: 1000px;
     margin: 0 auto;
-    border-radius: 20px;
-    border: 4px solid #504136;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    border: 2px solid #dce4ec;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -349,21 +387,24 @@ body {
     width: 75%;
     margin: 10px 0;
 
-    background: #7fbebc;
+    background: #f0f4f8;
     padding: 15px;
-    border-radius: 15px;
-    border: 3px solid #504136;
-    opacity: 0.8;
-    /* most of the 'lighter' text boxes are at 80% opacity, using 
-                    the same basic palette from the rest of the website -- either force fake opacity
-                    with hex code, or use RGBA to keep borders intact*/
+    border-radius: 6px;
+    border: 1.5px solid #dce4ec;
     font-size: 16px;
     outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.registration-section__input:focus {
+    border-color: #4a9ebb;
+    box-shadow: 0 0 0 3px rgba(74, 158, 187, 0.15);
 }
 
 .registration-section__input::placeholder {
     /*asking for user input*/
-    color: #091817;
+    color: #bbbbbb;
+    font-style: italic;
 }
 
 /*sign-up button*/
@@ -372,25 +413,31 @@ body {
     padding: 20px;
     width: 90%;
 
-    background: #5a80a1;
-    border: 2px solid #504136;
-    border-radius: 25px;
+    background-color: #2d6a9f;
+    color: white;
+    border: none;
+    border-radius: 10px;
 
     font-size: 30px;
     cursor: pointer;
     transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
 }
 
 .registration-section__button:hover {
-    background-color: #7fbebc;
-    opacity: 0.8;
+    background-color: #245a87;
     transform: translateY(-2px);
+}
+
+.registration-section__button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
 }
 
 .registration-section .confirmation {
     margin-top: 20px;
     font-size: 14px;
-    color: #333;
+    color: #1a2b3c;
 }
 
 /* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
@@ -418,7 +465,7 @@ body {
 .admin-panel-heading{
     font-size: 1.25rem;
     font-weight: 600;
-    color: #385064;
+    color: #1e3a5f;
     margin-bottom: 6px;
 }
 
@@ -471,10 +518,10 @@ body {
 
 /*Reports list - scrollable, clickable once JS implemented*/
 .admin-reports-list {
-    border: 2px solid #504136;
+    border: 1px solid #dce4ec;
     width: 320px;
-    border-radius: 12px;
-    background: rgba(127, 190, 188, 0.35);
+    border-radius: 10px;
+    background: rgba(45, 106, 159, 0.08);
     padding: 16px;
     height: 600px;
     overflow-y: auto;
@@ -494,22 +541,22 @@ body {
     margin-bottom: 12px;
     background: white;
     border: 2px solid #d0d4d9;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .admin-reports-item:hover {
-    border-color: #7fbebc;
+    border-color: #4a9ebb;
     box-shadow: 0 2px 6px rgba(127, 190, 188, 0.3);
     transform: translateY(-1px);
 }
 
 .admin-reports-item.selected {
-    background: #e0f4f3;
-    border-color: #3c7d7b;
-    box-shadow: 0 2px 8px rgba(60, 125, 123, 0.25);
+    background: #e8f1f8;
+    border-color: #2d6a9f;
+    box-shadow: 0 2px 8px rgba(45, 106, 159, 0.25);
 }
 
 /*Report viewer - click on report, see detail*/
@@ -517,7 +564,7 @@ body {
     background: white;
     width: 100%;
     border: 2px solid #d0d4d9;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 32px;
     display: flex;
     flex-direction: column;
@@ -526,7 +573,7 @@ body {
 }
 
 .admin-view-header {
-    border-bottom: 2px solid #e8e9eb;
+    border-bottom: 2px solid #e0e3e7;
     padding-bottom: 16px;
 }
 
@@ -574,7 +621,7 @@ body {
 }
 
 .admin-view-picture:hover {
-    border-color: #7fbebc;
+    border-color: #4a9ebb;
     box-shadow: 0 2px 8px rgba(127, 190, 188, 0.2);
 }
 
@@ -605,14 +652,14 @@ body {
     border: 2px solid #e0e3e7;
     border-radius: 8px;
     padding: 20px;
-    background: #f8f9fa;
+    background: #f5f7fa;
     min-height: 100px;
 }
 
 .admin-view-description__title{
     font-size: 1.02rem;
     font-weight: 600;
-    color: #385064;
+    color: #1e3a5f;
     margin-bottom: 8px;
 }
 
@@ -631,19 +678,19 @@ body {
     border: 2px solid #e0e3e7;
     border-radius: 8px;
     padding: 16px 20px;
-    background: #f8f9fa;
+    background: #f5f7fa;
 }
 
 .admin-report-buttons label{
     font-weight: 600;
-    color: #385064;
+    color: #1e3a5f;
     min-width: 145px;
 }
 
 .admin-report-buttons__input,
 .admin-report-buttons__select {
     border-radius: 6px;
-    border: 1px solid #c1c7cd;
+    border: 1px solid #1e3a5f;
     background: white;
     padding: 10px 14px;
     width: 100%;
@@ -669,23 +716,23 @@ body {
     font-weight: 600;
     border-radius: 8px;
     border: none;
-    background: linear-gradient(135deg, #4a9d9c 0%, #3c7d7b 100%);
+    background: linear-gradient(135deg, #2d6a9f 0%, #245a87 100%);
     color: white;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 6px rgba(60, 125, 123, 0.3);
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
 }
 
 .admin-report-update:hover {
-    background: linear-gradient(135deg, #5ab3b2 0%, #4a9d9c 100%);
+    background: linear-gradient(135deg, #3578ad 0%, #2d6a9f 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(60, 125, 123, 0.4);
+    box-shadow: 0 4px 12px rgba(45, 106, 159, 0.4);
 }
 
 .admin-report-update:active {
     transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(60, 125, 123, 0.3);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
 }
 
 @media (max-width: 1024px) {
@@ -745,10 +792,10 @@ body {
    SUB NAV BAR
  * ~ * ~ * ~ * ~ */
 .sub-nav {
-    background-color: #6a5948;
-    height: 40px;
+    background-color: #162d4a;
+    height: 45px;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     gap: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -760,13 +807,13 @@ body {
     font-size: 0.95rem;
     font-weight: 500;
     padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: 6px;
     transition: all 0.2s ease;
 }
 
 .sub-nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .sub-nav a:active,
@@ -803,7 +850,7 @@ body {
 .dashboard__divider {
     height: 2px;
     width: 320px;
-    background-color: black;
+    background-color: #4a9ebb;
     margin: 8px 0 40px 0;
 }
 
@@ -814,23 +861,31 @@ body {
 
 .dashboard-card {
     width: 320px;
-    border: 2px solid #7fbebc;
-    border-radius: 12px;
+    border: 1px solid #dce4ec;
+    border-radius: 10px;
     overflow: hidden;
-    background-color: #d9d9d9;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-card__header {
     padding: 12px;
     text-align: center;
     font-size: 1.2rem;
-    background-color: #d9d9d9;
-    border-bottom: 2px solid #7fbebc;
+    background-color: #1e3a5f;
+    color: white;
+    font-weight: 600;
 }
 
 .dashboard-card__body {
     height: 250px;
-    background-color: #d9d9d9;
+    background-color: #f0f4f8;
 }
 
 /* ~ * ~ * ~ * ~ *
@@ -845,14 +900,14 @@ body {
     background-color: #5a80a1;
     border-radius: 12px;
     overflow: hidden;
-    border: 2px solid #7fbebc;
+    border: 2px solid #4a9ebb;
 }
 
 .profile-dropdown div {
     padding: 15px;
     color: white;
     font-size: 1.2rem;
-    border-bottom: 1px solid #7fbebc;
+    border-bottom: 1px solid #4a9ebb;
     cursor: pointer;
 }
 
@@ -861,7 +916,7 @@ body {
 }
 
 .profile-dropdown div:hover {
-    background-color: #517390;
+    background-color: #1e3a5f;
 }
 
 */
@@ -877,13 +932,13 @@ body {
 .sidebar {
     width: 260px;
     padding: 30px 20px;
-    border-right: 3px solid #7fbebc;
+    border-right: 3px solid #4a9ebb;
 }
 
 .sidebar__profile-circle {
     width: 100px;
     height: 100px;
-    background-color: #78a0c3;
+    background-color: #2d6a9f;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -900,13 +955,20 @@ body {
 .sidebar__nav li {
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #d9d9d9;
+    background-color: #f0f4f8;
     border-radius: 6px;
     font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar__nav li:hover {
+    background-color: #e0eaf2;
+    transform: translateX(3px);
 }
 
 .sidebar__nav li.active {
-    background-color: #7fbebc;
+    background-color: #4a9ebb;
     color: white;
 }
 
@@ -926,7 +988,7 @@ body {
 
 .content__divider {
     height: 3px;
-    background-color: #7fbebc;
+    background-color: #4a9ebb;
     width: 100%;
     margin: 10px 0 30px 0;
 }
@@ -938,17 +1000,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 2px solid #7fbebc;
-    border-radius: 12px;
+    border: 2px solid #4a9ebb;
+    border-radius: 10px;
     padding: 20px;
     background-color: white;
     margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .report-card__image {
     width: 130px;
     height: 100px;
-    background-color: #d9d9d9;
+    background-color: #f0f4f8;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -982,8 +1050,8 @@ body {
 .progress__bar {
     width: 100%;
     height: 10px;
-    background-color: #d9d9d9;
-    border-radius: 20px;
+    background-color: #e8eef4;
+    border-radius: 16px;
     overflow: hidden;
 }
 
@@ -992,23 +1060,30 @@ body {
     height: 100%;
     width: 0%;
     /* Default for now */
-    background-color: #67936d;
+    background-color: #2d6a9f;
     transition: width 0.4s ease;
 }
 
 /* BUTTON */
 .report-card__btn {
-    background-color: #d9d9d9;
+    background-color: #2d6a9f;
+    color: white;
     border: none;
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: 6px;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.3s ease;
     margin-top: 15px;
 }
 
 .report-card__btn:hover {
-    background-color: #c4c4c4;
+    background-color: #245a87;
+    transform: translateY(-1px);
+}
+
+.report-card__btn:active {
+    transform: translateY(0);
 }
 
 /* ~ * ~ * ~ * ~ *
@@ -1028,24 +1103,51 @@ body {
 .updates__divider {
     height: 3px;
     width: 220px;
-    background-color: #7fbebc;
+    background-color: #4a9ebb;
     margin: 10px 0 40px 0;
 }
 
 .update-card {
-    border: 2px solid #7fbebc;
-    border-radius: 12px;
+    border: 2px solid #4a9ebb;
+    border-radius: 10px;
     padding: 20px;
     background-color: white;
     margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.update-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+/*cancel button format cw*/
+.cancel-btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background-color: #c62828;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #e53935;
+    transform: translateY(-1px);
+}
+
+.cancel-btn:active {
+    transform: translateY(0);
 }
 
 /* ~ * ~ * ~ * ~ *
   FOOTER
  * ~ * ~ * ~ * ~ */
 .main-footer {
-    background-color: #5a80a1;
-    border-top: 10px solid #705252;
+    background-color: #1e3a5f;
+    border-top: 3px solid #4a9ebb;
     color: white;
     text-align: center;
     padding: 20px;
