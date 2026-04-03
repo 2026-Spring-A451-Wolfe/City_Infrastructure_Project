@@ -35,14 +35,14 @@ import java.util.Map;
 
 /* Refactored ImageController -> now under edu.loyno.cosca451.servlets
  * Handles HTTP requests to upload report images.
- * Endpoint:    POST /api/reports/{id}/images
+ * Endpoint:    POST /api/images/{id}
  * Auth:        Required (Citizen/Admin)
  * This controller is responsible only for reading requests,
  * validating JWT access, passing image data to ImageStorageService,
  * and writing JSON responses back to the client.
  */
 
-@WebServlet("/api/reports/*")
+@WebServlet("/api/images/*")
 @MultipartConfig
 public class ImageController extends HttpServlet {
 
@@ -61,7 +61,7 @@ public class ImageController extends HttpServlet {
         resp.setContentType("application/json");
         String path = req.getPathInfo();
 
-        if (path != null && path.matches("/\\d+/images")) {
+        if (path != null && path.matches("/\\d+")) {
             handleImageUpload(req, resp);
         } else {
             resp.setStatus(404);

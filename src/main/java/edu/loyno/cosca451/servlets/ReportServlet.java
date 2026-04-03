@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +47,7 @@ public class ReportServlet extends HttpServlet { //ReportService changed to Repo
             response.setStatus(HttpServletResponse.SC_OK);
             objectMapper.writeValue(response.getWriter(), reports);
 
-        } catch (SQLException e) {
+} catch (Exception e) {
 
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             objectMapper.writeValue(response.getWriter(),
@@ -82,8 +82,8 @@ public class ReportServlet extends HttpServlet { //ReportService changed to Repo
             objectMapper.writeValue(response.getWriter(),
                     Map.of("error", e.getMessage()));
 
-        } catch (SQLException e) {
-            
+        } catch (Exception e) {
+
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             objectMapper.writeValue(response.getWriter(),
                     Map.of("error", "Failed to save report.", "details", e.getMessage()));

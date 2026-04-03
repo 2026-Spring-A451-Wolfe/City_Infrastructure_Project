@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const signupBtn = document.getElementById("signupButton");
-    const message = document.getElementById("message");
+    const message = document.getElementById("confirmation");
 
     signupBtn.addEventListener("click", function () {
 
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Call the Java Backend Servlet to actually register the user!
         const requestData = {
             username: emailValue.split('@')[0], // Generate a fake username from email
-            email_or_phone: emailValue,
+            emailOrPhone: emailValue,
             password: passwordValue
         };
 
