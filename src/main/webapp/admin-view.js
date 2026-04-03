@@ -1,5 +1,5 @@
 (function () {
-    const API_BASE = "/api/admin";
+    const API_BASE = "";
 
     const state = {
         reports: [],
@@ -52,7 +52,7 @@
 
     async function loadDepartments() {
         try {
-            const departments = await apiGet(`${API_BASE}/departments`);
+            const departments = await apiGet(`/departments/`);
             const normalized = Array.isArray(departments)
                 ? departments
                 : Array.isArray(departments?.items)
@@ -74,7 +74,7 @@
     async function loadReports() {
         setQueueLoading(true);
         try {
-            const response = await apiGet(`${API_BASE}/reports`);
+            const response = await apiGet(`/reports`);
             state.reports = normalizeReportList(response);
             renderQueue();
 
@@ -139,7 +139,9 @@
         showMessage("Loading report...", false);
 
         try {
-            const report = await apiGet(`${API_BASE}/reports/${encodeURIComponent(reportId)}`);
+            const report = state.reports.find(r => String(getReportId(r)) === String(reportId));
+            if (!report) throw new Error("Report not found in loaded list.");
+            
             state.selectedReportId = getReportId(report) || reportId;
             applyReportDetail(report);
             renderQueue();
@@ -226,7 +228,7 @@
         showMessage("Saving updates...", false);
 
         try {
-            const updated = await apiPatch(`${API_BASE}/reports/${encodeURIComponent(state.selectedReportId)}`, payload);
+            const updated = await apiPatch(`/reports/${encodeURIComponent(state.selectedReportId)}`, payload);
             applyReportDetail(updated);
             showMessage("Report updated successfully.", false);
         } catch (error) {
@@ -285,7 +287,7 @@
     function setQueueStatus(message, isError) {
         dom.queueEmpty.textContent = message;
         dom.queueEmpty.style.display = "flex";
-        dom.queueEmpty.style.color = isError ? "#a61010" : "#385064"; //Made error color brighter. I could barely tell it apart from regular text. -Kelly
+        dom.queueEmpty.style.color = isError ? "#7a1f1f" : "#385064";
     }
 
     function showMessage(message, isError) {
@@ -297,7 +299,7 @@
 
         pageMessage.textContent = message;
         pageMessage.style.display = "block";
-        pageMessage.style.color = isError ? "#a61010" : "#385064";
+        pageMessage.style.color = isError ? "#7a1f1f" : "#385064";
     }
 
     function getReportId(report) {
@@ -327,23 +329,27 @@
     }
 
     async function apiGet(url) {
+        const token = localStorage.getItem('jwt') || '';
         const response = await fetch(url, {
             method: "GET",
-            credentials: "include",
+            credentials: "omit",
             headers: {
-                "Accept": "application/json"
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
             }
         });
         return handleJsonResponse(response);
     }
 
     async function apiPatch(url, payload) {
+        const token = localStorage.getItem('jwt') || '';
         const response = await fetch(url, {
             method: "PATCH",
-            credentials: "include",
+            credentials: "omit",
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(payload)
         });

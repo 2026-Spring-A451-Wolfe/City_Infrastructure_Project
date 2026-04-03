@@ -1,7 +1,6 @@
-<!--
+﻿<!--
 Author: Jana El-Khatib
 Purpose: Report Tracker page – displays user-submitted reports and their progress status
-Last Modified: 2/23/2026
 -->
 
 <!DOCTYPE html>
@@ -15,7 +14,6 @@ Last Modified: 2/23/2026
 
 <body>
 
-    <!-- Top Navigation Bar -->
     <header class="top-bar">
         <div class="top-bar__menu">
             <span></span>
@@ -33,7 +31,6 @@ Last Modified: 2/23/2026
 
     <div class="layout">
 
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar__profile-circle">Profile</div>
 
@@ -46,41 +43,18 @@ Last Modified: 2/23/2026
         <main class="content">
             <h2 class="content__title">Report Tracker</h2>
             <div class="content__divider"></div>
-
-            <!-- REPORT CARD -->
-            <div class="report-card">
-                <div class="report-card__image">
-                    Picture of what they submitted
-                </div>
-
-                <div class="report-card__info">
-                    <p><strong>Report name:</strong></p>
-                    <p>Report Description</p>
-
-                    <div class="progress">
-                        <div class="progress__labels">
-                            <span>Submitted</span>
-                            <span>Processed</span>
-                            <span>Under Review</span>
-                            <span>Completed</span>
-                        </div>
-
-                        <div class="progress__bar">
-                            <div class="progress__fill"></div>
-                        </div>
-                    </div>
-
-                    <button class="report-card__btn">View Report</button>
-                </div>
-            </div>
+            <!-- Javascript will insert report cards here -->
         </main>
     </div>
     <footer class="main-footer">
         loyola university new orleans swe class project etc etc
     </footer>
     <script src="shared-hamburger-menu.js"></script>
+    <!-- To link the jsfile to the HTML - Ameen -->
+    <script src="reports.js?v=3"></script>
 </body>
-<!-- To link the jsfile to the HTML - Ameen -->
-<script src="reports.js"></script>
 
 </html>
+
+
+

@@ -29,19 +29,22 @@
 
   <!-- Login Card -->
   <main>
-    <form class="login-card">
+    <form class="login-card" id="loginForm">
       <h3 class="login-card__title">Login</h3>
+      <!-- Messages for user (error/success) -->
+      <div id="login-message" style="color: red; margin-bottom: 10px; font-weight: bold; font-family: sans-serif; text-align: center;"></div>
 
-      <input 
-        type="username" 
-        class="login-card__input" 
-        placeholder="Username" 
+      <input
+        type="text"
+        id="email_or_phone"
+        class="login-card__input"
+        placeholder="Username or Email"
         required
       >
 
-      <input 
-        type="password" 
-        class="login-card__input" 
+      <input
+        type="password"
+        id="password"
         placeholder="Password" 
         required
       >
@@ -96,6 +99,7 @@
     loyola university new orleans swe class project etc etc
 </footer>
 <script src="shared-hamburger-menu.js"></script>
+<script src="login-page.js"></script>
 
 </body>
 </html>
