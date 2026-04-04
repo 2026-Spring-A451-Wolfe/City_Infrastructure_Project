@@ -1,0 +1,1154 @@
+/* ~ * ~ * ~ * ~ *
+   Author(s): Jana El-Khatib, Madeline Krehely, Sophina Nichols
+   Purpose: CSS for the Infrastructure Reporter
+   Last Modified: 2/22/2026
+ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   GLOBAL RESET
+ * ~ * ~ * ~ * ~ */
+/*
+
+2/27/2026 By Roi
+added lines 390-412, 425-438, 458-610, 613-661
+*/
+
+/*3/27 redesign done by Adin 
+-colorway changed
+-Updated the font so it looks good on Mac                                                
+- Made all the rounded corners consistent — inputs are slightly
+rounded, cards are a bit more, and the map is the most rounded     
+- Added a subtle blue glow when you click into any text field so   
+you can tell which one is active                                
+- Added hover effects to the dashboard cards, update cards, report 
+cards, and sidebar items — they lift up slightly when you hover   
+over them, and buttons press down when you click                   
+- Removed an old opacity hack on the registration inputs */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #1a2b3c;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   NAVIGATION BAR
+ * ~ * ~ * ~ * ~ */
+.top-bar {
+    background-color: #1e3a5f;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    position: sticky;
+    top: 0;
+    border-bottom: 3px solid #4a9ebb;
+    z-index: 10;
+}
+
+.top-bar__title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #d1e3f0;
+    z-index: 1;
+}
+
+.top-bar__profile {
+    width: 60px;
+    height: 60px;
+    background-color: #2d6a9f;
+    border-radius: 50%;
+    border: 4px solid #4a9ebb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.3s ease;
+    z-index: 2;
+}
+
+.top-bar__profile:hover {
+    background-color: #1e3a5f;
+    transform: scale(1.05);
+}
+
+.top-bar__menu {
+    width: 30px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.top-bar__menu span {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   SUBMISSION HERO
+ * ~ * ~ * ~ * ~ */
+.submission-hero {
+    background-color: #4a9ebb;
+    padding: 30px 10px;
+    text-align: center;
+    /*border-bottom: 2px solid #cfd8dc; I dont think we need this? It makes it look like theres a gap between the hero and the bottom. -Kelly*/
+}
+
+.submission-hero__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1e3a5f;
+}
+
+.submission-hero__subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #1a2b3c;
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   SUBMISSION FORM
+ * ~ * ~ * ~ * ~ */
+.submission-form {
+    width: 800px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.report-section {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #dce4ec;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    transition: 0.3s ease;
+}
+
+.report-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.report-section__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #4a9ebb;
+    color: #1e3a5f;
+}
+
+.report-section__input,
+.report-section__textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background-color: #f0f4f8;
+    border: 1.5px solid #dce4ec;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.report-section__input:focus,
+.report-section__textarea:focus {
+    border-color: #4a9ebb;
+    box-shadow: 0 0 0 3px rgba(74, 158, 187, 0.15);
+}
+
+.report-section__textarea::placeholder,
+.report-section__input::placeholder {
+    border-color: #3c7d7b;
+    color: #bbbbbb;
+    /* light grey */
+    font-style: italic;
+    /* optional, makes it subtle */
+    opacity: 1;
+    /* ensures full visibility on all browsers */
+}
+
+.report-section__map {
+    margin-top: 15px;
+    height: 180px;
+    background-color: #f0f4f8;
+    border-radius: 10px;
+    border: 1.5px solid #dce4ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #1e3a5f;
+    transition: 0.3s ease;
+}
+
+.report-section__submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #2d6a9f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
+}
+
+.report-section__submit:hover {
+    background-color: #245a87;
+    transform: translateY(-2px);
+}
+
+.report-section__submit:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   LOGIN HERO
+ * ~ * ~ * ~ * ~ */
+.login-hero {
+    text-align: center;
+    padding: 50px 20px 20px 20px;
+}
+
+.login-hero__title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #1e3a5f;
+}
+
+/* ~ * ~ * ~ * ~ *
+   LOGIN CARD
+ * ~ * ~ * ~ * ~ */
+.login-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #dce4ec;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.login-card__title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #4a9ebb;
+    color: #1e3a5f;
+    text-align: center;
+}
+
+.login-card__input {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1.5px solid #dce4ec;
+    background-color: #f0f4f8;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.login-card__input:focus {
+    border-color: #4a9ebb;
+    box-shadow: 0 0 0 3px rgba(74, 158, 187, 0.15);
+}
+
+.login-card__input::placeholder {
+    color: #bbbbbb;
+    font-style: italic;
+}
+
+.login-card__button {
+    padding: 12px;
+    background-color: #2d6a9f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
+}
+
+.login-card__button:hover {
+    background-color: #245a87;
+    transform: translateY(-2px);
+}
+
+.login-card__button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
+}
+
+.login-card__footer {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.login-card__link {
+    color: #1e3a5f;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-card__link:hover {
+    text-decoration: underline;
+}
+
+/* ~ * ~ * ~ * ~ * MAP SECTION * ~ * ~ * ~ * ~ */
+
+.map-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.map-section__title {
+    font-size: 1.8rem;
+    color: #1e3a5f;
+    margin-bottom: 20px;
+}
+
+#map {
+    height: 500px;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 16px;
+    border: 2px solid #dce4ec;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+ REGISTRATION PAGE
+ * ~ * ~ * ~ * ~ */
+.registration-section {
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    gap: 5px;
+    padding: 0 20px;
+    align-items: center;
+}
+
+.registration-section__input {
+    width: 75%;
+    margin: 10px 0;
+
+    background: #f0f4f8;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1.5px solid #dce4ec;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.registration-section__input:focus {
+    border-color: #4a9ebb;
+    box-shadow: 0 0 0 3px rgba(74, 158, 187, 0.15);
+}
+
+.registration-section__input::placeholder {
+    /*asking for user input*/
+    color: #bbbbbb;
+    font-style: italic;
+}
+
+/*sign-up button*/
+.registration-section__button {
+    margin-top: 25px;
+    padding: 20px;
+    width: 90%;
+
+    background-color: #2d6a9f;
+    color: white;
+    border: none;
+    border-radius: 10px;
+
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
+}
+
+.registration-section__button:hover {
+    background-color: #245a87;
+    transform: translateY(-2px);
+}
+
+.registration-section__button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
+}
+
+.registration-section .confirmation {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #1a2b3c;
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+    ADMIN PAGE
+ * ~ * ~ * ~ * ~ */
+
+.admin-layout {
+    flex: 1;
+    padding: 60px 80px;
+}
+
+/*splits the page into the proper sections*/
+.admin-page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 32px;
+
+    max-width: 1400px;
+    margin: 40px auto;
+    width: calc(100% - 60px);
+}
+
+.admin-panel-heading{
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-bottom: 6px;
+}
+
+.admin-panel-subtext{
+    font-size: 0.92rem;
+    color: #5a6c7d;
+    margin-bottom: 14px;
+}
+
+/* Status badges for report items */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge--submitted {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-badge--under-review {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.status-badge--in-progress {
+    background: #f3e5f5;
+    color: #6a1b9a;
+}
+
+.status-badge--halted {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.status-badge--done {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge--rejected {
+    background: #fce4ec;
+    color: #ad1457;
+}
+
+/*Reports list - scrollable, clickable once JS implemented*/
+.admin-reports-list {
+    border: 1px solid #dce4ec;
+    width: 320px;
+    border-radius: 10px;
+    background: rgba(45, 106, 159, 0.08);
+    padding: 16px;
+    height: 600px;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.admin-reports-list__empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #5a6c7d;
+    font-style: italic;
+}
+
+.admin-reports-item {
+    /*Default status; unselected*/
+    padding: 14px;
+    margin-bottom: 12px;
+    background: white;
+    border: 2px solid #d0d4d9;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.admin-reports-item:hover {
+    border-color: #4a9ebb;
+    box-shadow: 0 2px 6px rgba(127, 190, 188, 0.3);
+    transform: translateY(-1px);
+}
+
+.admin-reports-item.selected {
+    background: #e8f1f8;
+    border-color: #2d6a9f;
+    box-shadow: 0 2px 8px rgba(45, 106, 159, 0.25);
+}
+
+/*Report viewer - click on report, see detail*/
+.admin-view-report {
+    background: white;
+    width: 100%;
+    border: 2px solid #d0d4d9;
+    border-radius: 10px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.admin-view-header {
+    border-bottom: 2px solid #e0e3e7;
+    padding-bottom: 16px;
+}
+
+.admin-view-report-column-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-view-report__top {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+}
+
+.admin-view-submitter {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #5a80a1 0%, #4a6d8a 100%);
+    border: 3px solid #e0e3e7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.admin-view-picture {
+    width: 120px;
+    height: 160px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ebed 100%);
+    border: 2px solid #d0d4d9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #7a8a99;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-view-picture:hover {
+    border-color: #4a9ebb;
+    box-shadow: 0 2px 8px rgba(127, 190, 188, 0.2);
+}
+
+/*THIS IS A DRAFT FOR WHEN WE HAVE PICTURES!!!
+.admin-view-picture img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}*/
+
+.admin-view-map {
+    /*PLACEHOLDER, review when map is implemented*/
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ebed 100%);
+    border: 2px solid #d0d4d9;
+    border-radius: 8px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a8a99;
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.admin-view-description {
+    border: 2px solid #e0e3e7;
+    border-radius: 8px;
+    padding: 20px;
+    background: #f5f7fa;
+    min-height: 100px;
+}
+
+.admin-view-description__title{
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-bottom: 8px;
+}
+
+.admin-view-description__text{
+    line-height: 1.45;
+}
+
+/*status, department, budget menus*/
+.admin-report-buttons {
+    display: flex;
+    margin: 0;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+    border: 2px solid #e0e3e7;
+    border-radius: 8px;
+    padding: 16px 20px;
+    background: #f5f7fa;
+}
+
+.admin-report-buttons label{
+    font-weight: 600;
+    color: #1e3a5f;
+    min-width: 145px;
+}
+
+.admin-report-buttons__input,
+.admin-report-buttons__select {
+    border-radius: 6px;
+    border: 1px solid #1e3a5f;
+    background: white;
+    padding: 10px 14px;
+    width: 100%;
+    max-width: 340px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.admin-report-buttons__input:focus,
+.admin-report-buttons__select:focus {
+    outline: none;
+    border-color: #5a80a1;
+    box-shadow: 0 0 0 3px rgba(90, 128, 161, 0.1);
+}
+
+.admin-report-update {
+    display: flex;
+    margin: 8px auto 0;
+    align-items: center;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, #2d6a9f 0%, #245a87 100%);
+    color: white;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(45, 106, 159, 0.3);
+}
+
+.admin-report-update:hover {
+    background: linear-gradient(135deg, #3578ad 0%, #2d6a9f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 106, 159, 0.4);
+}
+
+.admin-report-update:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(45, 106, 159, 0.3);
+}
+
+@media (max-width: 1024px) {
+    .admin-page{
+        grid-template-columns: 1fr;
+        margin: 24px auto;
+    }
+
+    .admin-reports-list{
+        width: 100%;
+        height: 260px;
+    }
+
+    .admin-reports-list__empty{
+        min-height: 130px;
+    }
+
+    .admin-view-report{
+        padding: 20px;
+    }
+
+    .admin-view-report__top{
+        grid-template-columns: 1fr;
+    }
+
+    .admin-view-report-column-left{
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .admin-view-submitter,
+    .admin-view-picture{
+        width: 100%;
+        max-width: 220px;
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-report-buttons{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-report-buttons label{
+        min-width: 0;
+    }
+
+    .admin-report-buttons__input,
+    .admin-report-buttons__select{
+        max-width: none;
+    }
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   SUB NAV BAR
+ * ~ * ~ * ~ * ~ */
+.sub-nav {
+    background-color: #162d4a;
+    height: 45px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sub-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.sub-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.sub-nav a:active,
+.sub-nav a.active {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   MAIN LAYOUT
+ * ~ * ~ * ~ * ~ */
+.layout {
+    display: flex;
+    flex: 1;
+}
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   DASHBOARD PAGE
+ * ~ * ~ * ~ * ~ */
+.dashboard-layout {
+    flex: 1;
+    padding: 60px 80px;
+}
+
+.dashboard__title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.dashboard__divider {
+    height: 3px;
+    width: 23.5rem;
+    background-color: #4a9ebb;
+    margin: 8px 0 40px 0;
+}
+
+.dashboard__cards {
+    display: flex;
+    gap: 60px;
+}
+
+.dashboard-card {
+    width: 320px;
+    border: 1px solid #dce4ec;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card__header {
+    padding: 12px;
+    text-align: center;
+    font-size: 1.2rem;
+    background-color: #1e3a5f;
+    color: white;
+    font-weight: 600;
+}
+
+.dashboard-card__body {
+    height: 250px;
+    background-color: #f0f4f8;
+}
+
+/* ~ * ~ * ~ * ~ *
+   PROFILE DROPDOWN
+ * ~ * ~ * ~ * ~ */
+
+/* .profile-dropdown {
+    position: absolute;
+    top: 120px;
+    right: 60px;
+    width: 260px;
+    background-color: #5a80a1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #4a9ebb;
+}
+
+.profile-dropdown div {
+    padding: 15px;
+    color: white;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #4a9ebb;
+    cursor: pointer;
+}
+
+.profile-dropdown div:last-child {
+    border-bottom: none;
+}
+
+.profile-dropdown div:hover {
+    background-color: #1e3a5f;
+}
+
+*/
+
+/* ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ * ~ */
+
+/* ~ * ~ * ~ * ~ *
+   REPORT TRACKING PAGE
+ * ~ * ~ * ~ * ~ */
+/* ~ * ~ * ~ * ~ *
+   SIDEBAR
+ * ~ * ~ * ~ * ~ */
+.sidebar {
+    width: 260px;
+    padding: 30px 20px;
+    border-right: 3px solid #4a9ebb;
+}
+
+.sidebar__profile-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #2d6a9f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.sidebar__nav {
+    list-style: none;
+}
+
+.sidebar__nav li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f0f4f8;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar__nav li:hover {
+    background-color: #e0eaf2;
+    transform: translateX(3px);
+}
+
+.sidebar__nav li.active {
+    background-color: #4a9ebb;
+    color: white;
+}
+
+/* ~ * ~ * ~ * ~ *
+   MAIN CONTENT
+ * ~ * ~ * ~ * ~ */
+.content {
+    flex: 1;
+    padding: 40px;
+}
+
+.content__title {
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.content__divider {
+    height: 3px;
+    background-color: #4a9ebb;
+    width: 100%;
+    margin: 10px 0 30px 0;
+}
+
+/* ~ * ~ * ~ * ~ *
+   REPORT CARD
+ * ~ * ~ * ~ * ~ */
+.report-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #4a9ebb;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+    margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.report-card__image {
+    width: 130px;
+    height: 100px;
+    background-color: #f0f4f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 10px;
+}
+
+.report-card__info {
+    flex: 1;
+    margin: 0 25px;
+}
+
+/* ~ * ~ * ~ * ~ *
+   PROGRESS TRACKER
+ * ~ * ~ * ~ * ~ */
+
+.progress {
+    margin-top: 15px;
+}
+
+/* Labels */
+.progress__labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+}
+
+/* Bar Background */
+.progress__bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e8eef4;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Filled Portion (JS will control width later) */
+.progress__fill {
+    height: 100%;
+    width: 0%;
+    /* Default for now */
+    background-color: #2d6a9f;
+    transition: width 0.4s ease;
+}
+
+/* BUTTON */
+.report-card__btn {
+    background-color: #2d6a9f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 15px;
+}
+
+.report-card__btn:hover {
+    background-color: #245a87;
+    transform: translateY(-1px);
+}
+
+.report-card__btn:active {
+    transform: translateY(0);
+}
+
+/* ~ * ~ * ~ * ~ *
+   UPDATES PAGE
+ * ~ * ~ * ~ * ~ */
+
+.updates-layout {
+    flex: 1;
+    padding: 60px 80px;
+}
+
+.updates__title {
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.updates__divider {
+    height: 3px;
+    width: 13rem;
+    background-color: #4a9ebb;
+    margin: 10px 0 40px 0;
+}
+
+.update-card {
+    border: 2px solid #4a9ebb;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+    margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.update-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+/*cancel button format cw*/
+.cancel-btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background-color: #c62828;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #e53935;
+    transform: translateY(-1px);
+}
+
+.cancel-btn:active {
+    transform: translateY(0);
+}
+
+/* ~ * ~ * ~ * ~ *
+  FOOTER
+ * ~ * ~ * ~ * ~ */
+.main-footer {
+    background-color: #1e3a5f;
+    border-top: 3px solid #4a9ebb;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
