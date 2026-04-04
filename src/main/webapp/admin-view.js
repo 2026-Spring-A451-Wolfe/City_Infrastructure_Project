@@ -271,11 +271,7 @@
     function setQueueStatus(message, isError) {
         dom.queueEmpty.textContent = message;
         dom.queueEmpty.style.display = "flex";
-<<<<<<< HEAD
-        dom.queueEmpty.style.color = isError ? "red" : "#385064";
-=======
         dom.queueEmpty.style.color = isError ? "#7a1f1f" : "#385064";
->>>>>>> servlet-refactor
     }
 
     function showMessage(message, isError) {
@@ -286,11 +282,7 @@
 
         pageMessage.textContent = message;
         pageMessage.style.display = "block";
-<<<<<<< HEAD
-        pageMessage.style.color = isError ? "red" : "#385064";
-=======
         pageMessage.style.color = isError ? "#7a1f1f" : "#385064";
->>>>>>> servlet-refactor
     }
 
     function getReportId(report) {
@@ -313,17 +305,6 @@
     }
 
     async function apiGet(url) {
-<<<<<<< HEAD
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("Request failed");
-        return res.json();
-    }
-
-    async function apiPatch(url, payload) {
-        const res = await fetch(url, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-=======
         const token = localStorage.getItem('jwt') || '';
         const response = await fetch(url, {
             method: "GET",
@@ -346,7 +327,6 @@
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
->>>>>>> servlet-refactor
             body: JSON.stringify(payload)
         });
         if (!res.ok) throw new Error("Update failed");
