@@ -848,13 +848,8 @@ body {
 }
 
 .dashboard__divider {
-<<<<<<< HEAD
-    height: 2px;
-    width: 320px;
-=======
     height: 3px;
     width: 23.5rem;
->>>>>>> servlet-refactor
     background-color: #4a9ebb;
     margin: 8px 0 40px 0;
 }
@@ -1107,11 +1102,7 @@ body {
 
 .updates__divider {
     height: 3px;
-<<<<<<< HEAD
-    width: 220px;
-=======
     width: 13rem;
->>>>>>> servlet-refactor
     background-color: #4a9ebb;
     margin: 10px 0 40px 0;
 }
