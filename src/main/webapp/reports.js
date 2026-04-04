@@ -1,23 +1,21 @@
-/* Author: Ameen Ayyad Js.file 
-Purpose: Javascript functionality for the reports tracking page 
-Last Modified: 3/1/26 */
+﻿// Since this script is loaded at the end of the body, we can just call it immediately!
+fetchRealReports();
 
-/* What I have done so far (Ameen Ayyad): 
- - View Report button functionality
- - Display report details
- - Progress tracking
- - User information display
-*/
+async function fetchRealReports() {
+    const listContainer = document.querySelector('.content') || document.body;
 
-document.addEventListener("DOMContentLoaded", function () {
+    try {
+        const token = localStorage.getItem('jwt');
 
+<<<<<<< HEAD
     // Buttons and elements
-    const viewReportBtn = document.querySelector(".report-card__btn");
-    const reportName = document.querySelector(".report-card__info p:first-of-type");
-    const reportDescription = document.querySelector(".report-card__info p:nth-of-type(2)");
-    const progressFill = document.querySelector(".progress__fill");
-    const profileCircle = document.querySelector(".sidebar__profile-circle");
-    const userInfo = document.querySelector(".sidebar__nav li");
+const viewReportBtn = document.querySelector(".report-card__btn");
+const cancelButtons = document.querySelectorAll(".cancel-btn"); // ✅ ADD THIS
+const reportName = document.querySelector(".report-card__info p:first-of-type");
+const reportDescription = document.querySelector(".report-card__info p:nth-of-type(2)");
+const progressFill = document.querySelector(".progress__fill");
+const profileCircle = document.querySelector(".sidebar__profile-circle");
+const userInfo = document.querySelector(".sidebar__nav li");
     
     // Maybe sometype of message element for displaying status could be used here 
     let messageDiv = document.querySelector(".report-message");
@@ -64,57 +62,75 @@ document.addEventListener("DOMContentLoaded", function () {
                 progressFill.style.backgroundColor = "#6b9cff"; // Blue for under review
             } else {
                 progressFill.style.backgroundColor = "#51cf66"; // Green for completed
+=======
+        const response = await fetch('/reports', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+>>>>>>> servlet-refactor
             }
-        }
-    }
+        });
 
-    // Added click event listener to the View Report button
-    if (viewReportBtn) {
-        viewReportBtn.addEventListener("click", function () {
+        if (response.ok) {
+            const data = await response.json();
             
-            // Clear previous message
-            messageDiv.textContent = "";
-            messageDiv.style.color = "black";
-            
-            // Report Details
-            const currentReportName = "Sample Report"; // Placeholder
-            const currentReportDesc = "This is a sample report description"; // Placeholder
-            
-            try {
-                // Simulate fetching report data
-                console.log("Fetching report details...");
-                
-                // Displaying report information
-                messageDiv.style.color = "green";
-                messageDiv.innerHTML = `
-                    <strong>Report Details:</strong><br>
-                    Name: ${currentReportName}<br>
-                    Description: ${currentReportDesc}<br>
-                    Status: Under Review<br>
-                    Submitted: 2026-02-15
+            // Wipe out placeholder report cards but keep the title and divider
+            const title = document.querySelector('.content__title');
+            const divider = document.querySelector('.content__divider');
+            listContainer.innerHTML = '';
+            if (title) listContainer.appendChild(title);
+            if (divider) listContainer.appendChild(divider);
+
+            if (data.length === 0) {
+                const emptyMsg = document.createElement('p');
+                emptyMsg.innerText = "No reports found in the database.";
+                listContainer.appendChild(emptyMsg);
+                return;
+            }
+
+            // Loop through the real database rows and render them
+            data.forEach(report => {
+                const div = document.createElement('div');
+                div.className = 'report-card';
+                div.innerHTML = `
+                    <div class="report-card__image">
+                        <!-- We can put an image here if needed, for now just a placeholder -->
+                        ${report.imageUrl ? `<img src="${report.imageUrl}" width="100" />` : 'No Image'}
+                    </div>
+
+                    <div class="report-card__info">
+                        <p><strong>${report.title || 'Untitled Report'}</strong></p>
+                        <p>${report.description || 'No description provided.'}</p>
+                        
+                        <p><strong>Category:</strong> ${report.category || 'N/A'} | <strong>Severity:</strong> ${report.severity || 'N/A'}</p>
+
+                        <div class="progress">
+                            <div class="progress__labels">
+                                <span style="color: black;">Reported: ${(function(d){if(!d)return new Date().toLocaleDateString();if(Array.isArray(d))return new Date(d[0],d[1]-1,d[2]).toLocaleDateString();return new Date(d).toLocaleDateString()})(report.createdAt)}</span>
+                                <span style="font-weight: bold; color: #d32f2f;">Status: ${report.status || 'Open'}</span>
+                            </div>
+                        </div>
+
+                        <button class="report-card__btn" onclick="alert('Viewing report ID: ${report.id}')">View Report</button>
+                    </div>
                 `;
+                listContainer.appendChild(div);
+            });
 
-                
-                console.log("Report viewed:", currentReportName);
-                
-                // Here backend could implement something that shows a full description of the report
-                
-                
-            } catch (error) {
-                messageDiv.style.color = "red";
-                messageDiv.textContent = "Error loading report: " + error.message;
-            }
-        });
+        } else {
+            const errDiv = document.createElement('p');
+            errDiv.style.color = 'red';
+            errDiv.innerText = 'Failed to load reports. Are you logged in?';
+            listContainer.appendChild(errDiv);
+        }
+    } catch (err) {
+        console.error('Error fetching reports:', err);
     }
+}
 
-    if (profileCircle) {
-        profileCircle.addEventListener("click", function () {
-            console.log("Profile clicked - could open user menu");
-            // Maybe this could show a dropdown menu here
-            // or navigate to user profile page
-        });
-    }
 
+<<<<<<< HEAD
     // Maybe Add some type of functionality to navigation links later pn 
     const navLinks = document.querySelectorAll(".sub-nav a");
     navLinks.forEach(link => {
@@ -123,6 +139,21 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Navigating to:", link.textContent);
         });
     });
+
+    /* cancel button functionality (event delegation) --cw*/
+
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("cancel-btn")) {
+
+        const card = e.target.closest(".report-card");
+
+        const confirmDelete = confirm("Are you sure you want to cancel this report?");
+
+        if (confirmDelete && card) {
+            card.remove();
+        }
+    }
+});
 
     // Initialize page with sample data
     function initializePageData() {
@@ -137,3 +168,5 @@ document.addEventListener("DOMContentLoaded", function () {
     initializePageData();
 
 });
+=======
+>>>>>>> servlet-refactor

@@ -1,0 +1,17 @@
+﻿NOLA API QA Test Results
+Generated: 2026-04-02 19:16:56
+BaseUrl: http://localhost:8080
+ReportCount: 1
+ImagesPerReport: 1
+
+Summary: PASS=1 FAIL=3 SKIP=4 TOTAL=8
+
+Detailed Results
+[SKIP] Docker Start :: Skipped because -SkipDocker was provided
+[PASS] GET /health :: Health endpoint returned HTTP 200
+[FAIL] GET /api/departments :: HTTP 404. Body: 
+[FAIL] POST /api/auth/login :: HTTP 404. Body: 
+[SKIP] GET /api/auth/me :: Skipped because login did not return a valid token
+[FAIL] GET /api/reports :: HTTP 405. Body: 
+[SKIP] POST /api/reports [1/1] :: Skipped because login did not return a valid token
+[SKIP] POST /api/reports/{id}/images [1/1 image 1/1] :: Skipped because report was not created

@@ -14,6 +14,17 @@ target/
 # IntelliJ
 .idea/
 *.iml
-
-# Worktrees
-.worktrees/
+*.class
+*.class
+target/classes/com/example/web/util/JwtUtil.class
+target/classes/com/example/web/util/PasswordUtil.class
+target/test-classes/com/example/web/SmokeTest.class
+target/classes/com/example/web/service/AuthService.class
+target/classes/com/example/web/repository/UserRepository.class
+target/classes/com/example/web/model/User.class
+target/classes/com/example/web/HealthServlet.class
+target/classes/com/example/web/dto/RegisterRequest.class
+target/classes/com/example/web/config/DBConnection.class
+target/classes/com/example/web/controller/AuthController.class
+target/classes/com/example/web/DbCheckServlet.class
+target/classes/com/example/web/dto/LoginRequest.class

@@ -1,103 +1,97 @@
 /* Author: Ellie Carroll
-Purpose: Javascript functionality for the user registration page
-Last Modified: 3/27/2026 -CW */
+Purpose: Javascript functionality for the user registration page 
+Last Modified: 3/9/2026 */
 
-/*
-Still Required:
-- Confirm exact backend request field names if backend does not accept { email, password }
+/* Still Required: 
+- backend integration
+- backend password and email formatting verification
+- send login credentials to the backend for verification
 */
 
 document.addEventListener("DOMContentLoaded", function () {
-    const registrationForm = document.getElementById("registrationForm");
+
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
-    const signupButton = document.getElementById("signupButton");
+    const signupBtn = document.getElementById("signupButton");
     const message = document.getElementById("confirmation");
 
-    if (!registrationForm || !email || !password || !confirmPassword || !signupButton || !message) {
-        console.error("Registration page is missing one or more required elements.");
-        return;
-    }
-
-    registrationForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+    signupBtn.addEventListener("click", function () {
 
         const emailValue = email.value.trim();
         const passwordValue = password.value.trim();
         const confirmPasswordValue = confirmPassword.value.trim();
 
+        // clearing the last entry
         message.textContent = "";
         message.style.color = "black";
-        signupButton.disabled = true;
-        signupButton.textContent = "Signing up...";
 
-        try {
-            if (!emailValue || !passwordValue || !confirmPasswordValue) {
-                message.textContent = "Please fill in all fields.";
-                return;
-            }
-
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailValue)) {
-                message.textContent = "Please enter a valid email address.";
-                return;
-            }
-
-            if (passwordValue.length < 10) {
-                message.textContent = "Password must be at least 10 characters long.";
-                return;
-            }
-
-            const passwordPattern = /^(?=(?:.*\d){2,})(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\/+=~`]).+$/;
-            if (!passwordPattern.test(passwordValue)) {
-                message.textContent = "Password must include at least 2 numbers and 1 special character.";
-                return;
-            }
-
-            if (passwordValue !== confirmPasswordValue) {
-                message.textContent = "Passwords do not match.";
-                return;
-            }
-
-            const response = await fetch("http://localhost:3000/api/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: emailValue,
-                    password: passwordValue
-                })
-            });
-
-            let data = {};
-            const rawText = await response.text();
-
-            try {
-                data = rawText ? JSON.parse(rawText) : {};
-            } catch (parseError) {
-                data = { message: rawText || "Registration failed." };
-            }
-
-            if (!response.ok) {
-                throw new Error(data.message || "Registration failed.");
-            }
-
-            message.style.color = "green";
-            message.textContent = "Registration successful! Redirecting to login...";
-
-            setTimeout(function () {
-                window.location.href = "login-page.html";
-            }, 1500);
-
-        } catch (error) {
-            console.error("Registration error:", error);
-            message.style.color = "red";
-            message.textContent = error.message || "Something went wrong during registration.";
-        } finally {
-            signupButton.disabled = false;
-            signupButton.textContent = "Sign up!";
+        // check if text field has content
+        if (!emailValue || !passwordValue || !confirmPasswordValue) {
+            message.textContent = "Please fill in all fields.";
+            return;
         }
+
+         // check email formatting
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (!emailValue.match(emailPattern)) {
+            message.textContent = "Please enter a valid email address.";
+            return;
+        }
+
+        // password strength verification
+        if (passwordValue.length < 10) {
+            message.textContent = "Password must be at least 10 characters long.";
+            return;
+        }
+
+        // password must include at least 2 numbers and 1 special character
+        const passwordPattern = /^(?=(?:.*\d){2,})(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\/+=~`]).+$/;
+
+        if (!passwordValue.match(passwordPattern)) {
+            message.textContent = "Password must include at least 2 numbers and 1 special character.";
+            return;
+        }
+
+        // check password formatting with eachother 
+        if (passwordValue !== confirmPasswordValue) {
+            message.textContent = "Passwords do not match.";
+            return;
+        }
+
+        // Call the Java Backend Servlet to actually register the user!
+        const requestData = {
+            username: emailValue.split('@')[0], // Generate a fake username from email
+            emailOrPhone: emailValue,
+            password: passwordValue
+        };
+
+        fetch('/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            if (response.ok) {
+                message.style.color = "green";
+                message.textContent = "Success! Please log in.";
+                setTimeout(() => {
+                    window.location.href = "login-page.html";
+                }, 2000);
+            } else {
+                response.text().then(err => {
+                    message.style.color = "red";
+                    message.textContent = err || "Registration failed on backend.";
+                });
+            }
+        })
+        .catch(err => {
+            message.style.color = "red";
+            message.textContent = "Network error connecting to backend.";
+            console.error("Registration error:", err);
+        });
+
     });
+
 });
+
