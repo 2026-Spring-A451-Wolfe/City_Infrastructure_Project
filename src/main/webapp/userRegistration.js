@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
-    const signupBtn = document.getElementById("signupButton");         
+    const signupBtn = document.getElementById("signupButton");
     const message = document.getElementById("confirmation");
 
-    if (!registrationForm || !email || !password || !confirmPassword || !signupBtn || !message) { 
+    if (!registrationForm || !email || !password || !confirmPassword || !signupButton || !message) {
         console.error("Registration page is missing one or more required elements.");
         return;
     }
@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         message.textContent = "";
         message.style.color = "black";
-        signupBtn.disabled = true;                                     
-        signupBtn.textContent = "Signing up...";                       
+        signupButton.disabled = true;
+        signupButton.textContent = "Signing up...";
 
         try {
             if (!emailValue || !passwordValue || !confirmPasswordValue) {
@@ -60,18 +60,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const requestData = {
-                username: emailValue.split('@')[0],
-                emailOrPhone: emailValue,
-                password: passwordValue
-            };
+        // Call the Java Backend Servlet to actually register the user!
+        const requestData = {
+            username: emailValue.split('@')[0], // Generate a fake username from email
+            emailOrPhone: emailValue,
+            password: passwordValue
+        };
 
-            const response = await fetch('/auth/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestData)
-            });
-
+        fetch('/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
             if (response.ok) {
                 message.style.color = "green";
                 message.textContent = "Success! Please log in.";
@@ -79,15 +80,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.location.href = "login-page.html";
                 }, 2000);
             } else {
-                const err = await response.text();
-                message.style.color = "red";
-                message.textContent = err || "Registration failed on backend.";
+                response.text().then(err => {
+                    message.style.color = "red";
+                    message.textContent = err || "Registration failed on backend.";
+                });
             }
-
-        } catch (err) {
+        })
+        } catch (error) {
             message.style.color = "red";
             message.textContent = "Network error connecting to backend.";
             console.error("Registration error:", err);
-        }
-    })                                                            
+    }});
+
 });
+
