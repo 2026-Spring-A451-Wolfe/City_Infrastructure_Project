@@ -14,7 +14,7 @@ package edu.loyno.cosca451.service;
 import edu.loyno.cosca451.dto.LoginRequest;
 import edu.loyno.cosca451.dto.RegisterRequest;
 import edu.loyno.cosca451.model.User;
-import edu.loyno.cosca451.repository.UserRepository;
+import edu.loyno.cosca451.db.UserDAO;
 import edu.loyno.cosca451.util.JwtUtil;
 import edu.loyno.cosca451.util.PasswordUtil;
 import org.junit.jupiter.api.BeforeEach;
