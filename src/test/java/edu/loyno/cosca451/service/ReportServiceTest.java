@@ -48,7 +48,7 @@ class ReportServiceTest {
     void setUp() {
         stubRepository = new StubReportRepository();
         stubUpdateRepository = new StubReportUpdateRepository();
-        reportService = new ReportService(stubRepository, stubUpdateRepository);
+        // reportService = new ReportService(stubRepository, stubUpdateRepository);
     }
 
     /* createReport() Tests */
@@ -120,7 +120,7 @@ class ReportServiceTest {
     }
 
     // Stub of fake data
-    private static class StubReportRepository extends ReportRepository {
+    private static class StubReportRepository extends ReportDAO {
         List<Report> reports = Collections.emptyList();
 
         @Override
