@@ -13,13 +13,25 @@ package edu.loyno.cosca451.service;
 import edu.loyno.cosca451.dto.ReportRequest;
 import edu.loyno.cosca451.model.Report;
 import edu.loyno.cosca451.db.ReportDAO;
+import edu.loyno.cosca451.db.ReportUpdateRepository;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class ReportService {
 
-    private final ReportDAO reportDAO = new ReportDAO();
+    private final ReportDAO reportDAO;
+    private final ReportUpdateRepository reportUpdateRepository;
+
+    public ReportService() {
+        this.reportDAO = new ReportDAO();
+        this.reportUpdateRepository = new ReportUpdateRepository(null);
+    }
+
+    public ReportService(ReportDAO reportDAO, ReportUpdateRepository reportUpdateRepository) {
+        this.reportDAO = reportDAO;
+        this.reportUpdateRepository = reportUpdateRepository;
+    }
 
     public Report createReport(ReportRequest request, long createdBy) throws SQLException {
         validate(request);
