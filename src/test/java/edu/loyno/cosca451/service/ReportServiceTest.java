@@ -48,7 +48,7 @@ class ReportServiceTest {
     void setUp() {
         stubRepository = new StubReportRepository();
         stubUpdateRepository = new StubReportUpdateRepository();
-        //reportService = new ReportService(stubRepository, stubUpdateRepository);
+        reportService = new ReportService(stubRepository, stubUpdateRepository);
     }
 
     /* createReport() Tests */
