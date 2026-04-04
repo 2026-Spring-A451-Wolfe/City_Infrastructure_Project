@@ -1,5 +1,5 @@
 (function () {
-    const API_BASE = "/api/admin";
+    const API_BASE = "";
 
     const state = {
         reports: [],
@@ -52,7 +52,7 @@
 
     async function loadDepartments() {
         try {
-            const departments = await apiGet(`${API_BASE}/departments`);
+            const departments = await apiGet(`/departments/`);
             const normalized = Array.isArray(departments)
                 ? departments
                 : Array.isArray(departments?.items)
@@ -74,7 +74,7 @@
     async function loadReports() {
         setQueueLoading(true);
         try {
-            const response = await apiGet(`${API_BASE}/reports`);
+            const response = await apiGet(`/reports`);
             state.reports = normalizeReportList(response);
             renderQueue();
 
@@ -84,21 +84,15 @@
                 clearReportDetail();
             }
         } catch (error) {
-            setQueueStatus(getErrorMessage(error, "Could not load reports."), true);
+            setQueueStatus("Failed to load reports. Please check server connection.", true);
             clearReportDetail();
         }
     }
 
     function normalizeReportList(response) {
-        if (Array.isArray(response)) {
-            return response;
-        }
-        if (Array.isArray(response?.items)) {
-            return response.items;
-        }
-        if (Array.isArray(response?.reports)) {
-            return response.reports;
-        }
+        if (Array.isArray(response)) return response;
+        if (Array.isArray(response?.items)) return response.items;
+        if (Array.isArray(response?.reports)) return response.reports;
         return [];
     }
 
@@ -106,18 +100,18 @@
         queueItemsContainer.innerHTML = "";
 
         if (!state.reports.length) {
-            setQueueStatus("No reports available.", false);
+            setQueueStatus("No reports found.", false);
             return;
         }
 
         dom.queueEmpty.style.display = "none";
+
         state.reports.forEach(function (report) {
             const reportId = getReportId(report);
             const item = document.createElement("button");
             item.type = "button";
             item.className = "admin-reports-item";
             item.textContent = getReportTitle(report);
-            item.setAttribute("data-report-id", reportId);
 
             if (String(reportId) === String(state.selectedReportId)) {
                 item.classList.add("selected");
@@ -133,13 +127,16 @@
 
     async function selectReport(reportId) {
         if (!reportId) {
+            showMessage("Invalid report selected.", true);
             return;
         }
 
         showMessage("Loading report...", false);
 
         try {
-            const report = await apiGet(`${API_BASE}/reports/${encodeURIComponent(reportId)}`);
+            const report = state.reports.find(r => String(getReportId(r)) === String(reportId));
+            if (!report) throw new Error("Report not found in loaded list.");
+            
             state.selectedReportId = getReportId(report) || reportId;
             applyReportDetail(report);
             renderQueue();
@@ -154,47 +151,35 @@
         const title = getReportTitle(report);
         const description = String(getFirst(report, ["description", "problemDescription", "details"], "No description available."));
         const statusValue = String(getFirst(report, ["status"], "submitted")).toLowerCase();
-        const departmentValue = String(getFirst(report, ["departmentId", "department", "assignedDepartmentId", "assignedDepartment"], ""));
+        const departmentValue = String(getFirst(report, ["departmentId", "department"], ""));
         const budgetValue = getFirst(report, ["budget"], "");
         const lat = getFirst(report, ["latitude", "lat"], null);
-        const lng = getFirst(report, ["longitude", "lng", "lon"], null);
-        const imageUrl = getFirst(report, ["imageUrl", "photoUrl", "attachmentUrl"], "");
+        const lng = getFirst(report, ["longitude", "lng"], null);
+        const imageUrl = getFirst(report, ["imageUrl", "photoUrl"], "");
 
         dom.submitter.textContent = getInitials(submitterName);
         dom.submitter.title = submitterName;
         dom.descriptionText.textContent = description;
 
-        if (lat !== null && lng !== null) {
-            dom.map.textContent = `${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}`;
-        } else {
-            dom.map.textContent = "Map location unavailable";
-        }
+        dom.map.textContent = (lat !== null && lng !== null)
+            ? `${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}`
+            : "Map location unavailable";
 
         if (imageUrl) {
             dom.picture.innerHTML = "";
             const image = document.createElement("img");
             image.src = imageUrl;
-            image.alt = title;
             image.style.width = "100%";
             image.style.height = "100%";
             image.style.objectFit = "cover";
-            image.style.borderRadius = "15px";
             dom.picture.appendChild(image);
         } else {
-            dom.picture.textContent = "No image attached";
+            dom.picture.innerHTML = "No image attached";
         }
 
-        if ([...dom.statusSelect.options].some(function (option) { return option.value === statusValue; })) {
-            dom.statusSelect.value = statusValue;
-        }
-
-        if ([...dom.departmentSelect.options].some(function (option) { return option.value === departmentValue; })) {
-            dom.departmentSelect.value = departmentValue;
-        } else {
-            dom.departmentSelect.value = "";
-        }
-
-        dom.budgetInput.value = budgetValue === null || budgetValue === undefined ? "" : String(budgetValue);
+        dom.statusSelect.value = statusValue;
+        dom.departmentSelect.value = departmentValue || "";
+        dom.budgetInput.value = budgetValue ?? "";
 
         state.originalForm = getFormSnapshot();
         setSaveButtonState();
@@ -223,16 +208,19 @@
         }
 
         dom.saveButton.disabled = true;
+        dom.saveButton.textContent = "Saving...";
         showMessage("Saving updates...", false);
 
         try {
-            const updated = await apiPatch(`${API_BASE}/reports/${encodeURIComponent(state.selectedReportId)}`, payload);
+            const updated = await apiPatch(`/reports/${encodeURIComponent(state.selectedReportId)}`, payload);
             applyReportDetail(updated);
             showMessage("Report updated successfully.", false);
         } catch (error) {
             showMessage(getErrorMessage(error, "Could not save report updates."), true);
             setSaveButtonState();
         }
+
+        dom.saveButton.textContent = "Save Updates";
     }
 
     function onFormChanged() {
@@ -265,10 +253,9 @@
         state.selectedReportId = null;
         state.originalForm = null;
         dom.submitter.textContent = "--";
-        dom.submitter.title = "";
-        dom.picture.textContent = "No image attached";
+        dom.picture.innerHTML = "No image attached";
         dom.map.textContent = "Map location preview";
-        dom.descriptionText.textContent = "Select a report from the queue to view its details.";
+        dom.descriptionText.textContent = "Select a report to view details.";
         dom.statusSelect.value = "submitted";
         dom.departmentSelect.value = "";
         dom.budgetInput.value = "";
@@ -276,105 +263,94 @@
         renderQueue();
     }
 
-    function setQueueLoading(loading) {
-        if (loading) {
-            setQueueStatus("Loading reports...", false);
-        }
+    function setQueueLoading() {
+        dom.queueEmpty.style.display = "flex";
+        dom.queueEmpty.textContent = "Loading reports...";
     }
 
     function setQueueStatus(message, isError) {
         dom.queueEmpty.textContent = message;
         dom.queueEmpty.style.display = "flex";
-        dom.queueEmpty.style.color = isError ? "#a61010" : "#385064"; //Made error color brighter. I could barely tell it apart from regular text. -Kelly
+<<<<<<< HEAD
+        dom.queueEmpty.style.color = isError ? "red" : "#385064";
+=======
+        dom.queueEmpty.style.color = isError ? "#7a1f1f" : "#385064";
+>>>>>>> servlet-refactor
     }
 
     function showMessage(message, isError) {
         if (!message) {
-            pageMessage.textContent = "";
             pageMessage.style.display = "none";
             return;
         }
 
         pageMessage.textContent = message;
         pageMessage.style.display = "block";
-        pageMessage.style.color = isError ? "#a61010" : "#385064";
+<<<<<<< HEAD
+        pageMessage.style.color = isError ? "red" : "#385064";
+=======
+        pageMessage.style.color = isError ? "#7a1f1f" : "#385064";
+>>>>>>> servlet-refactor
     }
 
     function getReportId(report) {
-        return getFirst(report, ["id", "reportId", "report_id"], "");
+        return getFirst(report, ["id", "reportId"], "");
     }
 
     function getReportTitle(report) {
-        return String(getFirst(report, ["title", "name", "summary"], `Report #${getReportId(report) || ""}`)).trim() || "Untitled Report";
+        return getFirst(report, ["title", "name"], "Untitled Report");
     }
 
     function getFirst(source, keys, fallback) {
         for (const key of keys) {
-            if (source && Object.prototype.hasOwnProperty.call(source, key) && source[key] !== undefined) {
-                return source[key];
-            }
+            if (source && source[key] !== undefined) return source[key];
         }
         return fallback;
     }
 
     function getInitials(name) {
-        const cleaned = (name || "").trim();
-        if (!cleaned) {
-            return "--";
-        }
-        const parts = cleaned.split(/\s+/).slice(0, 2);
-        return parts.map(function (part) { return part[0].toUpperCase(); }).join("");
+        return name ? name.split(" ").map(n => n[0]).join("").toUpperCase() : "--";
     }
 
     async function apiGet(url) {
+<<<<<<< HEAD
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Request failed");
+        return res.json();
+    }
+
+    async function apiPatch(url, payload) {
+        const res = await fetch(url, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+=======
+        const token = localStorage.getItem('jwt') || '';
         const response = await fetch(url, {
             method: "GET",
-            credentials: "include",
+            credentials: "omit",
             headers: {
-                "Accept": "application/json"
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
             }
         });
         return handleJsonResponse(response);
     }
 
     async function apiPatch(url, payload) {
+        const token = localStorage.getItem('jwt') || '';
         const response = await fetch(url, {
             method: "PATCH",
-            credentials: "include",
+            credentials: "omit",
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
+>>>>>>> servlet-refactor
             body: JSON.stringify(payload)
         });
-        return handleJsonResponse(response);
+        if (!res.ok) throw new Error("Update failed");
+        return res.json();
     }
 
-    async function handleJsonResponse(response) {
-        const contentType = response.headers.get("content-type") || "";
-        const hasJson = contentType.toLowerCase().includes("application/json");
-        const body = hasJson ? await response.json() : null;
-
-        if (!response.ok) {
-            const error = new Error(body?.message || `Request failed with status ${response.status}`);
-            error.status = response.status;
-            error.body = body;
-            throw error;
-        }
-
-        return body;
-    }
-
-    function getErrorMessage(error, fallbackMessage) {
-        if (error?.status === 401 || error?.status === 403) {
-            return "You do not have admin access for this action.";
-        }
-        if (error?.status === 404) {
-            return "Report not found.";
-        }
-        if (error?.message) {
-            return error.message;
-        }
-        return fallbackMessage;
-    }
 })();

@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
-    const signupBtn = document.getElementById("signupBtn");
-    const message = document.getElementById("message");
+    const signupBtn = document.getElementById("signupButton");
+    const message = document.getElementById("confirmation");
 
     signupBtn.addEventListener("click", function () {
 
@@ -59,14 +59,38 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // successful registration
-        message.style.color = "green";
+        // Call the Java Backend Servlet to actually register the user!
+        const requestData = {
+            username: emailValue.split('@')[0], // Generate a fake username from email
+            emailOrPhone: emailValue,
+            password: passwordValue
+        };
 
-        // no longer sending confirmation email
-       // message.textContent = "A confirmation email will be sent to the provided email address.";
+        fetch('/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            if (response.ok) {
+                message.style.color = "green";
+                message.textContent = "Success! Please log in.";
+                setTimeout(() => {
+                    window.location.href = "login-page.html";
+                }, 2000);
+            } else {
+                response.text().then(err => {
+                    message.style.color = "red";
+                    message.textContent = err || "Registration failed on backend.";
+                });
+            }
+        })
+        .catch(err => {
+            message.style.color = "red";
+            message.textContent = "Network error connecting to backend.";
+            console.error("Registration error:", err);
+        });
 
-       // send data to the backend, all checks must be preformed again on the backend
-        console.log("User registered:", emailValue);
     });
 
 });

@@ -77,18 +77,13 @@ To Check Container Status you can run
 "docker ps"
 or you can open docker desktop and verify its running there!
 
-You should see:
-
-tomcat-demo-db
-tomcat-demo-web
-
-Both should be in the “Up” state.
+You should see two running services (names may include `back-api` and `db`), both in the “Up” state.
 
 Accessing the Application (optional, mainly used later if only connecting to db you can ignore this)
 ###############
 Open your browser:
 
-http://localhost:8080
+http://localhost:5050
 
 If everything is working:
 
@@ -127,13 +122,13 @@ Stores relational data
 
 Uses a named Docker volume for persistence
 
-tomcat
+back-api (Tomcat)
 
-Java servlet application
+Java servlet application and bundled web UI (WAR)
 
 Connects to the database using JDBC
 
-Exposes port 8080
+Host port 5050 maps to Tomcat port 8080 in the container
 
 How Requests Flow
 
