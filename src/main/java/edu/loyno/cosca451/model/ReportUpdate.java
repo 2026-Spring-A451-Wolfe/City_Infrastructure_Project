@@ -3,11 +3,14 @@
  * Project: NOLA Infrastructure Reporting & Tracking System                      *
  * Description: Represents a status update made to a report, including the       *
  *              previous and new status, department, and user who updated it.    *
- * Author: Anderson Varela Suarez, capitalization tweaked by Madeline 3/16       *
- * Date Last Modified: 03/06/2026                                                *
+ * Author: Anderson Varela Suarez                                                *
+ * Edited By:                                                                    *
+ * Madeline - 3/16; capitalization tweaked                                       *
+ * Hector Maes - 04/02/2026                                                      *
+ * Date Last Modified: 04/02/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package com.example.web.model;
+package edu.loyno.cosca451.model;
 
 import java.time.LocalDateTime;
 
