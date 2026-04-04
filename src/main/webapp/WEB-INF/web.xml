@@ -27,24 +27,9 @@
     ====================================================================== -->
 
     <!-- Health Check -->
-    <servlet>
-        <servlet-name>HealthServlet</servlet-name>
-        <servlet-class>edu.loyno.cosca451.HealthServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HealthServlet</servlet-name>
-        <url-pattern>/health</url-pattern>
-    </servlet-mapping>
-
+    <!-- Removed to prevent duplicate mapping as HealthServlet uses @WebServlet -->
     <!-- Database Check -->
-    <servlet>
-        <servlet-name>DbCheckServlet</servlet-name>
-        <servlet-class>edu.loyno.cosca451.DbCheckServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DbCheckServlet</servlet-name>
-        <url-pattern>/db-check</url-pattern>
-    </servlet-mapping>
+    <!-- Removed to prevent duplicate mapping as DbCheckServlet now uses @WebServlet -->
 
     <!-- =====================================================================
          SESSION & TIMEOUT
