@@ -3,8 +3,10 @@
  * Project: NOLA Infrastructure Reporting & Tracking System                  *
  * Description: Represents an infrastructure report submitted by a citizen,  *
  *              mapped to the reports table.                                 *
- * Author: Jana El-Khatib                                                      *
- * Date Last Modified: 03/13/2026                                            *
+ * Author: Jana El-Khatib                                                    *
+ * Edited By:                                                                *
+ * Hector Maes - 04/02/2026                                                  *
+ * Date Last Modified: 04/02/2026                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.model;

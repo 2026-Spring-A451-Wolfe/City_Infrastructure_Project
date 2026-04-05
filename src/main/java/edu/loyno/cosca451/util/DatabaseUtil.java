@@ -1,11 +1,13 @@
- /**************************************************************************
- * Filename: DatabaseUtil.java
- * Project: Infrastructure Reporting & Tracking System
- * Description: Provides centralized database connection management and utility
- *              methods for interacting with the application’s data source.
- * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
- **************************************************************************/
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ * Filename: DatabaseUtil.java                                                      *
+ * Project: Infrastructure Reporting & Tracking System                              *
+ * Description: Provides centralized database connection management and utility     *
+ *              methods for interacting with the application’s data source.         *
+ * Author: Sophina Nichols                                                          *
+ * Edited By:                                                                       *
+ * Hector Maes - 04/02/2026                                                         *
+ * Date Last Modified: 04/02/2026                                                   *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.util;
 

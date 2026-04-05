@@ -4,7 +4,9 @@
  * Description: Data Transfer Object used to capture user registration details   *
  *              before creating a new system account.                            *
  * Author: Sophina Nichols                                                       *
- * Date Last Modified: 03/04/2026                                                *
+ * Edited By:                                                                    *
+ * Hector Maes - 04/02/2026                                                      *
+ * Date Last Modified: 04/02/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.dto;

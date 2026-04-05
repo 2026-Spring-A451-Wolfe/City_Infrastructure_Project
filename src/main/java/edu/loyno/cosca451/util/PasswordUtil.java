@@ -4,7 +4,9 @@
  * Description: Provides secure password hashing and verification utilities  *
  *              to protect user credentials.                                 *
  * Author: Sophina Nichols                                                   *
- * Date Last Modified: 03/03/2026                                            *
+ * Edited By:                                                                *
+ * Hector Maes - 04/02/2026                                                  *
+ * Date Last Modified: 04/02/2026                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.util;

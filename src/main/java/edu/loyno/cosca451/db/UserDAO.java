@@ -3,28 +3,36 @@
  * Project: NOLA Infrastructure Reporting & Tracking System                  *
  * Description: Handles database operations for the users table, including   *
  *              user lookup and account management queries.                  *
- * Author: Sophina Nichols                                                   *
- * Date Last Modified: 03/04/2026                                            *
+ * Author: Sophina Nichols                                                   *            
+ * Edited by:                                                                *
+ * Hector Maes - 04/02/2026                                                  *
+ * Date Last Modified: 04/02/2026                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package edu.loyno.cosca451.repository;
+package edu.loyno.cosca451.db;
 
 import edu.loyno.cosca451.model.User;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserRepository {
+/*
+ * Changes Made:
+ * - Renamed UserRepository -> UserDAO
+ * - Moved to edu.loyno.cosca451.db package
+ * - Updated import to match project structure
+ * 
+ * Note: All SQL logic remains unchanged 
+ */
+
+public class UserDAO {
 
     private final DataSource dataSource;
 
-    public UserRepository(DataSource dataSource) {
+    public UserDAO(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

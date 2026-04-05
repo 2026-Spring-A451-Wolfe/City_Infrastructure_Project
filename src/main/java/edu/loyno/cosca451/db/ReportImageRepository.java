@@ -6,19 +6,19 @@
  *              all images associated with a given report. All queries must use  * 
  *              PreparedStatement.                                               *
  *              Called only by ReportService or ImageStorageService.             *
- * Author: Jana El-Khatib                                                       *
- * Date Last Modified: 03/13/2026                                                *
+ * Author: Jana El-Khatib                                                        *
+ * Edited By:                                                                    *
+ * Hector Maes - 04/02/2026                                                      *
+ * Date Last Modified: 04/02/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package edu.loyno.cosca451.repository;
+package edu.loyno.cosca451.db;
 
 import edu.loyno.cosca451.model.ReportImage;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ReportImageRepository {
     private final DataSource dataSource;
@@ -74,34 +74,6 @@ public class ReportImageRepository {
                 }
             }
         }
-    }
-
-    public List<ReportImage> findByReportId(long reportId) throws SQLException {
-        String sql = """
-                SELECT id, report_id, image_url, file_path, uploaded_at
-                FROM report_images
-                WHERE report_id = ?
-                ORDER BY uploaded_at ASC
-                """;
-
-        List<ReportImage> images = new ArrayList<>();
-        try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, reportId);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    ReportImage image = new ReportImage();
-                    image.setId(rs.getLong("id"));
-                    image.setReportId(rs.getLong("report_id"));
-                    image.setImageUrl(rs.getString("image_url"));
-                    image.setFilePath(rs.getString("file_path"));
-                    image.setUploadedAt(rs.getTimestamp("uploaded_at").toLocalDateTime());
-                    images.add(image);
-                }
-            }
-        }
-        return images;
     }
 
     public void delete(ReportImage image) throws SQLException {

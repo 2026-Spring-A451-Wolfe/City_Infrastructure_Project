@@ -4,10 +4,12 @@
  * Description: Handles database operations for the departments table,     *
  *              including retrieval and persistence of department records. *
  * Author: Sophina Nichols                                                 *
- * Date Last Modified: 03/03/2026                                          *
+ * Edited By:                                                              *
+ * Hector Maes - 04/02/2026                                                *
+ * Date Last Modified: 04/02/2026                                          *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-package edu.loyno.cosca451.repository;
+package edu.loyno.cosca451.db;
 
 import edu.loyno.cosca451.model.Department;
 import edu.loyno.cosca451.model.DepartmentContact;

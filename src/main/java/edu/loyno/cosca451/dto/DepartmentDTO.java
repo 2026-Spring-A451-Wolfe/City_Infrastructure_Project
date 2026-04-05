@@ -4,7 +4,9 @@
  * Description: Data Transfer Object used to represent department data in API      *
  *              responses and prevent direct exposure of the Department entity.    *
  * Author: Sophina Nichols                                                         *
- * Date Last Modified: 03/03/2026                                                  *
+ * Edited By:                                                                      *
+ * Hector Maes - 04/02/2026                                                        *
+ * Date Last Modified: 04/02/2026                                                  *                                               *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.dto;

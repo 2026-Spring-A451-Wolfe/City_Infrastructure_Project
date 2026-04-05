@@ -4,7 +4,9 @@
  * Description: Represents a registered system user mapped to the users table,   *
  *              including authentication credentials and role assignment.        *
  * Author: Sophina Nichols                                                       *
- * Date Last Modified: 03/04/2026                                                *
+ * Edited By:                                                                    *
+ * Hector Maes - 04/02/2026                                                      *
+ * Date Last Modified: 04/02/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.model;

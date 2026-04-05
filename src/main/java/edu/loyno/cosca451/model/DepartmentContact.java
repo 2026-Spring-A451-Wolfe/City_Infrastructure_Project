@@ -5,7 +5,9 @@
  *              where each instance represents one contact method for a department.  *
  *              A single department can have multiple DepartmentContact entries.     *
  * Author: Sophina Nichols                                                           *
- * Date Last Modified: 03/03/2026                                                    *
+ * Edited By:                                                                        *
+ * Hector Maes - 04/02/2026                                                          * 
+ * Date Last Modified: 04/02/2026                                                    *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.model;

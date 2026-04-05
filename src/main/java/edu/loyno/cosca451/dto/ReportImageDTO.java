@@ -7,7 +7,9 @@
  *              imageUrl, filePath, and uploadedAt. Never expose raw file system *
  *              paths to unauthorized users.                                     *
  * Author: Makayla Hairston                                                      *
- * Date Last Modified: 03/05/2026                                                *
+ * Edited By:                                                                    *
+ * Hector Maes - 04/02/2026                                                      *
+ * Date Last Modified: 04/02/2026                                                *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.dto;

@@ -7,7 +7,9 @@
  *              a single connection (Singleton pattern) to keep things efficient. It reads database credentials
  *              from environment variables so that sensitive information like passwords are never hardcoded into the source code.
  * Author: Sophina Nichols
- * Date Last Modified: 03/03/2026
+ * Edited By:
+ * Hector Maes - 04/02/2026
+ * Date Last Modified: 04/02/2026
  **************************************************************************/
 
 package edu.loyno.cosca451.config;

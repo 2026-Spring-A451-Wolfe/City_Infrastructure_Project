@@ -19,9 +19,9 @@ package edu.loyno.cosca451.service;
 
 import edu.loyno.cosca451.dto.ReportRequest;
 import edu.loyno.cosca451.model.Report;
-import edu.loyno.cosca451.repository.ReportRepository;
+import edu.loyno.cosca451.db.ReportDAO;
 import edu.loyno.cosca451.model.ReportUpdate;
-import edu.loyno.cosca451.repository.ReportUpdateRepository;
+import edu.loyno.cosca451.db.ReportUpdateRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -120,7 +120,7 @@ class ReportServiceTest {
     }
 
     // Stub of fake data
-    private static class StubReportRepository extends ReportRepository {
+    private static class StubReportRepository extends ReportDAO {
         List<Report> reports = Collections.emptyList();
 
         @Override

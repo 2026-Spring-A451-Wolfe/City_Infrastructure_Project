@@ -4,7 +4,9 @@
  * Description: Contains logic for retrieving, creating, and managing  *
  *              departments and their associated contact records.      *
  * Author: Sophina Nichols                                             *
- * Date Last Modified: 03/03/2026                                      *
+ * Edited By:                                                          *
+ * Hector Maes - 04/02/2026                                            *
+ * Date Last Modified: 04/02/2026                                      *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.service;
@@ -13,7 +15,7 @@ import edu.loyno.cosca451.dto.DepartmentContactDTO;
 import edu.loyno.cosca451.dto.DepartmentDTO;
 import edu.loyno.cosca451.model.Department;
 import edu.loyno.cosca451.model.DepartmentContact;
-import edu.loyno.cosca451.repository.DepartmentRepository;
+import edu.loyno.cosca451.db.DepartmentRepository;
 
 import java.sql.SQLException;
 import java.util.List;

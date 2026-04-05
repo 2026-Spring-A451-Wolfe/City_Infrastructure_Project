@@ -3,8 +3,10 @@
  * Project: NOLA Infrastructure Reporting & Tracking System                  *
  * Description: Data Transfer Object used to capture user login credentials  *
  *              submitted to the authentication endpoint.                    *
- * Author: Sophina Nichols                                                   *
- * Date Last Modified: 03/04/2026                                            *
+ * Author: Sophina Nichols                                                   *                                    
+ * Edited By:                                                                *
+ * Hector Maes - 04/02/2026                                                  *
+ * Date Last Modified: 04/02/2026                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.dto;

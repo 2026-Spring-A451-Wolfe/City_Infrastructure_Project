@@ -6,18 +6,16 @@
  *              image/webp and do not exceed 5MB. Renames each file to a UUID  *
  *              before saving to prevent collisions. Works alongside           *
  *              ReportImageRepository to persist image metadata.               *
- * Author: Jana El-Khatib
- *         - Changes: - Added reportImage.setReportId(reportID) before 
- *                    saving — reportId was being passed in 
- *                    but never set on the object, causing it to insert 0 
- *                    and violate the foreign key constraint on report_images  
- * Date Last Modified: 03/20/2026                                              *
+ * Author: Jana El-Khatib                                                      *
+ * Edited By:                                                                  *
+ * Hector Maes - 04/02/2026                                                    *
+ * Date Last Modified: 04/02/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.service;
 
 import edu.loyno.cosca451.model.ReportImage;
-import edu.loyno.cosca451.repository.ReportImageRepository;
+import edu.loyno.cosca451.db.ReportImageRepository;
 
 import java.io.File;
 import java.util.UUID;
@@ -69,12 +67,10 @@ public class ImageStorageService {
         }
 
         ReportImage reportImage = new ReportImage();
-        reportImage.setReportId(reportID);
         reportImage.setOriginalFilename(originalFilename);
         reportImage.setStoredFilename(storedFilename);
         reportImage.setContentType(contentType);
         reportImage.setFilePath(destinationFile.getAbsolutePath());
-        reportImage.setImageUrl("/uploads/" + storedFilename);
         reportImage.setFileSize(fileSize);
 
         return reportImageRepository.save(reportImage);

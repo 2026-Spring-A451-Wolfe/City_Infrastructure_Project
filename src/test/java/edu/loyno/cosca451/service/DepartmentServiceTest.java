@@ -13,7 +13,7 @@ import edu.loyno.cosca451.dto.DepartmentContactDTO;
 import edu.loyno.cosca451.dto.DepartmentDTO;
 import edu.loyno.cosca451.model.Department;
 import edu.loyno.cosca451.model.DepartmentContact;
-import edu.loyno.cosca451.repository.DepartmentRepository;
+import edu.loyno.cosca451.db.DepartmentRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

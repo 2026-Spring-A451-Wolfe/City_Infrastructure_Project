@@ -6,7 +6,9 @@
  *              include a nested list of ReportUpdateDTOs for status history   *
  *              and a nested list of image URLs/paths when applicable.         *
  * Author: Adin Hultin                                                         *
- * Date Last Modified: 03/05/2026                                              *
+ * Edited By:                                                                  *
+ * Hector Maes - 04/02/2026                                                    *
+ * Date Last Modified: 04/02/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.dto;

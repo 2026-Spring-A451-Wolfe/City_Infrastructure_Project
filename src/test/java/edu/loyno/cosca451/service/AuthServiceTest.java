@@ -14,7 +14,7 @@ package edu.loyno.cosca451.service;
 import edu.loyno.cosca451.dto.LoginRequest;
 import edu.loyno.cosca451.dto.RegisterRequest;
 import edu.loyno.cosca451.model.User;
-import edu.loyno.cosca451.repository.UserRepository;
+import edu.loyno.cosca451.db.UserDAO;
 import edu.loyno.cosca451.util.JwtUtil;
 import edu.loyno.cosca451.util.PasswordUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,12 +29,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AuthServiceTest {
 
     private AuthService authService;
-    private FakeUserRepository fakeUserRepository;
+    private FakeUserDAO fakeUserDAO;
 
     @BeforeEach
     void setUp() {
-        fakeUserRepository = new FakeUserRepository();
-        authService = new AuthService(fakeUserRepository);
+        fakeUserDAO = new FakeUserDAO();
+        authService = new AuthService(fakeUserDAO);
     }
 
     @Test
@@ -132,7 +132,7 @@ public class AuthServiceTest {
         existing.setRole("Citizen");
         existing.setActive(true);
 
-        fakeUserRepository.seedUser(existing);
+        fakeUserDAO.seedUser(existing);
 
         RegisterRequest request = new RegisterRequest();
         request.setUsername("ethan123");
@@ -153,7 +153,7 @@ public class AuthServiceTest {
         existing.setRole("Citizen");
         existing.setActive(true);
 
-        fakeUserRepository.seedUser(existing);
+        fakeUserDAO.seedUser(existing);
 
         RegisterRequest request = new RegisterRequest();
         request.setUsername("ethan123");
@@ -174,7 +174,7 @@ public class AuthServiceTest {
         existing.setRole("Citizen");
         existing.setActive(true);
 
-        fakeUserRepository.seedUser(existing);
+        fakeUserDAO.seedUser(existing);
 
         LoginRequest request = new LoginRequest();
         request.setEmailOrPhone("ethan@example.com");
@@ -208,7 +208,7 @@ public class AuthServiceTest {
         existing.setRole("Citizen");
         existing.setActive(true);
 
-        fakeUserRepository.seedUser(existing);
+        fakeUserDAO.seedUser(existing);
 
         LoginRequest request = new LoginRequest();
         request.setEmailOrPhone("ethan@example.com");
@@ -221,12 +221,12 @@ public class AuthServiceTest {
     /**
      * Tiny fake repository so we can test AuthService logic without a real DB.
      */
-    private static class FakeUserRepository extends UserRepository {
+    private static class FakeUserDAO extends UserDAO {
 
         private final java.util.List<User> users = new java.util.ArrayList<>();
         private long nextId = 1L;
 
-        FakeUserRepository() {
+        FakeUserDAO() {
             super(new DummyDataSource());
         }
 

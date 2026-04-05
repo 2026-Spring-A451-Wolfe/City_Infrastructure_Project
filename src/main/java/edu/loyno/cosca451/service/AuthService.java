@@ -4,7 +4,9 @@
  * Description: Handles registration logic (password validation & BCrypt hashing)  *
  *              and login logic (BCrypt verification & JWT token generation).      *
  * Author: Sophina Nichols                                                         *
- * Date Last Modified: 03/04/2026                                                  *
+ * Edited by:                                                                      *
+ * Hector Maes - 04/02/2026                                                        *
+ * Date Last Modified: 04/02/2026                                                  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.service;
@@ -12,33 +14,37 @@ package edu.loyno.cosca451.service;
 import edu.loyno.cosca451.dto.LoginRequest;
 import edu.loyno.cosca451.dto.RegisterRequest;
 import edu.loyno.cosca451.model.User;
-import edu.loyno.cosca451.repository.UserRepository;
+import edu.loyno.cosca451.db.UserDAO;
 import edu.loyno.cosca451.util.JwtUtil;
 import edu.loyno.cosca451.util.PasswordUtil;
 
-/* AuthService contains all user authentication logic.
- * Tasks:
- *      - Validate registration input (username length, email/phone format,
- *        and password strength)
- *      - Check database for duplicate usernames or emails/phones
- *      - Hash passwords with BCrypt (cost factor 12)
- *      - Verify BCrypt password hashes on login
- *      - Generate JWT tokens for authenticated users
- *
- * This class does NOT handle HTTP requests or responses, that is
- * the responsibility of AuthController.
+import java.sql.SQLException;
+
+/* 
+ * Changes made:
+ * - Replaced UserRepository -> UserDao
+ * - Updated imports to match edu.loyno.cosca451 package structure
+ * - Updated constructor to accept UserDAO
+ * 
+ * Functionality remains:
+ * - Registration validate (username, email/phone, password strength)
+ * - Check for duplicates in DB
+ * - Hash passwords
+ * - Verify passwords
+ * - Generate JWT on login
  */
 
 public class AuthService {
 
     // Repository used to query and save users in the database
-    private final UserRepository userRepository;
+    private final UserDAO userDAO;
 
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthService(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
+
     // Registration 
-    public User register(RegisterRequest request) throws Exception {
+    public User register(RegisterRequest request) throws Exception, SQLException {
 
         if (request.getUsername() == null || request.getUsername().trim().length() < 3) {
             throw new Exception("Username must be at least 3 characters");
@@ -62,10 +68,10 @@ public class AuthService {
             throw new Exception("Password must contain at least one special character");
         }
 
-        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+        if (userDAO.findByUsername(request.getUsername()).isPresent()) {
             throw new Exception("Username already taken");
         }
-        if (userRepository.findByEmailOrPhone(request.getEmailOrPhone()).isPresent()) {
+        if (userDAO.findByEmailOrPhone(request.getEmailOrPhone()).isPresent()) {
             throw new Exception("Email/phone already registered");
         }
 
@@ -78,14 +84,14 @@ public class AuthService {
         newUser.setRole("Citizen");     // New accounts default to role "Citizen"
         newUser.setActive(true);
 
-        return userRepository.save(newUser);
+        return userDAO.save(newUser);
     }
 
     // Authentication
-    public String login(LoginRequest request) throws Exception {
+    public String login(LoginRequest request) throws Exception, SQLException {
 
-        User user = userRepository.findByEmailOrPhone(request.getEmailOrPhone())
-        .orElseThrow(() -> new Exception("Invalid email/phone or password"));
+        User user = userDAO.findByEmailOrPhone(request.getEmailOrPhone())
+                .orElseThrow(() -> new Exception("Invalid email/phone or password"));
 
         if (!PasswordUtil.verifyPassword(request.getPassword(), user.getPasswordHash())) {
             throw new Exception("Invalid email/phone or password");

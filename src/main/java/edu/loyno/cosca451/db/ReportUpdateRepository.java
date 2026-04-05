@@ -6,15 +6,13 @@
  *              change records and fetching the full update history for a      *
  *              given report. All queries must use PreparedStatement.          *
  *              Called only by ReportService.                                  *
- * Author: Madeline Krehely
- * - Edited by: Jana El-Khatib 03/20/2026
- *              - Changes: - Fixed department_id insert — now uses setNull when 
- *                departmentID is 0 instead of inserting 0, which violated 
- *                the foreign key constraint                                                
- * Date Last Modified: 03/20/2026                                              *
+ * Author: Madeline Krehely                                                    *
+ * Edited By:                                                                  *
+ * Hector Maes - 04/02/2026                                                    *
+ * Date Last Modified: 04/02/2026                                              *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
  
-package edu.loyno.cosca451.repository;
+package edu.loyno.cosca451.db;
 
 import edu.loyno.cosca451.model.ReportUpdate;
 
@@ -45,11 +43,7 @@ public class ReportUpdateRepository {
             ps.setLong(2, update.getUpdaterID());
             ps.setString(3, update.getOldStatus());
             ps.setString(4, update.getNewStatus());
-            if (update.getDepartmentID() == 0) {
-                ps.setNull(5, java.sql.Types.BIGINT);
-            } else {
-                ps.setLong(5, update.getDepartmentID());
-            }
+            ps.setLong(5, update.getDepartmentID());
             ps.setString(6, update.getComment());
 
             int affectedRows = ps.executeUpdate();

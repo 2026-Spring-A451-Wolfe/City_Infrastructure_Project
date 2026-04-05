@@ -3,8 +3,11 @@
  * Project: NOLA Infrastructure Reporting & Tracking System                *
  * Description: Data Transfer Object used to transfer report update        *
  *              information between the backend and client.                *
- * Author: Anderson Varela Suarez, capitalization tweaked by Madeline 3/16 *
- * Date Last Modified: 03/09/2026                                          *
+ * Author: Anderson Varela Suarez                                          *  
+ * Edited By:                                                              *
+ * Madeline - 03/16/2026; capitalization tweaked                           *
+ * Hector Maes - 04/02/2026                                                *
+ * Date Last Modified: 04/02/2026                                          *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 package edu.loyno.cosca451.dto;

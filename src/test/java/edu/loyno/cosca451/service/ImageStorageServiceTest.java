@@ -11,7 +11,7 @@
 package edu.loyno.cosca451.service;
 
 import edu.loyno.cosca451.model.ReportImage;
-import edu.loyno.cosca451.repository.ReportImageRepository;
+import edu.loyno.cosca451.db.ReportImageRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
