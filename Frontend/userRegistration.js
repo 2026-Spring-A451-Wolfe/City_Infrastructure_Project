@@ -1,63 +1,64 @@
 /* Author: Ellie Carroll
-Purpose: Javascript functionality for the user registration page 
-Last Modified: 3/9/2026 */
+Purpose: Javascript functionality for the user registration page
+Last Modified: 3/27/2026 -CW */
 
-/* Still Required: 
-- backend integration
-- backend password and email formatting verification
-- send login credentials to the backend for verification
+/*
+Still Required:
+- Confirm exact backend request field names if backend does not accept { email, password }
 */
 
 document.addEventListener("DOMContentLoaded", function () {
-
+    const registrationForm = document.getElementById("registrationForm");
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const signupBtn = document.getElementById("signupButton");
     const message = document.getElementById("confirmation");
 
-    signupBtn.addEventListener("click", function () {
+    if (!registrationForm || !email || !password || !confirmPassword || !signupButton || !message) {
+        console.error("Registration page is missing one or more required elements.");
+        return;
+    }
+
+    registrationForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
         const emailValue = email.value.trim();
         const passwordValue = password.value.trim();
         const confirmPasswordValue = confirmPassword.value.trim();
 
-        // clearing the last entry
         message.textContent = "";
         message.style.color = "black";
+        signupButton.disabled = true;
+        signupButton.textContent = "Signing up...";
 
-        // check if text field has content
-        if (!emailValue || !passwordValue || !confirmPasswordValue) {
-            message.textContent = "Please fill in all fields.";
-            return;
-        }
+        try {
+            if (!emailValue || !passwordValue || !confirmPasswordValue) {
+                message.textContent = "Please fill in all fields.";
+                return;
+            }
 
-         // check email formatting
-        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-        if (!emailValue.match(emailPattern)) {
-            message.textContent = "Please enter a valid email address.";
-            return;
-        }
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailValue)) {
+                message.textContent = "Please enter a valid email address.";
+                return;
+            }
 
-        // password strength verification
-        if (passwordValue.length < 10) {
-            message.textContent = "Password must be at least 10 characters long.";
-            return;
-        }
+            if (passwordValue.length < 10) {
+                message.textContent = "Password must be at least 10 characters long.";
+                return;
+            }
 
-        // password must include at least 2 numbers and 1 special character
-        const passwordPattern = /^(?=(?:.*\d){2,})(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\/+=~`]).+$/;
+            const passwordPattern = /^(?=(?:.*\d){2,})(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\/+=~`]).+$/;
+            if (!passwordPattern.test(passwordValue)) {
+                message.textContent = "Password must include at least 2 numbers and 1 special character.";
+                return;
+            }
 
-        if (!passwordValue.match(passwordPattern)) {
-            message.textContent = "Password must include at least 2 numbers and 1 special character.";
-            return;
-        }
-
-        // check password formatting with eachother 
-        if (passwordValue !== confirmPasswordValue) {
-            message.textContent = "Passwords do not match.";
-            return;
-        }
+            if (passwordValue !== confirmPasswordValue) {
+                message.textContent = "Passwords do not match.";
+                return;
+            }
 
         // Call the Java Backend Servlet to actually register the user!
         const requestData = {
@@ -85,13 +86,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         })
-        .catch(err => {
+        } catch (error) {
             message.style.color = "red";
             message.textContent = "Network error connecting to backend.";
             console.error("Registration error:", err);
-        });
-
-    });
+    }});
 
 });
-

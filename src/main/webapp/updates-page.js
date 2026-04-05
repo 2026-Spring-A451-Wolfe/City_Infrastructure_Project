@@ -1,4 +1,4 @@
-﻿/* Author: Javier Garcia
+﻿﻿/* Author: Javier Garcia
 Purpose: Javascript functionality for the updates page
 Last Modified: 3/08/2026 */
 
@@ -95,5 +95,3 @@ function clearTempCards(container) {
     const cards = container.querySelectorAll(".update-card");
     cards.forEach(card => card.remove());
 }
-
-

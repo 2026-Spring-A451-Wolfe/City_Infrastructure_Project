@@ -136,7 +136,7 @@
         try {
             const report = state.reports.find(r => String(getReportId(r)) === String(reportId));
             if (!report) throw new Error("Report not found in loaded list.");
-            
+
             state.selectedReportId = getReportId(report) || reportId;
             applyReportDetail(report);
             renderQueue();
@@ -271,7 +271,7 @@
     function setQueueStatus(message, isError) {
         dom.queueEmpty.textContent = message;
         dom.queueEmpty.style.display = "flex";
-        dom.queueEmpty.style.color = isError ? "#7a1f1f" : "#385064";
+        dom.queueEmpty.style.color = isError ? "#7a1f1f" : "#385064"; // conflict 1: kept servlet-refactor
     }
 
     function showMessage(message, isError) {
@@ -282,7 +282,7 @@
 
         pageMessage.textContent = message;
         pageMessage.style.display = "block";
-        pageMessage.style.color = isError ? "#7a1f1f" : "#385064";
+        pageMessage.style.color = isError ? "#7a1f1f" : "#385064"; // conflict 2: kept servlet-refactor
     }
 
     function getReportId(report) {
@@ -305,6 +305,7 @@
     }
 
     async function apiGet(url) {
+        // conflict 3: kept servlet-refactor (adds JWT auth header)
         const token = localStorage.getItem('jwt') || '';
         const response = await fetch(url, {
             method: "GET",
@@ -318,6 +319,7 @@
     }
 
     async function apiPatch(url, payload) {
+        // conflict 4: kept servlet-refactor (adds JWT auth header)
         const token = localStorage.getItem('jwt') || '';
         const response = await fetch(url, {
             method: "PATCH",
@@ -329,8 +331,12 @@
             },
             body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error("Update failed");
-        return res.json();
+        return handleJsonResponse(response);
+    }
+
+    function handleJsonResponse(response) {
+        if (!response.ok) throw new Error("Request failed");
+        return response.json();
     }
 
 })();

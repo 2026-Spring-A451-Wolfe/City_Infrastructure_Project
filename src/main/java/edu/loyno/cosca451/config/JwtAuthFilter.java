@@ -23,11 +23,9 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.util.Map;
 
-@WebFilter("/api/*")
 public class JwtAuthFilter implements Filter {
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -48,10 +46,10 @@ public class JwtAuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletRequest  httpRequest  = (HttpServletRequest)  request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        String path = httpRequest.getRequestURI();
+        String path   = httpRequest.getRequestURI();
         String method = httpRequest.getMethod();
 
         if (isPublicRoute(path, method)) {
@@ -71,22 +69,14 @@ public class JwtAuthFilter implements Filter {
         try {
             Claims claims = JwtUtil.validateToken(token);
 
-            // 1. Get the userId from the Subject (since that's where you stored it)
-            // 2. Use the exact claim names you used in JwtUtil.generateToken
-            long userId = Long.parseLong(claims.getSubject());
-            String username = claims.get("username", String.class);
-            String role = claims.get("role", String.class);
-
-            // Attach to request
-            httpRequest.setAttribute("userId", userId);
-            httpRequest.setAttribute("username", username);
-            httpRequest.setAttribute("role", role);
+            httpRequest.setAttribute("userId",   claims.get("userId",   Long.class));
+            httpRequest.setAttribute("username", claims.get("username", String.class));
+            httpRequest.setAttribute("role",     claims.get("role",     String.class));
 
             chain.doFilter(request, response);
 
         } catch (Exception e) {
-            // Helpful Tip: Print the error to your console so you can see WHY it failed
-            e.printStackTrace();
+            // Catches expired tokens, tampered signatures, malformed JWTs, etc.
             sendUnauthorized(httpResponse, "Invalid or expired token.");
         }
     }
@@ -94,7 +84,6 @@ public class JwtAuthFilter implements Filter {
     @Override
     public void destroy() {
     }
-
     /**
      * Returns true if the request path + method combination is public.
      * Also allows all GET requests to /api/reports/{id} and /api/departments/{id}
@@ -105,23 +94,16 @@ public class JwtAuthFilter implements Filter {
         String[] allowedMethods = PUBLIC_ROUTES.get(path);
         if (allowedMethods != null) {
             for (String m : allowedMethods) {
-                if (m.equalsIgnoreCase(method))
-                    return true;
+                if (m.equalsIgnoreCase(method)) return true;
             }
         }
 
         // Pattern matches — public GET access to individual reports and departments
         if ("GET".equalsIgnoreCase(method)) {
-            if (path.matches("/api/reports/\\d+"))
-                return true;
-            if (path.matches("/api/reports/\\d+/updates"))
-                return true;
-            if (path.matches("/api/departments/\\d+"))
-                return true;
-            if (path.matches("/api/departments/\\d+/contacts"))
-                return true;
-            if (path.matches("/api/images/report/\\d+"))
-                return true;
+            if (path.matches("/api/reports/\\d+"))              return true;
+            if (path.matches("/api/reports/\\d+/updates"))      return true;
+            if (path.matches("/api/departments/\\d+"))          return true;
+            if (path.matches("/api/departments/\\d+/contacts")) return true;
         }
 
         return false;
@@ -134,8 +116,10 @@ public class JwtAuthFilter implements Filter {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.getWriter().write(
-                mapper.writeValueAsString(Map.of(
-                        "error", "Unauthorized",
-                        "message", message)));
+            mapper.writeValueAsString(Map.of(
+                "error",   "Unauthorized",
+                "message", message
+            ))
+        );
     }
 }

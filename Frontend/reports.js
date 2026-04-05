@@ -71,5 +71,3 @@ async function fetchRealReports() {
         console.error('Error fetching reports:', err);
     }
 }
-
-
